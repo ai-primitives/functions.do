@@ -2,13 +2,17 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant'
+import type { Config } from './payload-types'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
-import { Media } from './collections/Media'
+import { Files } from './collections/Files'
+import { Functions } from './collections/Functions'
+import { Tenants } from './collections/Tenants'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Functions, Users, Tenants, Files],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -33,5 +37,12 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
+    multiTenantPlugin<Config>({
+      collections: {
+        files: {},
+        functions: {},
+        // users: {},
+      },
+    }),
   ],
 })
