@@ -137,7 +137,6 @@ export interface Function {
  */
 export interface Tenant {
   id: string;
-  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -289,7 +288,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "tenants_select".
  */
 export interface TenantsSelect<T extends boolean = true> {
-  name?: T;
+  id?: T;
   updatedAt?: T;
   createdAt?: T;
 }
