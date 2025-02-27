@@ -5,11 +5,18 @@ export const Functions: CollectionConfig = {
   // access: {
   //   read: () => true,
   // },
+  admin: {
+    group: 'Functions',
+    useAsTitle: 'name',
+  },
+  versions: true,
   fields: [
-    { name: 'name', type: 'text', required: true },
-    { name: 'type', type: 'select', required: true, options: ['AI', 'Code'] },
+    { type: 'row', fields: [
+      { name: 'name', type: 'text', required: true },
+      { name: 'type', type: 'select', required: true, options: ['AI', 'Code'], defaultValue: 'AI' },
+    ]},
     { name: 'systemPrompt', type: 'textarea', admin: { condition: (data) => data.type === 'AI' } },
     { name: 'userPrompt', type: 'textarea', admin: { condition: (data) => data.type === 'AI' } },
-    { name: 'code', type: 'code', admin: { condition: (data) => data.type === 'Code' } },
+    { name: 'code', type: 'code', admin: { language: 'typescript', condition: (data) => data.type === 'Code', editorOptions: { padding: { top: 20, bottom: 20 } } } },
   ],
 }

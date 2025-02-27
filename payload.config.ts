@@ -13,6 +13,7 @@ import { Users } from './collections/Users'
 import { Files } from './collections/Files'
 import { Functions } from './collections/Functions'
 import { Tenants } from './collections/Tenants'
+import { isSuperAdmin } from './hooks/isSuperAdmin'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -43,6 +44,7 @@ export default buildConfig({
         functions: {},
         // users: {},
       },
+      userHasAccessToAllTenants: isSuperAdmin,
     }),
   ],
 })
