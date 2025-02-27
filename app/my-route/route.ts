@@ -10,5 +10,7 @@ export const GET = async () => {
     collection: 'users',
   })
 
+  // const results = await payload.jobs.
+
   return Response.json(data)
 }
