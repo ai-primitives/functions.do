@@ -6,6 +6,8 @@ export const Tenants: CollectionConfig = {
   //   read: () => true,
   // },
   fields: [
-    { name: 'id', type: 'text', required: true },
+    { name: 'id', label: 'ID', type: 'text', required: true },
+    { name: 'name', label: 'Name', type: 'text' },
+    { name: 'domain', label: 'Domain', type: 'text' },
   ],
 }
