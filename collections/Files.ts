@@ -5,6 +5,9 @@ export const Files: CollectionConfig = {
   // access: {
   //   read: () => true,
   // },
+  admin: {
+    group: 'Data',
+  },
   fields: [
     { name: 'alt', type: 'text', required: false },
   ],
