@@ -9,6 +9,7 @@ export const updateModels: TaskConfig<'updateModels'> = {
     { name: 'count', type: 'number' },
   ],
   handler: async ({ input, job, req }) => {
+    
     try {
       console.log('Fetching models from OpenRouter API')
 
