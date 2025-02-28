@@ -8,14 +8,14 @@ export const Models: CollectionConfig = {
   },
   versions: true,
   fields: [
-    {
-      type: 'row',
-      fields: [
+    // {
+    //   type: 'row',
+    //   fields: [
         { name: 'id', type: 'text', required: true },
         { name: 'name', type: 'text', required: true },
-      ],
-    },
-    { name: 'created', type: 'number' },
+    //   ],
+    // },
+    { name: 'created', type: 'date' },
     { name: 'description', type: 'textarea' },
     { name: 'contextLength', type: 'number' },
     {

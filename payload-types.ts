@@ -179,7 +179,7 @@ export interface File {
 export interface Model {
   id: string;
   name: string;
-  created?: number | null;
+  created?: string | null;
   description?: string | null;
   contextLength?: number | null;
   architecture?: {
