@@ -20,6 +20,7 @@
     "@payloadcms/payload-cloud": "latest",
     "@payloadcms/plugin-multi-tenant": "^3.24.0",
     "@payloadcms/richtext-lexical": "latest",
+    "camelcase-keys": "^9.1.3",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "next": "15.1.5",

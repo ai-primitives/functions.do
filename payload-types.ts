@@ -68,6 +68,7 @@ export interface Config {
   collections: {
     functions: Function;
     files: File;
+    models: Model;
     users: User;
     tenants: Tenant;
     'payload-jobs': PayloadJob;
@@ -79,6 +80,7 @@ export interface Config {
   collectionsSelect: {
     functions: FunctionsSelect<false> | FunctionsSelect<true>;
     files: FilesSelect<false> | FilesSelect<true>;
+    models: ModelsSelect<false> | ModelsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
@@ -133,8 +135,8 @@ export interface Function {
   tenant?: (string | null) | Tenant;
   name: string;
   type: 'AI' | 'Code';
-  systemPrompt?: string | null;
-  userPrompt?: string | null;
+  system?: string | null;
+  user?: string | null;
   code?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -169,6 +171,44 @@ export interface File {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models".
+ */
+export interface Model {
+  id: string;
+  name: string;
+  created?: number | null;
+  description?: string | null;
+  contextLength?: number | null;
+  architecture?: {
+    modality?: string | null;
+    tokenizer?: string | null;
+    instructType?: string | null;
+  };
+  pricing?: {
+    prompt?: string | null;
+    completion?: string | null;
+    image?: string | null;
+    request?: string | null;
+  };
+  topProvider?: {
+    contextLength?: number | null;
+    maxCompletionTokens?: number | null;
+    isModerated?: boolean | null;
+  };
+  perRequestLimits?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -301,6 +341,10 @@ export interface PayloadLockedDocument {
         value: string | File;
       } | null)
     | ({
+        relationTo: 'models';
+        value: string | Model;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -362,8 +406,8 @@ export interface FunctionsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
   type?: T;
-  systemPrompt?: T;
-  userPrompt?: T;
+  system?: T;
+  user?: T;
   code?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -386,6 +430,42 @@ export interface FilesSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models_select".
+ */
+export interface ModelsSelect<T extends boolean = true> {
+  id?: T;
+  name?: T;
+  created?: T;
+  description?: T;
+  contextLength?: T;
+  architecture?:
+    | T
+    | {
+        modality?: T;
+        tokenizer?: T;
+        instructType?: T;
+      };
+  pricing?:
+    | T
+    | {
+        prompt?: T;
+        completion?: T;
+        image?: T;
+        request?: T;
+      };
+  topProvider?:
+    | T
+    | {
+        contextLength?: T;
+        maxCompletionTokens?: T;
+        isModerated?: T;
+      };
+  perRequestLimits?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -490,6 +570,8 @@ export interface TaskUpdateModels {
   input?: unknown;
   output: {
     success?: boolean | null;
+    message?: string | null;
+    count?: number | null;
   };
 }
 /**

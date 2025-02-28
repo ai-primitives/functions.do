@@ -6,17 +6,17 @@ export const Functions: CollectionConfig = {
   //   read: () => true,
   // },
   admin: {
-    group: 'Functions',
+    group: 'AI',
     useAsTitle: 'name',
   },
   versions: true,
   fields: [
     { type: 'row', fields: [
-      { name: 'name', type: 'text', required: true },
-      { name: 'type', type: 'select', required: true, options: ['AI', 'Code'], defaultValue: 'AI' },
+      { name: 'name', type: 'text', required: true, admin: { position: 'sidebar' } },
+      { name: 'type', type: 'select', required: true, options: ['AI', 'Code'], defaultValue: 'AI', admin: { position: 'sidebar' } },
     ]},
-    { name: 'systemPrompt', type: 'textarea', admin: { condition: (data) => data.type === 'AI' } },
-    { name: 'userPrompt', type: 'textarea', admin: { condition: (data) => data.type === 'AI' } },
+    { name: 'system', type: 'textarea', admin: { condition: (data) => data.type === 'AI' } },
+    { name: 'user', type: 'textarea', admin: { condition: (data) => data.type === 'AI' } },
     { name: 'code', type: 'code', admin: { language: 'typescript', condition: (data) => data.type === 'Code', editorOptions: { padding: { top: 20, bottom: 20 } } } },
   ],
 }
