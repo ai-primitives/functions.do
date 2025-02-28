@@ -14,7 +14,7 @@ import { Files } from './collections/Files'
 import { Functions } from './collections/Functions'
 import { Tenants } from './collections/Tenants'
 import { isSuperAdmin } from './hooks/isSuperAdmin'
-
+import { updateModels } from './tasks/updateModels'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -26,6 +26,9 @@ export default buildConfig({
     },
   },
   collections: [Functions, Files, Users, Tenants],
+  jobs: {
+    tasks: [updateModels],
+  },
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
