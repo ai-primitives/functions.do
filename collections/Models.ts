@@ -6,7 +6,7 @@ export const Models: CollectionConfig = {
     group: 'AI',
     useAsTitle: 'name',
   },
-  versions: true,
+  // versions: true,
   fields: [
     // {
     //   type: 'row',

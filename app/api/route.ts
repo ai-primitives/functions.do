@@ -20,7 +20,7 @@ export const GET = async () => {
   })
   const queueTime = Date.now() - start
 
-  // waitUntil(payload.jobs.runByID({ id: job.id }))
+  waitUntil(payload.jobs.runByID({ id: job.id }))
   // const results = await payload.jobs.runByID({ id: job.id })
   // const runTime = (Date.now() - start) - queueTime
 
