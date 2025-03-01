@@ -69,6 +69,7 @@ export interface Config {
     functions: Function;
     files: File;
     models: Model;
+    schemas: Schema;
     users: User;
     tenants: Tenant;
     'payload-jobs': PayloadJob;
@@ -81,6 +82,7 @@ export interface Config {
     functions: FunctionsSelect<false> | FunctionsSelect<true>;
     files: FilesSelect<false> | FilesSelect<true>;
     models: ModelsSelect<false> | ModelsSelect<true>;
+    schemas: SchemasSelect<false> | SchemasSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
@@ -209,6 +211,31 @@ export interface Model {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schemas".
+ */
+export interface Schema {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: string;
+  schema:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Edit schema in YAML format for better readability
+   */
+  schemaYaml?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -345,6 +372,10 @@ export interface PayloadLockedDocument {
         value: string | Model;
       } | null)
     | ({
+        relationTo: 'schemas';
+        value: string | Schema;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -466,6 +497,19 @@ export interface ModelsSelect<T extends boolean = true> {
   perRequestLimits?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schemas_select".
+ */
+export interface SchemasSelect<T extends boolean = true> {
+  tenant?: T;
+  name?: T;
+  schema?: T;
+  schemaYaml?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
