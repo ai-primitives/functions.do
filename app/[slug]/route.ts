@@ -12,12 +12,17 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     config: configPromise,
   })
 
+  const auth = await payload.auth(request)
+  console.log(auth)
+  const tenant = auth.user?.tenants?.[0]?.id
+
   const start = Date.now()
   const query = Object.fromEntries(new URL(request.url).searchParams) || {}
   console.log(query)
 
   const { slug } = await params
-  const { seed, model, input, system, prompt, ...args } = query
+  const { seed: seedString, model, input, system, prompt, ...args } = query
+  const seed = seedString ? parseInt(seedString) : undefined
 
   // get sha1 hash of input
   const inputString = typeof input === 'string' ? input : JSON.stringify(args)
@@ -30,7 +35,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       where: {
         function: { equals: slug },
         hash: { equals: inputHash },
-        ...(seed && typeof seed === 'string' ? { seed: { equals: parseInt(seed) } } : {}),
+        ...(seed ? { seed: { equals: seed } } : {}),
         ...(model && typeof model === 'string' ? { model: { equals: model } } : {}),
       },
     }),
@@ -53,17 +58,19 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   if (func.docs.length > 0) {
     const completionResult = await generateObject({
       // model: openrouter('openrouter/auto'),
-      model: openrouter('google/gemini-2.0-flash-001'),
+      model: openrouter(model || 'google/gemini-2.0-flash-001'),
       prompt: `${slug}(${inputString})`,
       output: 'no-schema'
     })
     waitUntil(payload.create({
       collection: 'completions',
       data: {
+        tenant,
         hash: inputHash,
         function: func.docs[0],
         input: input ? input : args,
         output: completionResult.object,
+        seed,
       },
     }))
     return Response.json({ cacheHit: false, cacheLatency, func: func.docs[0], completion: completionResult, input, inputHash, args, query })
@@ -74,14 +81,14 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const [completionResult, funcResult] = await Promise.all([
     generateObject({
       // model: openrouter('openrouter/auto'),
-      model: openrouter('google/gemini-2.0-flash-001'),
+      model: openrouter(model || 'google/gemini-2.0-flash-001'),
       prompt: `${slug}(${inputString})`,
       output: 'no-schema'
     }),
     payload.create({
       collection: 'functions',
       data: {
-        tenant: 'default',
+        tenant,
         name: slug,
         output: 'Object'
       },
@@ -95,10 +102,12 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   waitUntil(payload.create({
     collection: 'completions',
     data: {
+      tenant,
       hash: inputHash,
       function: func.docs[0],
-      input: inputString,
+      input: input ? input : args,
       output: completionResult.object,
+      seed,
     },
   }))
 
