@@ -62,7 +62,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       data: {
         hash: inputHash,
         function: func.docs[0],
-        input: inputString,
+        input: input ? input : args,
         output: completionResult.object,
       },
     }))
