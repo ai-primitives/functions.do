@@ -7,6 +7,8 @@ import crypto from 'crypto'
 import { generateObject, generateText } from 'ai'
 import { openrouter } from '@openrouter/ai-sdk-provider'
 
+export const maxDuration = 300
+
 export const GET = async (request: Request, { params }: { params: Promise<{ slug: string }>; searchParams: Promise<{ [key: string]: string | string[] }> }) => {
   const payload = await getPayload({
     config: configPromise,
