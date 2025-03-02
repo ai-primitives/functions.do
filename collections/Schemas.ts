@@ -18,7 +18,6 @@ export const Schemas: CollectionConfig = {
       type: 'code',
       admin: {
         language: 'yaml',
-        description: 'Edit schema in YAML format for better readability',
         editorOptions: { lineNumbers: 'off' },
       },
       hooks: {
