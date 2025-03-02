@@ -63,7 +63,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const languageModel = createOpenAI({
     apiKey: process.env.OPENROUTER_API_KEY,
     baseURL: 'https://openrouter.ai/api/v1',
-  })(model || 'google/gemini-2.0-flash-001')
+  })(model || 'openrouter/auto', { reasoningEffort: 'high' })
+  // })(model || 'google/gemini-2.0-flash-001')
 
   // const languageModel = openrouter(model || 'google/gemini-2.0-flash-001')
   // const languageModel = openrouter('openrouter/auto')
@@ -92,6 +93,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     const completionResult = await generateObject({
       // model: openrouter('openrouter/auto'),
       model: languageModel,
+      system,
       prompt: `${slug}(${inputString})`,
       output: 'no-schema'
     })
@@ -114,7 +116,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const [completionResult, funcResult] = await Promise.all([
     generateObject({
       // model: openrouter('openrouter/auto'),
+      system,
       model: languageModel,
+      // reasoning: { effort: 'high' },
       prompt: `${slug}(${inputString})`,
       output: 'no-schema'
     }),
