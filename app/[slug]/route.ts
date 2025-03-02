@@ -5,7 +5,11 @@ import { NextApiRequest } from 'next'
 import crypto from 'crypto'
 
 import { generateObject, generateText } from 'ai'
+import { wrapLanguageModel } from 'ai'
+import { createOpenAI} from '@ai-sdk/openai'
 import { openrouter } from '@openrouter/ai-sdk-provider'
+
+
 
 export const maxDuration = 300
 
@@ -56,11 +60,38 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     return Response.json({ cacheHit: true, cacheLatency, completion: completion.docs[0], function: func.docs[0], input, inputHash, args, query })
   }
 
+  const languageModel = createOpenAI({
+    apiKey: process.env.OPENROUTER_API_KEY,
+    baseURL: 'https://openrouter.ai/api/v1',
+  })(model || 'google/gemini-2.0-flash-001')
+
+  // const languageModel = openrouter(model || 'google/gemini-2.0-flash-001')
+  // const languageModel = openrouter('openrouter/auto')
+
+  // const languageModel = wrapLanguageModel({
+  //   model: openrouter(model || 'google/gemini-2.0-flash-001'),
+  //   middleware: [
+  //     { 
+  //       wrapGenerate: async ({ doGenerate, params }) => {
+  //         console.log('doGenerate called');
+  //         console.log(`params: ${JSON.stringify(params, null, 2)}`);
+      
+  //         const result = await doGenerate();
+
+  //         console.log(result)
+    
+      
+  //         return result
+  //       },
+  //     }
+  //   ]
+  // })
+
   // if function exists but no completion, generate completion
   if (func.docs.length > 0) {
     const completionResult = await generateObject({
       // model: openrouter('openrouter/auto'),
-      model: openrouter(model || 'google/gemini-2.0-flash-001'),
+      model: languageModel,
       prompt: `${slug}(${inputString})`,
       output: 'no-schema'
     })
@@ -83,7 +114,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const [completionResult, funcResult] = await Promise.all([
     generateObject({
       // model: openrouter('openrouter/auto'),
-      model: openrouter(model || 'google/gemini-2.0-flash-001'),
+      model: languageModel,
       prompt: `${slug}(${inputString})`,
       output: 'no-schema'
     }),

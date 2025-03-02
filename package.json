@@ -15,6 +15,7 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^1.1.15",
     "@openrouter/ai-sdk-provider": "^0.4.2",
     "@payloadcms/db-mongodb": "latest",
     "@payloadcms/next": "latest",
