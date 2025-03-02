@@ -223,6 +223,7 @@ export interface Schema {
  */
 export interface Completion {
   id: string;
+  tenant?: (string | null) | Tenant;
   function?: (string | null) | Function;
   hash?: string | null;
   seed?: number | null;
@@ -520,6 +521,7 @@ export interface ModelsSelect<T extends boolean = true> {
  * via the `definition` "completions_select".
  */
 export interface CompletionsSelect<T extends boolean = true> {
+  tenant?: T;
   function?: T;
   hash?: T;
   seed?: T;

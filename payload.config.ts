@@ -51,6 +51,7 @@ export default buildConfig({
         images: {},
         functions: {},
         schemas: {},
+        completions: {},
         // projects: {},
       },
       userHasAccessToAllTenants: isSuperAdmin,
