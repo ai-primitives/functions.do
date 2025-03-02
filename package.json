@@ -15,6 +15,7 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
+    "@openrouter/ai-sdk-provider": "^0.4.2",
     "@payloadcms/db-mongodb": "latest",
     "@payloadcms/next": "latest",
     "@payloadcms/payload-cloud": "latest",
@@ -22,6 +23,7 @@
     "@payloadcms/richtext-lexical": "latest",
     "@types/js-yaml": "^4.0.9",
     "@vercel/functions": "^2.0.0",
+    "ai": "^4.1.47",
     "camelcase-keys": "^9.1.3",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
