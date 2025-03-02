@@ -67,8 +67,9 @@ export interface Config {
   blocks: {};
   collections: {
     functions: Function;
-    files: File;
     models: Model;
+    completions: Completion;
+    images: Image;
     schemas: Schema;
     users: User;
     tenants: Tenant;
@@ -80,8 +81,9 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     functions: FunctionsSelect<false> | FunctionsSelect<true>;
-    files: FilesSelect<false> | FilesSelect<true>;
     models: ModelsSelect<false> | ModelsSelect<true>;
+    completions: CompletionsSelect<false> | CompletionsSelect<true>;
+    images: ImagesSelect<false> | ImagesSelect<true>;
     schemas: SchemasSelect<false> | SchemasSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
@@ -136,10 +138,11 @@ export interface Function {
   id: string;
   tenant?: (string | null) | Tenant;
   name: string;
-  type: 'AI' | 'Code';
+  model?: (string | null) | Model;
+  output: 'Object' | 'Text';
+  schema?: (string | null) | Schema;
   system?: string | null;
   user?: string | null;
-  code?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -153,26 +156,6 @@ export interface Tenant {
   domain?: string | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "files".
- */
-export interface File {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  alt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -229,13 +212,61 @@ export interface Schema {
     | number
     | boolean
     | null;
-  /**
-   * Edit schema in YAML format for better readability
-   */
   schemaYaml?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "completions".
+ */
+export interface Completion {
+  id: string;
+  function?: (string | null) | Function;
+  hash?: string | null;
+  seed?: number | null;
+  model?: (string | null) | Model;
+  output?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  input?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "images".
+ */
+export interface Image {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  alt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -364,12 +395,16 @@ export interface PayloadLockedDocument {
         value: string | Function;
       } | null)
     | ({
-        relationTo: 'files';
-        value: string | File;
-      } | null)
-    | ({
         relationTo: 'models';
         value: string | Model;
+      } | null)
+    | ({
+        relationTo: 'completions';
+        value: string | Completion;
+      } | null)
+    | ({
+        relationTo: 'images';
+        value: string | Image;
       } | null)
     | ({
         relationTo: 'schemas';
@@ -436,31 +471,13 @@ export interface PayloadMigration {
 export interface FunctionsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
-  type?: T;
+  model?: T;
+  output?: T;
+  schema?: T;
   system?: T;
   user?: T;
-  code?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "files_select".
- */
-export interface FilesSelect<T extends boolean = true> {
-  tenant?: T;
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -497,6 +514,39 @@ export interface ModelsSelect<T extends boolean = true> {
   perRequestLimits?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "completions_select".
+ */
+export interface CompletionsSelect<T extends boolean = true> {
+  function?: T;
+  hash?: T;
+  seed?: T;
+  model?: T;
+  output?: T;
+  input?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "images_select".
+ */
+export interface ImagesSelect<T extends boolean = true> {
+  tenant?: T;
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

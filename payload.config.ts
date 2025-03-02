@@ -10,13 +10,16 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
-import { Files } from './collections/Files'
+import { Images } from './collections/Images'
 import { Functions } from './collections/Functions'
 import { Tenants } from './collections/Tenants'
 import { Models } from './collections/Models'
 import { Schemas } from './collections/Schemas'
+import { Completions } from './collections/Completions'
+
 import { isSuperAdmin } from './hooks/isSuperAdmin'
 import { updateModels } from './tasks/updateModels'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -27,7 +30,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Functions, Files, Models, Schemas, Users, Tenants],
+  collections: [Functions, Models, Completions, Images, Schemas, Users, Tenants],
   jobs: {
     tasks: [updateModels],
   },
@@ -45,7 +48,7 @@ export default buildConfig({
     // storage-adapter-placeholder
     multiTenantPlugin<Config>({
       collections: {
-        files: {},
+        images: {},
         functions: {},
         schemas: {},
         // projects: {},
