@@ -12,8 +12,8 @@ importers:
         specifier: ^1.1.15
         version: 1.1.15(zod@3.24.2)
       '@openrouter/ai-sdk-provider':
-        specifier: ^0.4.2
-        version: 0.4.2(zod@3.24.2)
+        specifier: ^0.4.3
+        version: 0.4.3(zod@3.24.2)
       '@payloadcms/db-mongodb':
         specifier: latest
         version: 3.24.0(@aws-sdk/credential-providers@3.750.0)(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))
@@ -954,8 +954,8 @@ packages:
     resolution: {integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==}
     engines: {node: '>=12.4.0'}
 
-  '@openrouter/ai-sdk-provider@0.4.2':
-    resolution: {integrity: sha512-BSGkZlvyirMCOH6Eso3M6GZ/lwVcx3lCUV6fTjq+vBOOeqgkNbmK6Z/tJjiq+xnC+C9o7PgW0yoVCjygEwYWKw==}
+  '@openrouter/ai-sdk-provider@0.4.3':
+    resolution: {integrity: sha512-/MAUj5XFKs6IRZ3WwD8qFyUC6I+yhQ4TsemxvwDk+mbXNiVuJvP5Qc+yJ4fKTfIP4vRiV1sApA/t/La5MgA2FQ==}
     engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.0.0
@@ -4755,7 +4755,7 @@ snapshots:
 
   '@nolyfill/is-core-module@1.0.39': {}
 
-  '@openrouter/ai-sdk-provider@0.4.2(zod@3.24.2)':
+  '@openrouter/ai-sdk-provider@0.4.3(zod@3.24.2)':
     dependencies:
       '@ai-sdk/provider': 1.0.9
       '@ai-sdk/provider-utils': 2.1.10(zod@3.24.2)
