@@ -9,6 +9,7 @@ export const Completions: CollectionConfig = {
   fields: [
     { type: 'row', fields: [
       { name: 'function', type: 'relationship', relationTo: 'functions' },
+      { name: 'functionName', type: 'text', admin: { hidden: true } },
       { name: 'model', type: 'relationship', relationTo: 'models' },
       { name: 'hash', type: 'text' },
       { name: 'requestId', type: 'text' },
