@@ -17,6 +17,7 @@ export const Completions: CollectionConfig = {
     ]},
     { name: 'output', type: 'json' },
     { name: 'input', type: 'json' },
+    { name: 'reasoning', type: 'code', admin: { language: 'markdown' } },
     { name: 'debug', type: 'json' },
   ],
 }
