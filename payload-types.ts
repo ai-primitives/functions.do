@@ -225,9 +225,10 @@ export interface Completion {
   id: string;
   tenant?: (string | null) | Tenant;
   function?: (string | null) | Function;
-  hash?: string | null;
-  seed?: number | null;
   model?: (string | null) | Model;
+  hash?: string | null;
+  requestId?: string | null;
+  seed?: number | null;
   output?:
     | {
         [k: string]: unknown;
@@ -238,6 +239,15 @@ export interface Completion {
     | boolean
     | null;
   input?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  debug?:
     | {
         [k: string]: unknown;
       }
@@ -523,11 +533,13 @@ export interface ModelsSelect<T extends boolean = true> {
 export interface CompletionsSelect<T extends boolean = true> {
   tenant?: T;
   function?: T;
-  hash?: T;
-  seed?: T;
   model?: T;
+  hash?: T;
+  requestId?: T;
+  seed?: T;
   output?: T;
   input?: T;
+  debug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

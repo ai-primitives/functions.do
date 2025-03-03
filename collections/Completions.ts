@@ -9,11 +9,13 @@ export const Completions: CollectionConfig = {
   fields: [
     { type: 'row', fields: [
       { name: 'function', type: 'relationship', relationTo: 'functions' },
-      { name: 'hash', type: 'text' },
-      { name: 'seed', type: 'number' },
       { name: 'model', type: 'relationship', relationTo: 'models' },
+      { name: 'hash', type: 'text' },
+      { name: 'requestId', type: 'text' },
+      { name: 'seed', type: 'number' },
     ]},
     { name: 'output', type: 'json' },
     { name: 'input', type: 'json' },
+    { name: 'debug', type: 'json' },
   ],
 }
