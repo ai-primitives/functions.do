@@ -67,8 +67,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   // })(model || 'openrouter/auto', { reasoningEffort: 'high' })
   // })(model || 'google/gemini-2.0-flash-001')
 
-  // const languageModel = openrouter(model || 'google/gemini-2.0-flash-001')
-  const languageModel = openrouter('openrouter/auto')
+  const languageModel = openrouter(model || 'google/gemini-2.0-flash-001')
+  // const languageModel = openrouter('openrouter/auto')
 
   // const languageModel = wrapLanguageModel({
   //   model: openrouter(model || 'google/gemini-2.0-flash-001'),
