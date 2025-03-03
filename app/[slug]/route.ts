@@ -152,6 +152,11 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       // model: openrouter('openrouter/auto'),
       system,
       model: languageModel,
+      providerOptions: {
+        reasoning: {
+          effort: 'high'
+        }
+      },
       // reasoning: { effort: 'high' },
       prompt: `${slug}(${inputString})`,
       output: 'no-schema',
@@ -184,6 +189,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       model: completionResult.response.modelId,
       requestId: completionResult.response.id,
       debug: completionResult as any,
+      // reasoning: completionResult.,
       seed,
     },
   }))

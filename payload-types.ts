@@ -248,6 +248,7 @@ export interface Completion {
     | number
     | boolean
     | null;
+  reasoning?: string | null;
   debug?:
     | {
         [k: string]: unknown;
@@ -541,6 +542,7 @@ export interface CompletionsSelect<T extends boolean = true> {
   seed?: T;
   output?: T;
   input?: T;
+  reasoning?: T;
   debug?: T;
   updatedAt?: T;
   createdAt?: T;
