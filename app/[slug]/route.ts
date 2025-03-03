@@ -45,8 +45,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
         tenant: { equals: tenant },
         'function.name': { equals: slug },
         hash: { equals: inputHash },
-        // ...(seed ? { seed: { equals: seed } } : {}),
-        // ...(model && typeof model === 'string' ? { model: { equals: model } } : {}),
+        ...(seed ? { seed: { equals: seed } } : {}),
+        ...(model && typeof model === 'string' ? { model: { equals: model } } : {}),
       },
     }),
     payload.find({
