@@ -28,8 +28,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   console.log(query)
 
   const { slug } = await params
-  const { seed: seedString, model, input, system, prompt, ...args } = query
+  const { seed: seedString, temperature: temperatureString, model, input, system, prompt, ...args } = query
   const seed = seedString ? parseInt(seedString) : undefined
+  const temperature = temperatureString ? parseFloat(temperatureString) : 1.0
 
   // get sha1 hash of input
   const inputString = typeof input === 'string' ? input : JSON.stringify(args)
@@ -67,36 +68,60 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   // })(model || 'openrouter/auto', { reasoningEffort: 'high' })
   // })(model || 'google/gemini-2.0-flash-001')
 
-  const languageModel = openrouter(model || 'google/gemini-2.0-flash-001')
+  // const languageModel = openrouter(model || 'google/gemini-2.0-flash-001')
+  // const languageModel = openrouter(model || 'anthropic/claude-3.7-sonnet')
   // const languageModel = openrouter('openrouter/auto')
 
-  // const languageModel = wrapLanguageModel({
-  //   model: openrouter(model || 'google/gemini-2.0-flash-001'),
-  //   middleware: [
-  //     { 
-  //       wrapGenerate: async ({ doGenerate, params }) => {
-  //         console.log('doGenerate called');
-  //         console.log(`params: ${JSON.stringify(params, null, 2)}`);
+  const languageModel = wrapLanguageModel({
+    model: openrouter(model || 'anthropic/claude-3.7-sonnet'),
+    middleware: [
+      { 
+        wrapGenerate: async ({ doGenerate, params }) => {
+          console.log('doGenerate called');
+          console.log(`params: ${JSON.stringify(params, null, 2)}`);
       
-  //         const result = await doGenerate();
+          const result = await doGenerate()
 
-  //         console.log(result)
+          console.log(result)
+
+
+          // waitUntil(payload.create({
+          //   collection: 'completions',
+          //   data: {
+          //     tenant,
+          //     hash: inputHash,
+          //     function: func.docs[0],
+          //     input: input ? input : args,
+          //     output: result.object,
+          //     model: completionResult.response.modelId,
+          //     requestId: completionResult.response.id,
+          //     debug: completionResult as any,
+          //     seed,
+          //   },
+          // }))
     
       
-  //         return result
-  //       },
-  //     }
-  //   ]
-  // })
+          return result
+        },
+      }
+    ]
+  })
 
   // if function exists but no completion, generate completion
   if (func.docs.length > 0) {
     const completionResult = await generateObject({
       // model: openrouter('openrouter/auto'),
       model: languageModel,
+      providerOptions: {
+        reasoning: {
+          effort: 'high'
+        }
+      },
       system,
       prompt: `${slug}(${inputString})`,
-      output: 'no-schema'
+      output: 'no-schema',
+      seed,
+      temperature,
     })
     waitUntil(payload.create({
       collection: 'completions',
@@ -106,6 +131,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
         function: func.docs[0],
         input: input ? input : args,
         output: completionResult.object,
+        model: completionResult.response.modelId,
+        requestId: completionResult.response.id,
+        debug: completionResult as any,
         seed,
       },
     }))
@@ -121,14 +149,17 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       model: languageModel,
       // reasoning: { effort: 'high' },
       prompt: `${slug}(${inputString})`,
-      output: 'no-schema'
+      output: 'no-schema',
+      seed,
+      temperature,
     }),
     payload.create({
       collection: 'functions',
       data: {
         tenant,
         name: slug,
-        output: 'Object'
+        output: 'Object',
+        model: model || 'anthropic/claude-3.7-sonnet',
       },
     }),
   ])
@@ -145,6 +176,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       function: func.docs[0],
       input: input ? input : args,
       output: completionResult.object,
+      model: completionResult.response.modelId,
+      requestId: completionResult.response.id,
+      debug: completionResult as any,
       seed,
     },
   }))
