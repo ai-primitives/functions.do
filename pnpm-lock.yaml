@@ -24,8 +24,8 @@ importers:
         specifier: latest
         version: 3.24.0(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))
       '@payloadcms/plugin-multi-tenant':
-        specifier: ^3.24.0
-        version: 3.24.0(@payloadcms/ui@3.24.0(@types/react@19.0.7)(monaco-editor@0.52.2)(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3))(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))
+        specifier: ^3.25.0
+        version: 3.25.0(@payloadcms/ui@3.24.0(@types/react@19.0.7)(monaco-editor@0.52.2)(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3))(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))
       '@payloadcms/richtext-lexical':
         specifier: latest
         version: 3.24.0(@faceless-ui/modal@3.0.0-beta.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@faceless-ui/scroll-info@2.0.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@payloadcms/next@3.24.0(@types/react@19.0.7)(graphql@16.10.0)(monaco-editor@0.52.2)(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3))(@types/react@19.0.7)(monaco-editor@0.52.2)(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)(yjs@13.6.23)
@@ -54,7 +54,7 @@ importers:
         specifier: 15.1.5
         version: 15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4)
       payload:
-        specifier: latest
+        specifier: ^3.24.0
         version: 3.24.0(graphql@16.10.0)(typescript@5.7.3)
       react:
         specifier: 19.0.0
@@ -995,12 +995,12 @@ packages:
     peerDependencies:
       payload: 3.24.0
 
-  '@payloadcms/plugin-multi-tenant@3.24.0':
-    resolution: {integrity: sha512-dRcpSLwE1FqssbOL90VjDMY6G/kL0h4mIVc+tWGShH4Tkc5U95dpeAMPeV5/iXFPxDyGJMdQ2UiRcvMCBk8lJA==}
+  '@payloadcms/plugin-multi-tenant@3.25.0':
+    resolution: {integrity: sha512-Xh/twsM09a+VceoezgM0sQnXBmeUGaTN3MukkYFLrXPZ15WSDyjaS+smFD9GfuZikOALbh8ffgoNqkjUa+QEcA==}
     peerDependencies:
-      '@payloadcms/ui': 3.24.0
+      '@payloadcms/ui': 3.25.0
       next: ^15.0.3
-      payload: 3.24.0
+      payload: 3.25.0
 
   '@payloadcms/richtext-lexical@3.24.0':
     resolution: {integrity: sha512-JT2RZvgXnH+gvYFIll/WFkZ+iM4Ppmi5PKlJWTePnJePas1uPJYFw3GzE1nuJrcB7VEAEVNV8B45qb6gl9mP2g==}
@@ -4839,7 +4839,7 @@ snapshots:
       - aws-crt
       - encoding
 
-  '@payloadcms/plugin-multi-tenant@3.24.0(@payloadcms/ui@3.24.0(@types/react@19.0.7)(monaco-editor@0.52.2)(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3))(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))':
+  '@payloadcms/plugin-multi-tenant@3.25.0(@payloadcms/ui@3.24.0(@types/react@19.0.7)(monaco-editor@0.52.2)(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3))(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))':
     dependencies:
       '@payloadcms/ui': 3.24.0(@types/react@19.0.7)(monaco-editor@0.52.2)(next@15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4))(payload@3.24.0(graphql@16.10.0)(typescript@5.7.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3)
       next: 15.1.5(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.77.4)
