@@ -19,8 +19,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   })
 
   const auth = await payload.auth(request)
-  console.log(auth)
-  const tenant = auth.user?.tenants?.[0]?.id
+  console.log(auth.user)
+  // const tenant = auth.user?.tenants?.[0]?.id
+  const tenant = 'default'
 
   const start = Date.now()
   const query = Object.fromEntries(new URL(request.url).searchParams) || {}
@@ -60,14 +61,14 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     return Response.json({ cacheHit: true, cacheLatency, completion: completion.docs[0], function: func.docs[0], input, inputHash, args, query })
   }
 
-  const languageModel = createOpenAI({
-    apiKey: process.env.OPENROUTER_API_KEY,
-    baseURL: 'https://openrouter.ai/api/v1',
-  })(model || 'openrouter/auto', { reasoningEffort: 'high' })
+  // const languageModel = createOpenAI({
+  //   apiKey: process.env.OPENROUTER_API_KEY,
+  //   baseURL: 'https://openrouter.ai/api/v1',
+  // })(model || 'openrouter/auto', { reasoningEffort: 'high' })
   // })(model || 'google/gemini-2.0-flash-001')
 
   // const languageModel = openrouter(model || 'google/gemini-2.0-flash-001')
-  // const languageModel = openrouter('openrouter/auto')
+  const languageModel = openrouter('openrouter/auto')
 
   // const languageModel = wrapLanguageModel({
   //   model: openrouter(model || 'google/gemini-2.0-flash-001'),

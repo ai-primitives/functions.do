@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.1.15",
-    "@openrouter/ai-sdk-provider": "^0.4.2",
+    "@openrouter/ai-sdk-provider": "^0.4.3",
     "@payloadcms/db-mongodb": "latest",
     "@payloadcms/next": "latest",
     "@payloadcms/payload-cloud": "latest",
