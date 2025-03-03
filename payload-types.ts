@@ -225,6 +225,7 @@ export interface Completion {
   id: string;
   tenant?: (string | null) | Tenant;
   function?: (string | null) | Function;
+  functionName?: string | null;
   model?: (string | null) | Model;
   hash?: string | null;
   requestId?: string | null;
@@ -533,6 +534,7 @@ export interface ModelsSelect<T extends boolean = true> {
 export interface CompletionsSelect<T extends boolean = true> {
   tenant?: T;
   function?: T;
+  functionName?: T;
   model?: T;
   hash?: T;
   requestId?: T;

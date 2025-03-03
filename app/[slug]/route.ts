@@ -40,11 +40,13 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const [completion, func] = await Promise.all([
     payload.find({
       collection: 'completions',
+      depth: 0,
       where: {
-        function: { equals: slug },
+        tenant: { equals: tenant },
+        'function.name': { equals: slug },
         hash: { equals: inputHash },
-        ...(seed ? { seed: { equals: seed } } : {}),
-        ...(model && typeof model === 'string' ? { model: { equals: model } } : {}),
+        // ...(seed ? { seed: { equals: seed } } : {}),
+        // ...(model && typeof model === 'string' ? { model: { equals: model } } : {}),
       },
     }),
     payload.find({
@@ -54,6 +56,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       },
     }),
   ])
+
+  console.log({ completion, func })
+  console.log(func)
 
   const cacheLatency = Date.now() - start
 
