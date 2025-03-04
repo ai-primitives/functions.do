@@ -10,6 +10,9 @@ Objectives:
 - Run Objective & Subjective evals with support for deterministic tests, LLM-as-Judge, and Human Feedback
 - Optimize each function by cost, latency, and/or eval performance
 
+Assumptions:
+- 
+
 Initial version:
 
 - [ ] generateObject - JSON Object
