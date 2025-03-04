@@ -47,6 +47,7 @@ export default buildConfig({
     payloadCloudPlugin(),
     // storage-adapter-placeholder
     multiTenantPlugin<Config>({
+      tenantSelectorLabel: 'Project',
       tenantsArrayField: {
         
       },
