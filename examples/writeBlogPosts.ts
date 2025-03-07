@@ -32,6 +32,20 @@ const ai = AI({
   }
 })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Example blog to work with
 const blogExample = {
   niche: 'Artificial Intelligence',
