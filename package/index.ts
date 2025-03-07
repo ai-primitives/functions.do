@@ -6,9 +6,12 @@ export interface AISchemaObject {
 export type AISchemaField = AISchemaFieldPrimitive | AISchemaObject
 export type AISchema = Record<string, AISchemaField>
 
-export type AIConfig = Record<string, AISchema>
+export type AIConfig = {
+  functions: Record<string, AISchema>
+  workflows?: Record<string, (ai: any, ...args: any[]) => Promise<any>>
+}
 export type AIFunctions<T extends AIConfig> = {
-  [key in keyof T]: (args: any) => Promise<T[key]>
+  [key in keyof T['functions']]: (args: any) => Promise<T['functions'][key]>
 }
 
 // Create a global schema store to hold schemas defined with the define pattern
@@ -103,13 +106,19 @@ export const ai: AIObject = new Proxy({} as any, {
  * sends them to an API endpoint defined in environment variables,
  * and returns the typed response.
  */
-export const AI = <T extends AIConfig>(config: T): AIFunctions<T> => {
+export const AI = <T extends AIConfig>(config: T): AIFunctions<T> & Record<string, any> => {
   // Get the API endpoint from environment variables
   const API_ENDPOINT = process?.env?.AI_API_ENDPOINT || 'https://functions.do/api';
   
   // Create a proxy handler to intercept function calls
   const handler: ProxyHandler<any> = {
     get: (target, prop: string) => {
+      // Check if this is a workflow function
+      if (config.workflows && prop in config.workflows) {
+        // Return the workflow function with the AI instance as the argument
+        return (...args: any[]) => config.workflows![prop](target, ...args);
+      }
+      
       // Return a function that will be called when the property is accessed
       return async (args: any) => {
         try {
@@ -117,7 +126,7 @@ export const AI = <T extends AIConfig>(config: T): AIFunctions<T> => {
           const payload = {
             function: prop,
             args,
-            schema: config[prop]
+            schema: config.functions[prop]
           };
           
           // Make the API request
@@ -137,7 +146,7 @@ export const AI = <T extends AIConfig>(config: T): AIFunctions<T> => {
           
           // Parse and return the response
           const result = await response.json();
-          return result as T[typeof prop];
+          return result as T['functions'][typeof prop];
         } catch (error) {
           console.error(`Error in AI function '${String(prop)}':`, error);
           throw error;
@@ -147,5 +156,5 @@ export const AI = <T extends AIConfig>(config: T): AIFunctions<T> => {
   };
   
   // Create and return the proxy
-  return new Proxy({}, handler) as AIFunctions<T>;
+  return new Proxy({}, handler) as AIFunctions<T> & Record<string, any>;
 }
