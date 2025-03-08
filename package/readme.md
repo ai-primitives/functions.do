@@ -27,3 +27,28 @@ This approach enables:
 - Continuous improvement of prompts, models, and settings without disrupting application code
 - Objective and subjective evaluations with support for deterministic tests, LLM-as-Judge, and human feedback
 - Optimization of each function by cost, latency, and/or evaluation performance
+
+
+## Usage
+
+You can use it by simply calling any function name with any arguments on the `ai object like:
+
+```typescript
+const results = await ai.writeBlogPostTitles({ topic: 'automating business workflows with LLMs', audience: 'executives', count: 10 })
+
+console.log(results)
+// {
+//   titles: [
+//     '10 Steps to Automate Your Business Processes with LLMs',
+//     '5 Ways to Use LLMs to Improve Your Business',
+//     'The Future of Business: How LLMs Will Transform Your Organization',
+//     '10 Steps to Automate Your Business Processes with LLMs',
+//     '5 Ways to Use LLMs to Improve Your Business',
+//     'The Future of Business: How LLMs Will Transform Your Organization',
+//     '10 Steps to Automate Your Business Processes with LLMs',
+//     '5 Ways to Use LLMs to Improve Your Business',
+//     'The Future of Business: How LLMs Will Transform Your Organization',
+//   ]
+// }
+```
+
