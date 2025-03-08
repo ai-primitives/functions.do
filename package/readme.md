@@ -34,21 +34,79 @@ This approach enables:
 You can use it by simply calling any function name with any arguments on the `ai object like:
 
 ```typescript
+import { ai } from 'functions.do'
+
 const results = await ai.writeBlogPostTitles({ topic: 'automating business workflows with LLMs', audience: 'executives', count: 10 })
 
 console.log(results)
 // {
-//   titles: [
-//     '10 Steps to Automate Your Business Processes with LLMs',
-//     '5 Ways to Use LLMs to Improve Your Business',
-//     'The Future of Business: How LLMs Will Transform Your Organization',
-//     '10 Steps to Automate Your Business Processes with LLMs',
-//     '5 Ways to Use LLMs to Improve Your Business',
-//     'The Future of Business: How LLMs Will Transform Your Organization',
-//     '10 Steps to Automate Your Business Processes with LLMs',
-//     '5 Ways to Use LLMs to Improve Your Business',
-//     'The Future of Business: How LLMs Will Transform Your Organization',
+//   blogPostTitles: [
+//     '10 Steps to Automate Your Business Workflows with LLMs',
+//     'The Executive's Guide to LLM-Powered Process Automation',
+//     'Transforming Executive Decision-Making with AI Workflows',
+//     'How LLMs Are Revolutionizing C-Suite Productivity',
+//     'Strategic Implementation of LLMs: An Executive Roadmap',
+//     'Competitive Advantage Through Intelligent Automation',
+//     'Measuring ROI on LLM Integration in Enterprise Workflows',
+//     'From Boardroom to Automation: The Executive's LLM Playbook',
+//     'Scaling Business Operations with AI-Driven Workflow Solutions',
+//     'Future-Proofing Your Business with Intelligent LLM Systems'
 //   ]
 // }
 ```
 
+Alternatively, you can define the return type of the function during initialization to get strongly-typed responses:
+
+```typescript
+import { AI } from 'functions.do'
+
+const ai = AI({
+
+  createLeanCanvas: {
+      problems: ['top 3 problems the business solves'],
+      customerSegments: ['target customers and users for the product'],
+      uniqueValueProposition: 'clear and compelling message that states why you are different and worth buying',
+      solutions: ['outline of the solutions to the identified problems'],
+      unfairAdvantage: 'something that cannot be easily copied or bought',
+      revenueStreams: ['revenue model, lifetime value, revenue, gross margin'],
+      costStructure: ['customer acquisition costs', 'distribution costs', 'hosting', 'people', 'etc.'],
+      keyMetrics: ['key activities you measure (acquisition, retention, referrals, etc.)'],
+      channels: ['path to customers (inbound, outbound, viral, etc.)'],
+      earlyAdopters: 'characteristics of the ideal early adopter'
+    }
+
+})
+
+
+const results = await ai.createLeanCanvas({ domain: 'aws.amazon.com' })
+```
+
+
+Finally, you can also define the return type and override system settings for a specific function like:
+
+```typescript
+import { ai } from 'functions.do'
+
+const results = await ai.generateLandingPage({ brand: 'Functions.do', idea: 'AI-powered Functions-as-a-Service' }, {
+  model: 'anthropic/claude-3.7-sonnet:thinking',
+  system: 'You an expert at generating highly-converting marketing copy for startup landing pages',
+  temperature: 1.0,
+  seed: 1741452228,
+  schema: {
+    headline: 'attention-grabbing headline that clearly states value proposition',
+    subheadline: 'supporting statement that adds clarity to the headline',
+    productDescription: 'concise explanation of what the product does and its benefits',
+    keyFeatures: ['list of main features or benefits'],
+    socialProof: ['testimonials, user counts, or other trust indicators'],
+    captureForm: 'description of email capture form and call to action',
+    incentive: 'what users get for joining the waitlist (early access, discount, etc.)',
+    visualElements: 'description of images, videos, or other visual elements',
+    faq: [{
+      question: 'frequently asked question related to an objection',
+      answer: 'clear answer to the question that overcomes the objection'
+    }],
+    launchDate: 'expected product launch date or timeline',
+    callToAction: 'primary button text and action',
+    secondaryAction: 'secondary button text and action'
+  }
+})
