@@ -1,0 +1,52 @@
+# https://payloadcms.com/docs llms.txt
+
+- [Open-source Next.js Backend](https://payloadcms.com/docs/getting-started/what-is-payload): Payload is an open-source Next.js backend framework for developers.
+- [Payload CMS I18n](https://payloadcms.com/docs/configuration/i18n): Manage internationalization for Payload CMS applications easily.
+- [Email Field Documentation](https://payloadcms.com/docs/fields/email): Learn how to create and configure an Email Field.
+- [Blocks Field Documentation](https://payloadcms.com/docs/fields/blocks): Powerful Blocks Field for flexible content modeling and layouts.
+- [Payload CMS Pagination](https://payloadcms.com/docs/queries/pagination): Learn about automatic pagination in Payload CMS queries.
+- [Collapsible Field Guide](https://payloadcms.com/docs/fields/collapsible): Learn to use the Collapsible Field in Payload CMS.
+- [Radio Group Field](https://payloadcms.com/docs/fields/radio): Select one value from predefined options in Payload CMS.
+- [Admin Panel Overview](https://payloadcms.com/docs/admin/overview): Manage users and data with a customizable Admin Panel.
+- [Payload API Select](https://payloadcms.com/docs/queries/select): Learn how to efficiently select specific fields from Payload API.
+- [TypeScript Overview](https://payloadcms.com/docs/typescript/overview): Comprehensive guide to using TypeScript with Payload CMS.
+- [Database Overview](https://payloadcms.com/docs/database/overview): Payload supports various databases through adaptable APIs.
+- [Collection Hooks Overview](https://payloadcms.com/docs/hooks/collections): Learn about Collection Hooks for document lifecycle events.
+- [Payload Authentication Overview](https://payloadcms.com/docs/authentication/overview): Comprehensive guide to Payload's authentication features and setup.
+- [Payload SQLite Configuration](https://payloadcms.com/docs/database/sqlite): Learn how to configure Payload with SQLite database.
+- [Draft Management](https://payloadcms.com/docs/versions/drafts): Manage document drafts and versions before publishing changes.
+- [Document Versioning System](https://payloadcms.com/docs/versions/overview): Manage document versions, restore changes, and track history.
+- [User Preferences Management](https://payloadcms.com/docs/admin/preferences): Manage user preferences for a personalized admin experience.
+- [Row Field Documentation](https://payloadcms.com/docs/fields/row): Learn how to use the Row Field in Payload CMS.
+- [Payload Plugins Overview](https://payloadcms.com/docs/plugins/overview): Explore Payload Plugins for enhanced app functionality.
+- [Select Field Documentation](https://payloadcms.com/docs/fields/select): Dropdown interface for selecting options in Payload CMS.
+- [Payload CMS Globals](https://payloadcms.com/docs/configuration/globals): Learn how to configure Globals in Payload CMS effectively.
+- [Payload CMS Field Hooks](https://payloadcms.com/docs/hooks/fields): Explore Payload CMS Field Hooks for document lifecycle events.
+- [Payload CMS Search Plugin](https://payloadcms.com/docs/plugins/search): Fast search plugin for Payload CMS with customizable indexing.
+- [Point Field Documentation](https://payloadcms.com/docs/fields/point): Point Field saves coordinates for location queries in Payload.
+- [Payload JSON Field](https://payloadcms.com/docs/fields/json): Manage JSON data with Payload's customizable JSON Field.
+- [Payload Deployment Guide](https://payloadcms.com/docs/production/deployment): Learn how to deploy Payload apps securely and efficiently.
+- [Payload Fields Overview](https://payloadcms.com/docs/fields/overview): Explore Payload's field types and configuration options.
+- [Redirects Plugin](https://payloadcms.com/docs/plugins/redirects): Manage URL redirects easily within your application.
+- [Payload MongoDB Integration](https://payloadcms.com/docs/database/mongodb): Integrate Payload CMS with MongoDB for data storage.
+- [Document Depth Management](https://payloadcms.com/docs/queries/depth): Learn how to manage document relationships and depth in Payload.
+- [SEO Plugin Overview](https://payloadcms.com/docs/plugins/seo): Manage SEO metadata easily within your application admin panel.
+- [Payload CMS Autosave](https://payloadcms.com/docs/versions/autosave): Automatically save drafts in Payload CMS with autosave feature.
+- [UI Field Overview](https://payloadcms.com/docs/fields/ui): Integrate custom React components into Payload CMS Admin Panel.
+- [Collection Configuration Guide](https://payloadcms.com/docs/configuration/collections): Learn to configure collections for managing documents effectively.
+- [Payload CMS Configuration](https://payloadcms.com/docs/configuration/overview): Comprehensive guide to configuring Payload CMS effectively.
+- [Sentry Plugin](https://payloadcms.com/docs/plugins/sentry): Integrate Sentry for error tracking and performance monitoring.
+- [Payload Cookie Authentication](https://payloadcms.com/docs/authentication/cookies): Learn about Payload's HTTP-only cookie authentication strategy.
+- [Email Functionality Overview](https://payloadcms.com/docs/email/overview): Explore Payload's email functionality and configuration options.
+- [Tabs Field Overview](https://payloadcms.com/docs/fields/tabs): Learn how to use the Tabs Field in Payload CMS.
+- [Payload Cloud Teams](https://payloadcms.com/docs/cloud/teams): Manage teams, members, billing, and subscriptions in Payload Cloud.
+- [Payload Cloud Configuration](https://payloadcms.com/docs/cloud/configuration): Configure your Payload Cloud project settings and payment options.
+- [Payload CMS Context](https://payloadcms.com/docs/hooks/context): Learn how to use context in Payload CMS hooks.
+- [File Upload Overview](https://payloadcms.com/docs/upload/overview): Comprehensive guide for file uploads and management.
+- [Document Sorting in Payload](https://payloadcms.com/docs/queries/sort): Easily sort documents in Payload by specific fields.
+- [Payload Migrations Guide](https://payloadcms.com/docs/database/migrations): Comprehensive guide on managing database migrations in Payload.
+- [Content Localization](https://payloadcms.com/docs/configuration/localization): Manage content in multiple languages for personalized user experience.
+- [Payload Relationship Field](https://payloadcms.com/docs/fields/relationship): Explore Payload's Relationship Field for document linking.
+- [Database Transactions Guide](https://payloadcms.com/docs/database/transactions): Learn how to manage database transactions effectively.
+- [Preview Feature](https://payloadcms.com/docs/admin/preview): Generate direct links for front-end application previews.
+- [Authentication Email Customization](https://payloadcms.com/docs/authentication/email): Learn to customize authentication emails for users effectively.
