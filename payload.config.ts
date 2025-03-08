@@ -17,7 +17,7 @@ import { Models } from './collections/Models'
 import { Schemas } from './collections/Schemas'
 import { Completions } from './collections/Completions'
 
-import { isSuperAdmin } from './hooks/isSuperAdmin'
+import { isSuperAdmin } from './collections/hooks/isSuperAdmin'
 import { updateModels } from './tasks/updateModels'
 
 const filename = fileURLToPath(import.meta.url)

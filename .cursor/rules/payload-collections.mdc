@@ -1,5 +1,0 @@
----
-description: Fields in a collection should be written on a single line unless it has subfields (like row or group) or is extremely long
-globs: collections/*.ts
-alwaysApply: false
----
