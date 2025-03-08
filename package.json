@@ -54,5 +54,13 @@
     "onlyBuiltDependencies": [
       "sharp"
     ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 180,
+    "semi": false,
+    "jsxSingleQuote": true,
+    "jsxBracketSameLine": true
   }
 }
