@@ -9,26 +9,26 @@ export async function POST(request: Request) {
   const payload = await getPayload({ config })
   const auth = await payload.auth(request)
   console.log(auth.user)
-  if (!auth.user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  // if (!auth.user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { functionName, args, schema, settings } = body
+  const { functionName, input, schema, settings } = body
   console.log({ body })
-  const data = await generateObject(body).catch(e => ({ error: e.message }))
-  const { object, reasoning } = data
-  const model = data.response?.modelId
-  const requestId = data.response?.id
+  const data = await generateObject({ functionName, input, schema, settings })
+  const { object, reasoning, model, id, provider } = data
   waitUntil(payload.create({
     collection: 'completions',
     data: {
       tenant: auth.user?.tenants?.[0]?.id || 'default',
       function: functionName,
       output: object,
-      input: body,
-      debug: data,
+      input: input,
+      debug: { body, data },
       seed: settings?.seed,
       model: model,
-      requestId: requestId,
+      reasoning,
+      // provider: data.provider,
+      requestId: id,
     } 
   }).then(console.log))
   return Response.json({ model, data: object, reasoning })

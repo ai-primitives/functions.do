@@ -1,9 +1,9 @@
 import { AIConfig, AIFunction, FunctionDefinition, SchemaValue } from './types'
 
 // Helper to generate the API request payload
-const generateRequest = (name: string, schema: FunctionDefinition, input: any, config: AIConfig) => {
+const generateRequest = (functionName: string, schema: FunctionDefinition, input: any, config: AIConfig) => {
   return {
-    name,
+    functionName,
     schema,
     input,
     config
@@ -24,11 +24,12 @@ const callAPI = async (request: any) => {
   })
 
   if (!response.ok) {
+    console.log(response.status, response.statusText)
     throw new Error(`API call failed: ${response.statusText}`)
   }
 
-  const data = await response.json()
-  console.log({ data })
+  const data = await response.json() as any
+  console.log(data)
   return data
 }
 
@@ -44,7 +45,7 @@ const createFunction = (
     
     try {
       const response = await callAPI(request) as any
-      return response.object
+      return response.data ?? response
     } catch (error) {
       console.error('Error calling AI function:', error)
       throw error
