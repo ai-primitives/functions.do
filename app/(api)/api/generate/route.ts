@@ -14,22 +14,40 @@ export async function POST(request: Request) {
   const body = await request.json()
   const { functionName, input, schema, settings } = body
   console.log({ body })
+
+  const start = Date.now()
+  const functionPromise = payload.find({
+    collection: 'functions',
+    where: {
+      name: {
+        equals: functionName
+      }
+    }
+  })
   const data = await generateObject({ functionName, input, schema, settings })
   const { object, reasoning, model, id, provider } = data
+  const duration = Date.now() - start
+
+  const functionDocs = await functionPromise
+
   waitUntil(payload.create({
     collection: 'completions',
     data: {
       tenant: auth.user?.tenants?.[0]?.id || 'default',
-      function: functionName,
+      function: functionDocs.docs[0].id,
       output: object,
       input: input,
+      functionName,
+      schema,
       debug: { body, data },
       seed: settings?.seed,
       model: model,
       reasoning,
-      // provider: data.provider,
+      provider,
       requestId: id,
+      duration,
     } 
   }).then(console.log))
+
   return Response.json({ model, data: object, reasoning })
 }

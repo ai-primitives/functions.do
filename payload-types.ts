@@ -248,6 +248,15 @@ export interface Completion {
     | number
     | boolean
     | null;
+  schema?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   reasoning?: string | null;
   debug?:
     | {
@@ -258,6 +267,8 @@ export interface Completion {
     | number
     | boolean
     | null;
+  duration?: number | null;
+  provider?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -545,8 +556,11 @@ export interface CompletionsSelect<T extends boolean = true> {
   seed?: T;
   output?: T;
   input?: T;
+  schema?: T;
   reasoning?: T;
   debug?: T;
+  duration?: T;
+  provider?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -9,7 +9,7 @@ export const Completions: CollectionConfig = {
   fields: [
     { type: 'row', fields: [
       { name: 'function', type: 'relationship', relationTo: 'functions' },
-      { name: 'functionName', type: 'text', admin: { hidden: true } },
+      { name: 'functionName', type: 'text' }, //, admin: { hidden: true } },
       { name: 'model', type: 'relationship', relationTo: 'models' },
       { name: 'hash', type: 'text' },
       { name: 'requestId', type: 'text' },
@@ -17,7 +17,12 @@ export const Completions: CollectionConfig = {
     ]},
     { name: 'output', type: 'json' },
     { name: 'input', type: 'json' },
+    { name: 'schema', type: 'json' },
     { name: 'reasoning', type: 'code', admin: { language: 'markdown' } },
     { name: 'debug', type: 'json' },
+    { type: 'row', fields: [
+      { name: 'duration', type: 'number' },
+      { name: 'provider', type: 'text' },
+    ]},
   ],
 }
