@@ -21,6 +21,7 @@ export async function POST(request: Request) {
   waitUntil(payload.create({
     collection: 'completions',
     data: {
+      tenant: auth.user?.tenants?.[0]?.id || 'default',
       function: functionName,
       output: object,
       input: body,
