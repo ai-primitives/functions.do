@@ -2,8 +2,6 @@ import { AI } from '../package'
 
 const ai = AI({
 
-  functions: {
-
     // Book Proposal - Initial concept and outline
     createBookProposal: {
       title: 'proposed title of the book',
@@ -146,140 +144,141 @@ const ai = AI({
       formatRecommendations: ['recommended formats (hardcover, ebook, etc.)'],
       distributionChannels: ['recommended distribution channels']
     }
-  },
-
-  workflows: {
-    // Function to run the entire book creation process
-    writeBook: async (ai) => {
-      console.log('Starting book creation process...')
-      
-      // Example book to work with
-      const bookExample = {
-        title: 'The Startup Mindset',
-        author: 'Nathan Clevenger'
-      }
-      
-      // Step 1: Create book proposal
-      console.log('\n1. Creating book proposal...')
-      const proposal = await ai.createBookProposal({
-        title: bookExample.title,
-        author: bookExample.author
-      })
-      console.log('Book proposal created:', proposal)
-      
-      // Step 2: Create table of contents
-      console.log('\n2. Creating table of contents...')
-      const toc = await ai.createTableOfContents({
-        bookTitle: proposal.title
-      })
-      console.log('Table of contents created:', toc)
-      
-      // Step 3: Create chapter outlines for each chapter
-      console.log('\n3. Creating chapter outlines...')
-      const chapterOutlines = []
-      for (let i = 0; i < toc.chapters.length; i++) {
-        const chapterNumber = i + 1
-        const chapterTitle = toc.chapters[i].title
-        console.log(`Creating outline for Chapter ${chapterNumber}: ${chapterTitle}...`)
-        
-        const chapterOutline = await ai.createChapterOutline({
-          bookTitle: proposal.title,
-          chapterNumber: chapterNumber.toString(),
-          chapterTitle
-        })
-        
-        chapterOutlines.push(chapterOutline)
-        console.log(`Outline for Chapter ${chapterNumber} created`)
-      }
-      
-      // Step 4: Write each section of each chapter
-      console.log('\n4. Writing chapter sections...')
-      const completedChapters = []
-      
-      for (let i = 0; i < chapterOutlines.length; i++) {
-        const chapterNumber = i + 1
-        const chapterOutline = chapterOutlines[i]
-        const chapterSections = []
-        
-        console.log(`Writing sections for Chapter ${chapterNumber}: ${chapterOutline.chapterTitle}...`)
-        
-        for (let j = 0; j < chapterOutline.sections.length; j++) {
-          const section = chapterOutline.sections[j]
-          console.log(`Writing section: ${section.title}...`)
-          
-          const writtenSection = await ai.writeSection({
-            bookTitle: proposal.title,
-            chapterNumber: chapterNumber.toString(),
-            chapterTitle: chapterOutline.chapterTitle,
-            sectionTitle: section.title
-          })
-          
-          chapterSections.push(writtenSection)
-          console.log(`Section ${section.title} written`)
-        }
-        
-        const completedChapter = {
-          chapterNumber,
-          chapterTitle: chapterOutline.chapterTitle,
-          sections: chapterSections
-        }
-        
-        completedChapters.push(completedChapter)
-        console.log(`Chapter ${chapterNumber} completed`)
-      }
-      
-      // Step 5: Review each chapter
-      console.log('\n5. Reviewing chapters...')
-      const chapterReviews = []
-      
-      for (let i = 0; i < completedChapters.length; i++) {
-        const chapter = completedChapters[i]
-        console.log(`Reviewing Chapter ${chapter.chapterNumber}: ${chapter.chapterTitle}...`)
-        
-        const chapterReview = await ai.reviewChapter({
-          bookTitle: proposal.title,
-          chapterNumber: chapter.chapterNumber.toString(),
-          chapterTitle: chapter.chapterTitle
-        })
-        
-        chapterReviews.push(chapterReview)
-        console.log(`Review for Chapter ${chapter.chapterNumber} completed`)
-      }
-      
-      // Step 6: Review the entire book
-      console.log('\n6. Reviewing the entire book...')
-      const bookReview = await ai.reviewBook({
-        bookTitle: proposal.title
-      })
-      console.log('Book review completed:', bookReview)
-      
-      // Step 7: Edit the book based on reviews
-      console.log('\n7. Editing the book...')
-      const bookEdits = await ai.editBook({
-        bookTitle: proposal.title
-      })
-      console.log('Book edits completed:', bookEdits)
-      
-      // Step 8: Prepare for publication
-      console.log('\n8. Preparing for publication...')
-      const publicationPrep = await ai.prepareForPublication({
-        bookTitle: proposal.title
-      })
-      console.log('Publication preparation completed:', publicationPrep)
-      
-      // Return the completed book
-      return {
-        proposal,
-        tableOfContents: toc,
-        chapters: completedChapters,
-        chapterReviews,
-        bookReview,
-        bookEdits,
-        publicationPrep
-      }
-    }
   }
-})
+)
+
+//   workflows: {
+//     // Function to run the entire book creation process
+//     writeBook: async (ai) => {
+//       console.log('Starting book creation process...')
+      
+//       // Example book to work with
+//       const bookExample = {
+//         title: 'The Startup Mindset',
+//         author: 'Nathan Clevenger'
+//       }
+      
+//       // Step 1: Create book proposal
+//       console.log('\n1. Creating book proposal...')
+//       const proposal = await ai.createBookProposal({
+//         title: bookExample.title,
+//         author: bookExample.author
+//       })
+//       console.log('Book proposal created:', proposal)
+      
+//       // Step 2: Create table of contents
+//       console.log('\n2. Creating table of contents...')
+//       const toc = await ai.createTableOfContents({
+//         bookTitle: proposal.title
+//       })
+//       console.log('Table of contents created:', toc)
+      
+//       // Step 3: Create chapter outlines for each chapter
+//       console.log('\n3. Creating chapter outlines...')
+//       const chapterOutlines = []
+//       for (let i = 0; i < toc.chapters.length; i++) {
+//         const chapterNumber = i + 1
+//         const chapterTitle = toc.chapters[i].title
+//         console.log(`Creating outline for Chapter ${chapterNumber}: ${chapterTitle}...`)
+        
+//         const chapterOutline = await ai.createChapterOutline({
+//           bookTitle: proposal.title,
+//           chapterNumber: chapterNumber.toString(),
+//           chapterTitle
+//         })
+        
+//         chapterOutlines.push(chapterOutline)
+//         console.log(`Outline for Chapter ${chapterNumber} created`)
+//       }
+      
+//       // Step 4: Write each section of each chapter
+//       console.log('\n4. Writing chapter sections...')
+//       const completedChapters = []
+      
+//       for (let i = 0; i < chapterOutlines.length; i++) {
+//         const chapterNumber = i + 1
+//         const chapterOutline = chapterOutlines[i]
+//         const chapterSections = []
+        
+//         console.log(`Writing sections for Chapter ${chapterNumber}: ${chapterOutline.chapterTitle}...`)
+        
+//         for (let j = 0; j < chapterOutline.sections.length; j++) {
+//           const section = chapterOutline.sections[j]
+//           console.log(`Writing section: ${section.title}...`)
+          
+//           const writtenSection = await ai.writeSection({
+//             bookTitle: proposal.title,
+//             chapterNumber: chapterNumber.toString(),
+//             chapterTitle: chapterOutline.chapterTitle,
+//             sectionTitle: section.title
+//           })
+          
+//           chapterSections.push(writtenSection)
+//           console.log(`Section ${section.title} written`)
+//         }
+        
+//         const completedChapter = {
+//           chapterNumber,
+//           chapterTitle: chapterOutline.chapterTitle,
+//           sections: chapterSections
+//         }
+        
+//         completedChapters.push(completedChapter)
+//         console.log(`Chapter ${chapterNumber} completed`)
+//       }
+      
+//       // Step 5: Review each chapter
+//       console.log('\n5. Reviewing chapters...')
+//       const chapterReviews = []
+      
+//       for (let i = 0; i < completedChapters.length; i++) {
+//         const chapter = completedChapters[i]
+//         console.log(`Reviewing Chapter ${chapter.chapterNumber}: ${chapter.chapterTitle}...`)
+        
+//         const chapterReview = await ai.reviewChapter({
+//           bookTitle: proposal.title,
+//           chapterNumber: chapter.chapterNumber.toString(),
+//           chapterTitle: chapter.chapterTitle
+//         })
+        
+//         chapterReviews.push(chapterReview)
+//         console.log(`Review for Chapter ${chapter.chapterNumber} completed`)
+//       }
+      
+//       // Step 6: Review the entire book
+//       console.log('\n6. Reviewing the entire book...')
+//       const bookReview = await ai.reviewBook({
+//         bookTitle: proposal.title
+//       })
+//       console.log('Book review completed:', bookReview)
+      
+//       // Step 7: Edit the book based on reviews
+//       console.log('\n7. Editing the book...')
+//       const bookEdits = await ai.editBook({
+//         bookTitle: proposal.title
+//       })
+//       console.log('Book edits completed:', bookEdits)
+      
+//       // Step 8: Prepare for publication
+//       console.log('\n8. Preparing for publication...')
+//       const publicationPrep = await ai.prepareForPublication({
+//         bookTitle: proposal.title
+//       })
+//       console.log('Publication preparation completed:', publicationPrep)
+      
+//       // Return the completed book
+//       return {
+//         proposal,
+//         tableOfContents: toc,
+//         chapters: completedChapters,
+//         chapterReviews,
+//         bookReview,
+//         bookEdits,
+//         publicationPrep
+//       }
+//     }
+//   }
+// })
 
 // Example book to work with
 const bookExample = {
