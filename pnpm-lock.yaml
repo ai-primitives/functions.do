@@ -74,6 +74,9 @@ importers:
       yaml:
         specifier: ^2.7.0
         version: 2.7.0
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.2.0
