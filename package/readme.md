@@ -31,7 +31,7 @@ This approach enables:
 
 ## Usage
 
-You can use it by simply calling any function name with any arguments on the `ai object like:
+You can use it by simply calling any function name with any arguments on the `ai` object like:
 
 ```typescript
 import { ai } from 'functions.do'

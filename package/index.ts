@@ -1,160 +1,77 @@
-// Define the possible field types in a schema
-export type AISchemaFieldPrimitive = string | string[] | Record<string, any> | Record<string, any>[]
-export interface AISchemaObject {
-  [key: string]: AISchemaField
-}
-export type AISchemaField = AISchemaFieldPrimitive | AISchemaObject
-export type AISchema = Record<string, AISchemaField>
+import { AIConfig, AIFunction, FunctionDefinition, SchemaValue } from './types'
 
-export type AIConfig = {
-  functions: Record<string, AISchema>
-  workflows?: Record<string, (ai: any, ...args: any[]) => Promise<any>>
-}
-export type AIFunctions<T extends AIConfig> = {
-  [key in keyof T['functions']]: (args: any) => Promise<T['functions'][key]>
-}
-
-// Create a global schema store to hold schemas defined with the define pattern
-const schemaStore: Record<string, AISchema> = {};
-
-
-// Type definitions for the ai object with define method and dynamic properties
-// Define the structure of the ai object to support both define and dynamic function calls
-interface AIDefineProxy {
-  [key: string]: (schema: AISchema) => AISchema;
-}
-
-interface AIDynamicFunctions {
-  [key: string]: (args: any) => Promise<any>;
-}
-
-// The main AI object type that combines both the define property and dynamic functions
-// Use an intersection type instead of extending to avoid the index signature conflict
-type AIObject = {
-  define: AIDefineProxy;
-} & Omit<AIDynamicFunctions, 'define'>;
-
-// Create the ai object with both define capability and dynamic function access
-export const ai: AIObject = new Proxy({} as any, {
-  get: (target, prop: string) => {
-    // Handle the 'define' property specially
-    if (prop === 'define') {
-      // If the define property doesn't exist yet, create it
-      if (!target.define) {
-        target.define = new Proxy({} as AIDefineProxy, {
-          get: (_defineTarget, defineProp: string) => {
-            // Return a function that accepts a schema and stores it for later use
-            return (schema: AISchema) => {
-              schemaStore[defineProp] = schema;
-              return schema;
-            };
-          }
-        });
-      }
-      return target.define;
-    }
-    
-    // For any other property, return a function that handles the AI API call
-    return async (args: any) => {
-      try {
-        // Get the API endpoint from environment variables
-        const API_ENDPOINT = process?.env?.AI_API_ENDPOINT || 'https://functions.do/api';
-        
-        // Check if we have a schema for this function
-        if (!schemaStore[prop]) {
-          throw new Error(`Schema for AI function '${String(prop)}' not defined. Use ai.define.${String(prop)}({...}) first.`);
-        }
-        
-        // Prepare the request payload
-        const payload = {
-          function: prop,
-          args,
-          schema: schemaStore[prop]
-        };
-        
-        // Make the API request
-        const response = await fetch(API_ENDPOINT, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process?.env?.AI_API_KEY || ''}`
-          },
-          body: JSON.stringify(payload)
-        });
-        
-        // Check if the request was successful
-        if (!response.ok) {
-          throw new Error(`AI API request failed: ${response.statusText}`);
-        }
-        
-        // Parse and return the response
-        const result = await response.json();
-        return result;
-      } catch (error) {
-        console.error(`Error in AI function '${String(prop)}':`, error);
-        throw error;
-      }
-    };
+// Helper to generate the API request payload
+const generateRequest = (name: string, schema: FunctionDefinition, input: any, config: AIConfig) => {
+  return {
+    name,
+    schema,
+    input,
+    config
   }
-});
-
-// TODO: Integrate this more conventional interface
-// type AIFunction = <T>(schema: T) => (args: object) => Promise<T>
-
-/**
- * Creates an AI function proxy that captures function calls,
- * sends them to an API endpoint defined in environment variables,
- * and returns the typed response.
- */
-export const AI = <T extends AIConfig>(config: T): AIFunctions<T> & Record<string, any> => {
-  // Get the API endpoint from environment variables
-  const API_ENDPOINT = process?.env?.AI_API_ENDPOINT || 'https://functions.do/api';
-  
-  // Create a proxy handler to intercept function calls
-  const handler: ProxyHandler<any> = {
-    get: (target, prop: string) => {
-      // Check if this is a workflow function
-      if (config.workflows && prop in config.workflows) {
-        // Return the workflow function with the AI instance as the argument
-        return (...args: any[]) => config.workflows![prop](target, ...args);
-      }
-      
-      // Return a function that will be called when the property is accessed
-      return async (args: any) => {
-        try {
-          // Prepare the request payload
-          const payload = {
-            function: prop,
-            args,
-            schema: config.functions[prop]
-          };
-          
-          // Make the API request
-          const response = await fetch(API_ENDPOINT, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${process?.env?.AI_API_KEY || ''}`
-            },
-            body: JSON.stringify(payload)
-          });
-          
-          // Check if the request was successful
-          if (!response.ok) {
-            throw new Error(`AI API request failed: ${response.statusText}`);
-          }
-          
-          // Parse and return the response
-          const result = await response.json();
-          return result as T['functions'][typeof prop];
-        } catch (error) {
-          console.error(`Error in AI function '${String(prop)}':`, error);
-          throw error;
-        }
-      };
-    }
-  };
-  
-  // Create and return the proxy
-  return new Proxy({}, handler) as AIFunctions<T> & Record<string, any>;
 }
+
+// Helper to call the functions.do API
+const callAPI = async (request: any) => {
+  const response = await fetch(process.env.FUNCTIONS_API_URL || 'https://functions.do/api/generate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request)
+  })
+
+  if (!response.ok) {
+    throw new Error(`API call failed: ${response.statusText}`)
+  }
+
+  return response.json()
+}
+
+// Helper to generate a function from schema and config
+const createFunction = (
+  name: string,
+  schema: FunctionDefinition,
+  config?: AIConfig
+): AIFunction => {
+  return async (input: any, functionConfig?: AIConfig) => {
+    const mergedConfig = { ...config, ...functionConfig }
+    const request = generateRequest(name, schema, input, mergedConfig)
+    
+    try {
+      const response = await callAPI(request)
+      return response.result
+    } catch (error) {
+      console.error('Error calling AI function:', error)
+      throw error
+    }
+  }
+}
+
+// AI factory function for creating strongly-typed functions
+export const AI = <T extends Record<string, FunctionDefinition>>(
+  functions: T,
+  config?: AIConfig
+) => {
+  const result: Record<string, AIFunction> = {}
+
+  for (const [name, schema] of Object.entries(functions)) {
+    result[name] = createFunction(name, schema, config)
+  }
+
+  return result as {
+    [K in keyof T]: AIFunction<any, any>
+  }
+}
+
+// Dynamic ai instance that accepts any function name
+export const ai = new Proxy(
+  {},
+  {
+    get: (target: any, prop: string) => {
+      if (typeof prop === 'string' && !prop.startsWith('_')) {
+        return createFunction(prop, {}, {})
+      }
+      return target[prop]
+    },
+  }
+) as any

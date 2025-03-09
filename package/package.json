@@ -2,6 +2,10 @@
   "name": "functions.do",
   "version": "0.0.1",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.8"
   }
 }
