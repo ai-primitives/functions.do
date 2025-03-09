@@ -29,6 +29,6 @@ export async function POST(request: Request) {
       model: model,
       requestId: requestId,
     } 
-  }))
+  }).then(console.log))
   return Response.json({ model, object, reasoning })
 }
