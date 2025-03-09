@@ -31,5 +31,5 @@ export async function POST(request: Request) {
       requestId: requestId,
     } 
   }).then(console.log))
-  return Response.json({ model, object, reasoning })
+  return Response.json({ model, data: object, reasoning })
 }
