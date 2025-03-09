@@ -6,7 +6,7 @@ export const Users: CollectionConfig = {
     group: 'Admin',
     useAsTitle: 'email',
   },
-  auth: { tokenExpiration: 60 * 60 * 24 * 30 },
+  auth: { tokenExpiration: 60 * 60 * 24 * 30, useAPIKey: true },
   fields: [
     // Email added by default
     // Add more fields as needed
