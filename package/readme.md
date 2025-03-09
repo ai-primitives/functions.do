@@ -1,5 +1,4 @@
 # functions.do
-## Introduction
 
 AI is transforming businesses but integrating LLMs into existing systems presents challenges due to the clash between AI's non-deterministic nature and traditional software's deterministic characteristics.
 
@@ -10,7 +9,7 @@ Key challenges include:
 - **Prompt Engineering**: More art than science, difficult to standardize
 - **Configuration**: Complex parameter interactions require careful tuning
 
-## The Solution
+### The Solution
 
 functions.do creates a clean separation between AI capabilities and application code through strongly-typed interfaces that hide model complexities, enabling:
 - Rapid prototyping of AI applications
@@ -18,7 +17,7 @@ functions.do creates a clean separation between AI capabilities and application 
 - Comprehensive evaluation and optimization strategies
 
 
-## Usage
+### Usage
 
 You can use it by simply calling any function name with any arguments on the `ai` object like:
 
