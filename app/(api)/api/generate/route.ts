@@ -2,6 +2,8 @@ import config from 'payload.config'
 import { getPayload } from 'payload'
 import generateObject from '@/lib/generateObject'
 
+export const maxDuration = 300
+
 export async function POST(request: Request) {
   const payload = await getPayload({ config })
   const auth = await payload.auth(request)
