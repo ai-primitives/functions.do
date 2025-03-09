@@ -26,7 +26,9 @@ const callAPI = async (request: any) => {
     throw new Error(`API call failed: ${response.statusText}`)
   }
 
-  return response.json()
+  const data = await response.json()
+  console.log({ data })
+  return data
 }
 
 // Helper to generate a function from schema and config
@@ -41,7 +43,7 @@ const createFunction = (
     
     try {
       const response = await callAPI(request)
-      return response.result
+      return response.object
     } catch (error) {
       console.error('Error calling AI function:', error)
       throw error

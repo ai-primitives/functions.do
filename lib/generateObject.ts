@@ -81,5 +81,5 @@ export default async (args: GenerateObjectArgs) => {
   const { object, reasoning } = results as any
   // console.log(results)
   console.log({ results, modelName, object, reasoning })
-  return object as any
+  return object
 }
