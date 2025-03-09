@@ -43,7 +43,7 @@ const createFunction = (
     const request = generateRequest(name, schema, input, mergedConfig)
     
     try {
-      const response = await callAPI(request)
+      const response = await callAPI(request) as any
       return response.object
     } catch (error) {
       console.error('Error calling AI function:', error)

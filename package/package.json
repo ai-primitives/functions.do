@@ -1,9 +1,12 @@
 {
   "name": "functions.do",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A framework and platform for easily creating, managing, evaluating, and iterating on AI functions & object generation",
   "keywords": ["functions", "serverless", "api", "endpoints", "cloud-functions", "ai", "functions", "object generation"],
   "homepage": "https://functions.do",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/ai-primitives/functions.do.git"
