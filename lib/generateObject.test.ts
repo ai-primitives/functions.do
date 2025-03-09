@@ -5,7 +5,7 @@ import { FunctionDefinition } from '@/package/types';
 
 
 // Set a longer timeout for these tests since they make actual API calls
-const TEST_TIMEOUT = 30000;
+const TEST_TIMEOUT = 90000;
 
 // Tests that make actual API calls to verify the functionality
 describe('generateObject', () => {
@@ -16,7 +16,7 @@ describe('generateObject', () => {
       name: 'A string containing a person\'s full name',
       age: 'A number representing the person\'s age in years',
       companies: ['The name of companies they have worked at'],
-      email: 'A guessed email (use the most recent company domain)'
+      email: 'A guessed email from the most recent company domain'
     }
 
     const result = await generateObject({
