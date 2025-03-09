@@ -1,6 +1,7 @@
 import config from 'payload.config'
 import { getPayload } from 'payload'
 import generateObject from '@/lib/generateObject'
+import { waitUntil } from '@vercel/functions'
 
 export const maxDuration = 300
 
@@ -11,7 +12,23 @@ export async function POST(request: Request) {
   if (!auth.user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
+  const { functionName, args, schema, settings } = body
   console.log({ body })
-  const object = await generateObject(body).catch(e => ({ error: e.message }))
-  return Response.json({ object })
+  const data = await generateObject(body).catch(e => ({ error: e.message }))
+  const { object, reasoning } = data
+  const model = data.response?.modelId
+  const requestId = data.response?.id
+  waitUntil(payload.create({
+    collection: 'completions',
+    data: {
+      function: functionName,
+      output: object,
+      input: body,
+      debug: data,
+      seed: settings?.seed,
+      model: model,
+      requestId: requestId,
+    } 
+  }))
+  return Response.json({ model, object, reasoning })
 }

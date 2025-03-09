@@ -31,11 +31,11 @@ describe('generateObject', () => {
     });
 
     // Check that the result has the expected structure
-    expect(result).toBeDefined();
-    expect(typeof result.name).toBe('string');
-    expect(typeof result.age).toBe('string');
-    expect(typeof result.email).toBe('string');
-    expect(result.email).toMatch(/@/);
+    expect(result.object).toBeDefined();
+    expect(typeof result.object.name).toBe('string');
+    expect(typeof result.object.age).toBe('string');
+    expect(typeof result.object.email).toBe('string');
+    expect(result.object.email).toMatch(/@/);
   }, TEST_TIMEOUT);
 
   // Test with a more complex nested schema
@@ -76,16 +76,16 @@ describe('generateObject', () => {
     });
 
     // Check the structure of the result
-    expect(result).toBeDefined();
-    expect(typeof result.orderId).toBe('string');
-    expect(result.customer).toBeDefined();
-    expect(typeof result.customer.name).toBe('string');
-    expect(typeof result.customer.email).toBe('string');
-    expect(result.customer.address).toBeDefined();
-    expect(Array.isArray(result.items)).toBe(true);
-    expect(result.items.length).toBeGreaterThan(0);
-    expect(typeof result.total).toBe('string');
-    expect(typeof result.orderDate).toBe('string');
+    expect(result.object).toBeDefined();
+    expect(typeof result.object.orderId).toBe('string');
+    expect(result.object.customer).toBeDefined();
+    expect(typeof result.object.customer.name).toBe('string');
+    expect(typeof result.object.customer.email).toBe('string');
+    expect(result.object.customer.address).toBeDefined();
+    expect(Array.isArray(result.object.items)).toBe(true);
+    expect(result.object.items.length).toBeGreaterThan(0);
+    expect(typeof result.object.total).toBe('string');
+    expect(typeof result.object.orderDate).toBe('string');
   }, TEST_TIMEOUT);
 
   // Test without providing a schema (using 'no-schema' mode)
@@ -102,7 +102,7 @@ describe('generateObject', () => {
     });
 
     // Basic check that we got something back
-    expect(result).toBeDefined();
+    expect(result.object).toBeDefined();
   }, TEST_TIMEOUT);
 
   // Test with enum values in the schema
@@ -125,9 +125,9 @@ describe('generateObject', () => {
     });
 
     // Check that enum values are respected
-    expect(result).toBeDefined();
-    expect(['electronics', 'clothing', 'books', 'home']).toContain(result.category);
-    expect(['true', 'false']).toContain(result.inStock);
+    expect(result.object).toBeDefined();
+    expect(['electronics', 'clothing', 'books', 'home']).toContain(result.object.category);
+    expect(['true', 'false']).toContain(result.object.inStock);
   }, TEST_TIMEOUT);
 
 
@@ -141,7 +141,7 @@ describe('generateObject', () => {
     });
 
     // Basic check that we got something back
-    expect(result).toBeDefined();
+    expect(result.object).toBeDefined();
   }, TEST_TIMEOUT);
 
 
@@ -155,7 +155,7 @@ describe('generateObject', () => {
     });
 
     // Basic check that we got something back
-    expect(result).toBeDefined();
+    expect(result.object).toBeDefined();
   }, TEST_TIMEOUT);
 
 
@@ -182,7 +182,7 @@ describe('generateObject', () => {
 
     })
     // Basic check that we got something back
-    expect(result).toBeDefined();
+    expect(result.object).toBeDefined();
   }, TEST_TIMEOUT);
 
 });
