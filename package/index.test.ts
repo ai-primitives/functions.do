@@ -85,7 +85,7 @@ describe('functions.do', () => {
 
       expect(result).toBeDefined()
       expect(typeof result).toBe('object')
-    })
+    }, 90000)
 
     it('should handle errors gracefully', async () => {
       try {
@@ -94,6 +94,6 @@ describe('functions.do', () => {
       } catch (error) {
         expect(error).toBeDefined()
       }
-    })
-  }, 90000)
+    }, 90000)
+  })
 })
