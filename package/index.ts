@@ -12,7 +12,9 @@ const generateRequest = (name: string, schema: FunctionDefinition, input: any, c
 
 // Helper to call the functions.do API
 const callAPI = async (request: any) => {
-  const response = await fetch(process.env.FUNCTIONS_API_URL || 'https://functions.do/api/generate', {
+  const url = process.env.FUNCTIONS_API_URL || 'https://functions.do/api/generate'
+  console.log({ url })
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
