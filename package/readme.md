@@ -34,8 +34,6 @@ console.log(results)
 // {
 //   blogPostTitles: [
 //     '10 Steps to Automate Your Business Workflows with LLMs',
-//   blogPostTitles: [
-//     '10 Steps to Automate Your Business Workflows with LLMs',
 //     'The Executive's Guide to LLM-Powered Process Automation',
 //     'Transforming Executive Decision-Making with AI Workflows',
 //     'How LLMs Are Revolutionizing C-Suite Productivity',
