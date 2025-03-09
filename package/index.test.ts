@@ -14,9 +14,7 @@ describe('functions.do', () => {
       })
 
       const result = await functions.generateBio({
-        name: 'John Doe',
-        role: 'Software Engineer',
-        company: 'Tech Corp'
+        name: 'Paul Graham'
       })
 
       expect(result).toHaveProperty('name')

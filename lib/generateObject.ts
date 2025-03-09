@@ -4,17 +4,20 @@ import { createOpenAICompatible } from '@ai-sdk/openai-compatible'
 import { generateObject } from 'ai'
 import { sample } from 'lodash-es'
 import { generateSchema } from './generateSchema'
+import { zodToJsonSchema } from "zod-to-json-schema"
 import { z } from 'zod'
 
 
-const openRouter = createOpenRouter({ 
-  // baseURL: process.env.AI_GATEWAY_URL!,
-  baseURL: 'https://gateway.ai.cloudflare.com/v1/a826340b3b93189c9ebb7c0eaeba3c46/functions/openrouter',
-  headers: {
-    'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
-    'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
-  }
-})
+// const openRouter = createOpenRouter({ 
+//   // baseURL: process.env.AI_GATEWAY_URL!,
+//   baseURL: 'https://gateway.ai.cloudflare.com/v1/a826340b3b93189c9ebb7c0eaeba3c46/functions/openrouter',
+//   headers: {
+//     'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
+//     'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
+//   }
+// })
+
+
 const defaultModels = [
   'qwen/qwq-32b', 
   'deepseek/deepseek-r1', 
@@ -40,7 +43,7 @@ const defaultModels = [
 
 type GenerateObjectArgs = {
   functionName: string
-  args: any,
+  input: any,
   model?: string
   schema?: FunctionDefinition
   settings?: {
@@ -59,27 +62,74 @@ type GenerateObjectArgs = {
    * @returns The generated object.
    */
 export default async (args: GenerateObjectArgs) => {
-  const modelName = args.model || sample(defaultModels)!
-  const model = openRouter(modelName)
-  let { system = 'Respond only in JSON: do not wrap with ```json\n\n```' } = args.settings || {}
-  const prompt = `${args.functionName}(${JSON.stringify(args.args, null, 2)})`
-  console.log({ modelName })
-  const results = args.schema ? 
-    await generateObject({
-      model,
-      system,
-      prompt,
-      mode: 'json',
-      schema: generateSchema(args.schema),
-    } as any) :
-    await generateObject({
-      model,
-      system,
-      prompt,
-      output: 'no-schema',
+  const modelName  = args.model || sample(defaultModels)!
+  const { functionName, input, settings } = args
+  // const model = openRouter(modelName)
+  let { system = 'Respond only in JSON.', temperature, seed } = settings || {}
+  const prompt = `${functionName}(${JSON.stringify(input, null, 2)})`
+  const zodSchema = args.schema ? generateSchema(args.schema) : undefined
+  let json_schema: any = zodSchema ? { name: functionName, schema: zodToJsonSchema(zodSchema) } : undefined
+  if (json_schema) {
+    delete json_schema.schema?.$schema
+  }
+  const response_format = args.schema ? { type: 'json_schema', json_schema } : { type: 'json_object' }
+  console.log({ modelName, json_schema })
+  const url = (process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1') + '/chat/completions'
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
+      'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
+    },
+    body: JSON.stringify({
+      model: modelName,
+      messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }],
+      response_format,
+      temperature,
+      seed,
     })
-  const { object, reasoning } = results as any
+  })
+  const headers = Object.fromEntries(response.headers)
+  // console.log(headers)
+  const { id } = headers
+  const cache = headers['cf-aig-cache-status']
+  const status = `${response.status}: ${response.statusText}`
+  const results = await response.json()
+  console.log(results)
+  // const results = args.schema ? 
+  //   await generateObject({
+  //     model,
+  //     system,
+  //     prompt,
+  //     mode: 'json',
+  //     schema: generateSchema(args.schema),
+  //   } as any) :
+  //   await generateObject({
+  //     model,
+  //     system,
+  //     prompt,
+  //     output: 'no-schema',
+  //   })
+  // const { object, reasoning } = results as any
+  const { model, provider } = results
+  const message = results.choices[0].message
+  const { content, reasoning, refusal } = message || {}
+  let object: any
+  let error: any
+  try {
+    const parsedContent = content.replace(/```json/, '').replace(/```/, '')
+    object = JSON.parse(parsedContent)
+    // if (zodSchema) {
+    //   object = zodSchema.parse(object)
+    // }
+  } catch(e: any) {
+    console.log(e)
+    error = e.message
+  }
   // console.log(results)
-  console.log({ results, modelName, object, reasoning })
-  return results as any
+  const data = { results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema }
+  console.log(data)
+  return data
 }

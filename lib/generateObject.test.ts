@@ -21,7 +21,7 @@ describe('generateObject', () => {
 
     const result = await generateObject({
       functionName: 'getPerson',
-      args: { twitter: 'sama' },
+      input: { twitter: 'sama' },
       schema: personSchema,
       // Using a specific model to reduce variability in tests
       // model: 'openai/gpt-4o-mini',
@@ -67,7 +67,7 @@ describe('generateObject', () => {
 
     const result = await generateObject({
       functionName: 'getOrder',
-      args: { product: 'xbox'},
+      input: { product: 'xbox'},
       schema: orderSchema,
       // model: 'openai/gpt-4o-mini',
       settings: {
@@ -92,7 +92,7 @@ describe('generateObject', () => {
   it('should generate content without a schema', async () => {
     const result = await generateObject({
       functionName: 'generateCreativeText',
-      args: {
+      input: {
         topic: 'space exploration'
       },
       // model: 'openai/gpt-4o-mini',
@@ -116,7 +116,7 @@ describe('generateObject', () => {
 
     const result = await generateObject({
       functionName: 'getProduct',
-      args: { product: 'Xbox' },
+      input: { product: 'Xbox' },
       schema: productSchema,
       // model: 'openai/gpt-4o-mini',
       settings: {
@@ -134,7 +134,7 @@ describe('generateObject', () => {
   it('should support calls without a schema', async () => {
     const result = await generateObject({
       functionName: 'writeBlogPost',
-      args: {
+      input: {
         topic: 'space exploration'
       },
       // model: 'openai/gpt-4o-mini',
@@ -148,7 +148,7 @@ describe('generateObject', () => {
   it('should support calls without a schema', async () => {
     const result = await generateObject({
       functionName: 'generateStoryBrand',
-      args: {
+      input: {
         business: 'AWS'
       },
 
@@ -163,7 +163,7 @@ describe('generateObject', () => {
     const result = await generateObject({
       functionName: 'determineGreaterValue',
       model: 'deepseek/deepseek-r1',
-      args: {
+      input: {
         values: '4.11 vs 4.9'
       },
 
@@ -176,7 +176,7 @@ describe('generateObject', () => {
     const result = await generateObject({
       functionName: 'determineGreaterValue',
       model: 'anthropic/claude-3.7-sonnet:thinking',
-      args: {
+      input: {
         values: '4.11 vs 4.9'
       },
 
