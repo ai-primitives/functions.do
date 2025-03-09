@@ -18,6 +18,7 @@ const callAPI = async (request: any) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `users API-Key ${process.env.FUNCTIONS_DO_API_KEY}`,
     },
     body: JSON.stringify(request)
   })
