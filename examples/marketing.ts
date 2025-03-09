@@ -1,8 +1,6 @@
 import { AI } from '../package'
 
 const ai = AI({
-
-  functions: {
     
     // Lean Canvas - Business model on a single page
     createLeanCanvas: {
@@ -103,81 +101,7 @@ const ai = AI({
       performanceMetrics: ['key metrics to track for this campaign'],
       abtestElements: ['elements to test across different versions']
     }
-  },
-
-  workflows: {
-    // Function to create a complete marketing strategy
-    createMarketingStrategy: async (ai) => {
-      console.log('Starting marketing strategy creation...')
-      
-      // Example product to work with
-      const productExample = {
-        name: 'SaaS Platform',
-        audience: 'Small business owners'
-      }
-      
-      // Step 1: Create lean canvas
-      console.log('\n1. Creating lean canvas...')
-      const leanCanvas = await ai.createLeanCanvas({
-        problems: ['Small businesses struggle with digital marketing', 'Limited budget for marketing tools', 'Lack of expertise in digital channels'],
-        customerSegments: [productExample.audience, 'Freelancers', 'New entrepreneurs']
-      })
-      console.log('Lean canvas created:', leanCanvas)
-      
-      // Step 2: Create StoryBrand framework
-      console.log('\n2. Creating StoryBrand framework...')
-      const storyBrand = await ai.createStoryBrand({
-        character: {
-          hero: productExample.audience,
-          wants: 'More customers and business growth',
-          needs: 'Simple, effective marketing solutions'
-        },
-        problem: {
-          external: 'Not enough customers or sales',
-          internal: 'Feeling overwhelmed and inadequate at marketing',
-          philosophical: 'Small businesses deserve the same marketing opportunities as big companies',
-          villain: 'Complex, expensive marketing tools designed for enterprises'
-        }
-      })
-      console.log('StoryBrand framework created:', storyBrand)
-      
-      // Step 3: Create waitlist landing page
-      console.log('\n3. Creating waitlist landing page...')
-      const waitlistPage = await ai.createWaitlistPage({
-        headline: `${productExample.name}: Marketing Made Simple`,
-        productDescription: 'An all-in-one marketing platform designed specifically for small businesses'
-      })
-      console.log('Waitlist landing page created:', waitlistPage)
-      
-      // Step 4: Create marketing copy
-      console.log('\n4. Creating marketing copy...')
-      const marketingCopy = await ai.createMarketingCopy({
-        productName: productExample.name,
-        targetAudience: productExample.audience,
-        valueProposition: 'Save time and grow your business with automated marketing tools',
-        toneOfVoice: 'Professional but approachable',
-        copyLength: 'medium'
-      })
-      console.log('Marketing copy created:', marketingCopy)
-      
-      // Step 5: Create email campaign
-      console.log('\n5. Creating email campaign...')
-      const emailCampaign = await ai.createEmailCampaign({
-        campaignGoal: 'Convert waitlist signups to paying customers',
-        audienceSegment: 'Waitlist subscribers',
-        numberOfEmails: '5'
-      })
-      console.log('Email campaign created:', emailCampaign)
-      
-      return {
-        leanCanvas,
-        storyBrand,
-        waitlistPage,
-        marketingCopy,
-        emailCampaign
-      }
-    }
-  }
+  
 })
 
 // Example product to work with
@@ -228,12 +152,12 @@ const createWaitlistPageExample = async () => {
   return waitlistPage
 }
 
-// Run the complete marketing strategy creation process
-ai.createMarketingStrategy().then((result: any) => {
-  console.log('Marketing strategy creation completed successfully!', result)
-}).catch((error: any) => {
-  console.error('Error creating marketing strategy:', error)
-})
+// // Run the complete marketing strategy creation process
+// ai.createMarketingStrategy().then((result: any) => {
+//   console.log('Marketing strategy creation completed successfully!', result)
+// }).catch((error: any) => {
+//   console.error('Error creating marketing strategy:', error)
+// })
 
 // Uncomment to run individual examples
 // createLeanCanvasExample()

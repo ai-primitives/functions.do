@@ -2,37 +2,35 @@ import { AI } from '../package'
 
 const ai = AI({
 
-  functions: {
-    
-    // List Blog Topics - Generate potential blog topics
-    listBlogTopics: {
-      niche: 'target niche or industry',
-      audience: 'target audience description',
-      keywords: ['relevant keywords'],
-      topics: ['list of potential blog topics']
-    },
-    
-    // List Blog Titles - Generate engaging titles for a specific topic
-    listBlogTitles: {
-      topic: 'main topic of the blog post',
-      audience: 'target audience description',
-      titles: ['list of potential blog titles']
-    },
-    
-    // Write Blog Post - Create a complete blog post
-    writeBlogPost: {
-      title: 'title of the blog post',
-      audience: 'target audience description',
-      content: 'complete blog post content'
-    },
-    
-    // Edit Blog Post - Make improvements to a blog post
-    editBlogPost: {
-      title: 'title of the blog post',
-      content: 'updated blog post content',
-      changes: ['list of changes made']
-    }
+  // List Blog Topics - Generate potential blog topics
+  listBlogTopics: {
+    niche: 'target niche or industry',
+    audience: 'target audience description',
+    keywords: ['relevant keywords'],
+    topics: ['list of potential blog topics']
+  },
+  
+  // List Blog Titles - Generate engaging titles for a specific topic
+  listBlogTitles: {
+    topic: 'main topic of the blog post',
+    audience: 'target audience description',
+    titles: ['list of potential blog titles']
+  },
+  
+  // Write Blog Post - Create a complete blog post
+  writeBlogPost: {
+    title: 'title of the blog post',
+    audience: 'target audience description',
+    content: 'complete blog post content'
+  },
+  
+  // Edit Blog Post - Make improvements to a blog post
+  editBlogPost: {
+    title: 'title of the blog post',
+    content: 'updated blog post content',
+    changes: ['list of changes made']
   }
+  
 })
 
 

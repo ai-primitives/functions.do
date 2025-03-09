@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.1.15",
+    "@ai-sdk/openai-compatible": "^0.1.13",
     "@openrouter/ai-sdk-provider": "^0.4.3",
     "@payloadcms/db-mongodb": "latest",
     "@payloadcms/next": "latest",
@@ -29,6 +30,7 @@
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "js-yaml": "^4.1.0",
+    "lodash-es": "^4.17.21",
     "next": "15.1.5",
     "payload": "^3.25.0",
     "react": "19.0.0",
@@ -38,13 +40,16 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.5.4",
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
+    "dotenv": "^16.4.7",
     "eslint": "^9.16.0",
     "eslint-config-next": "15.1.5",
     "prettier": "^3.4.2",
-    "typescript": "5.7.3"
+    "typescript": "5.7.3",
+    "vitest": "^3.0.8"
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0",
