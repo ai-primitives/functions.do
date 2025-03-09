@@ -1,7 +1,7 @@
 {
   "name": "functions.do",
   "version": "0.0.1",
-  "description": "A framework and platform for easily creating and managing AI functions & object generation",
+  "description": "A framework and platform for easily creating, managing, evaluating, and iterating on AI functions & object generation",
   "keywords": ["functions", "serverless", "api", "endpoints", "cloud-functions", "ai", "functions", "object generation"],
   "homepage": "https://functions.do",
   "repository": {
