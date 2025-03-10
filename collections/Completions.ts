@@ -26,5 +26,6 @@ export const Completions: CollectionConfig = {
       { name: 'refusal', type: 'text' },
     ]},
     { name: 'error', type: 'textarea' },
+    { name: 'validation', type: 'json' },
   ],
 }

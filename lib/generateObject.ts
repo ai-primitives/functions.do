@@ -121,15 +121,20 @@ export default async (args: GenerateObjectArgs) => {
   const parsedContent = content.replace(/^```json\s*/, '').replace(/\s*```$/, '')
   try {
     object = JSON.parse(parsedContent)
-    if (zodSchema) {
-      object = zodSchema.parse(object)
-    }
   } catch(e: any) {
     console.log(e, parsedContent)
     error = e.message
   }
+  let validation: any = { valid: true }
+  if (zodSchema) {
+    try {
+      object = zodSchema.parse(object)
+    } catch(e: any) {
+      validation = e.message
+    }
+  }
   // console.log(results)
-  const data = { results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema }
+  const data = { results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema, validation }
   console.log(data)
   return data
 }
