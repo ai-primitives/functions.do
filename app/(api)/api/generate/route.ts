@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     }
   })
   const data = await generateObject({ functionName, input, schema, settings })
-  const { object, reasoning, model, id, provider } = data
+  const { object, reasoning, model, id, provider, error, validation } = data
   const duration = Date.now() - start
 
   const functionDocs = await functionPromise
@@ -46,6 +46,8 @@ export async function POST(request: Request) {
       provider,
       requestId: id,
       duration,
+      error,
+      validation,
     } 
   }).then(console.log))
 
