@@ -19,7 +19,6 @@ export const Completions: CollectionConfig = {
     { name: 'input', type: 'json' },
     { name: 'schema', type: 'json' },
     { name: 'reasoning', type: 'code', admin: { language: 'markdown' } },
-    { name: 'debug', type: 'json' },
     { type: 'row', fields: [
       { name: 'duration', type: 'number' },
       { name: 'provider', type: 'text' },
@@ -27,5 +26,6 @@ export const Completions: CollectionConfig = {
     ]},
     { name: 'error', type: 'textarea' },
     { name: 'validation', type: 'json' },
+    { name: 'debug', type: 'json' },
   ],
 }
