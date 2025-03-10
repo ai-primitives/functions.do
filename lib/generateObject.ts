@@ -87,10 +87,10 @@ export default async (args: GenerateObjectArgs) => {
     body: JSON.stringify({
       model: modelName,
       route: 'fallback',
-      // provider: {
-      //   require_parameters: true,
-      //   data_collection: 'deny',
-      // },
+      provider: {
+        require_parameters: true,
+        data_collection: 'deny',
+      },
       messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }],
       response_format,
       temperature,
@@ -142,7 +142,7 @@ export default async (args: GenerateObjectArgs) => {
     }
   }
   // console.log(results)
-  const data = { results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema, validation }
+  const data = { functionName, results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema, validation }
   console.log(data)
   return data
 }

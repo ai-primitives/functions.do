@@ -8,7 +8,7 @@ export const maxDuration = 300
 export async function POST(request: Request) {
   const payload = await getPayload({ config })
   const auth = await payload.auth(request)
-  console.log(auth.user)
+  console.log(auth.user?.tenants)
   // if (!auth.user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()

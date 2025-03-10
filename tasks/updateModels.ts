@@ -1,6 +1,11 @@
 import type { TaskConfig } from 'payload'
 import camelcaseKeys from 'camelcase-keys'
 
+// TODO: look at refactoring to this endpoint for more details
+// https://openrouter.ai/api/frontend/models/find?fmt=cards&order=newest
+// https://openrouter.ai/api/frontend/models/find?fmt=cards&order=newest&supported_parameters=structured_outputs%2Cresponse_format
+// https://openrouter.ai/api/frontend/models/find?fmt=cards&order=newest&supported_parameters=tools
+
 export const updateModels: TaskConfig<'updateModels'> = {
   slug: 'updateModels',
   outputSchema: [
