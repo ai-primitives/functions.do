@@ -23,6 +23,7 @@ export const Completions: CollectionConfig = {
     { type: 'row', fields: [
       { name: 'duration', type: 'number' },
       { name: 'provider', type: 'text' },
+      { name: 'refusal', type: 'text' },
     ]},
   ],
 }

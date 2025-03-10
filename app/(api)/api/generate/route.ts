@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     collection: 'completions',
     data: {
       tenant: auth.user?.tenants?.[0]?.id || 'default',
-      function: functionDocs.docs[0].id,
+      function: functionDocs.docs[0],
       output: object,
       input: input,
       functionName,
