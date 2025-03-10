@@ -269,6 +269,7 @@ export interface Completion {
     | null;
   duration?: number | null;
   provider?: string | null;
+  refusal?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -561,6 +562,7 @@ export interface CompletionsSelect<T extends boolean = true> {
   debug?: T;
   duration?: T;
   provider?: T;
+  refusal?: T;
   updatedAt?: T;
   createdAt?: T;
 }
