@@ -25,5 +25,6 @@ export const Completions: CollectionConfig = {
       { name: 'provider', type: 'text' },
       { name: 'refusal', type: 'text' },
     ]},
+    { name: 'error', type: 'textarea' },
   ],
 }

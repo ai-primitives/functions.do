@@ -118,12 +118,12 @@ export default async (args: GenerateObjectArgs) => {
   const { content, reasoning, refusal } = message || {}
   let object: any
   let error: any
-  const parsedContent = content.replace(/```json/, '').replace(/```/, '')
+  const parsedContent = content.replace(/^```json\s*/, '').replace(/\s*```$/, '')
   try {
     object = JSON.parse(parsedContent)
-    // if (zodSchema) {
-    //   object = zodSchema.parse(object)
-    // }
+    if (zodSchema) {
+      object = zodSchema.parse(object)
+    }
   } catch(e: any) {
     console.log(e, parsedContent)
     error = e.message
