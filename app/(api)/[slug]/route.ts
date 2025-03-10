@@ -78,7 +78,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   // const languageModel = openrouter('openrouter/auto')
 
   const languageModel = wrapLanguageModel({
-    model: openrouter(model || 'anthropic/claude-3.7-sonnet'),
+    // model: openrouter(model || 'anthropic/claude-3.7-sonnet'),
+    model: openrouter(model || 'google/gemini-2.0-flash-001'),
     middleware: [
       { 
         wrapGenerate: async ({ doGenerate, params }) => {
