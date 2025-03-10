@@ -258,7 +258,11 @@ export interface Completion {
     | boolean
     | null;
   reasoning?: string | null;
-  debug?:
+  duration?: number | null;
+  provider?: string | null;
+  refusal?: string | null;
+  error?: string | null;
+  validation?:
     | {
         [k: string]: unknown;
       }
@@ -267,11 +271,7 @@ export interface Completion {
     | number
     | boolean
     | null;
-  duration?: number | null;
-  provider?: string | null;
-  refusal?: string | null;
-  error?: string | null;
-  validation?:
+  debug?:
     | {
         [k: string]: unknown;
       }
@@ -569,12 +569,12 @@ export interface CompletionsSelect<T extends boolean = true> {
   input?: T;
   schema?: T;
   reasoning?: T;
-  debug?: T;
   duration?: T;
   provider?: T;
   refusal?: T;
   error?: T;
   validation?: T;
+  debug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -20,6 +20,7 @@
     "@ai-sdk/openai-compatible": "^0.1.13",
     "@openrouter/ai-sdk-provider": "^0.4.3",
     "@payloadcms/db-mongodb": "^3.27.0",
+    "@payloadcms/email-nodemailer": "^3.27.0",
     "@payloadcms/graphql": "^3.27.0",
     "@payloadcms/next": "latest",
     "@payloadcms/payload-cloud": "latest",
