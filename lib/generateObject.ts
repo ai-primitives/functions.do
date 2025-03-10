@@ -130,7 +130,7 @@ export default async (args: GenerateObjectArgs) => {
     try {
       object = zodSchema.parse(object)
     } catch(e: any) {
-      validation = e.message
+      validation = JSON.parse(e.message)
     }
   }
   // console.log(results)
