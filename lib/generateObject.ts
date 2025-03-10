@@ -126,7 +126,7 @@ export default async (args: GenerateObjectArgs) => {
   let error: any
   // Fixing the bug in Qwen QwQ where the content is empty but JSON in the reasoning
   if (content === '' && reasoning && reasoning != '') content = reasoning
-  const parsedContent = content.replace(/^```json\s*/, '').replace(/\s*```$/, '')
+  const parsedContent = content.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '')
   try {
     object = JSON.parse(parsedContent)
   } catch(e: any) {
