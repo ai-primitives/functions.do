@@ -73,6 +73,7 @@ export default async (args: GenerateObjectArgs) => {
     delete json_schema.schema?.$schema
   }
   const response_format = args.schema ? { type: 'json_schema', json_schema } : { type: 'json_object' }
+  
   console.log({ modelName, json_schema })
   const url = (process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1') + '/chat/completions'
   const response = await fetch(url, {
@@ -85,6 +86,11 @@ export default async (args: GenerateObjectArgs) => {
     },
     body: JSON.stringify({
       model: modelName,
+      route: 'fallback',
+      // provider: {
+      //   require_parameters: true,
+      //   data_collection: 'deny',
+      // },
       messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }],
       response_format,
       temperature,
@@ -115,9 +121,11 @@ export default async (args: GenerateObjectArgs) => {
   // const { object, reasoning } = results as any
   const { model, provider } = results
   const message = results.choices[0].message
-  const { content, reasoning, refusal } = message || {}
+  let { content, reasoning, refusal } = message || {}
   let object: any
   let error: any
+  // Fixing the bug in Qwen QwQ where the content is empty but JSON in the reasoning
+  if (content === '' && reasoning && reasoning != '') content = reasoning
   const parsedContent = content.replace(/^```json\s*/, '').replace(/\s*```$/, '')
   try {
     object = JSON.parse(parsedContent)
