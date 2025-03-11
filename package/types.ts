@@ -14,23 +14,30 @@ export type AIFunction<TInput = any, TOutput = any> = {
 }
 
 // Types for function definitions
+// Define StringArray as an array of string literals to help TypeScript better infer element types
+export type StringArray = Array<string>
+
 export type SchemaValue =
   | string
-  | string[]
+  | StringArray
   | { [key: string]: SchemaValue }
   | SchemaValue[]
+
+
 
 export type FunctionDefinition = Record<string, SchemaValue>
 
 // Helper type to convert schema to output type
-type SchemaToOutput<T extends FunctionDefinition> = {
-  [K in keyof T]: T[K] extends Array<infer U>
-    ? U extends Record<string, any>
-      ? Array<{ [P in keyof U]: SchemaToOutput<{ value: U[P] }>['value'] }>
-      : string[]
+export type SchemaToOutput<T extends FunctionDefinition> = {
+  [K in keyof T]: T[K] extends Array<any> 
+    ? T[K] extends Array<string> 
+      ? string[] 
+      : T[K] extends Array<Record<string, any>>
+        ? Array<{ [P in keyof T[K][0]]: SchemaToOutput<{ value: T[K][0][P] }>['value'] }>
+        : string[]
     : T[K] extends Record<string, any>
-    ? { [P in keyof T[K]]: SchemaToOutput<{ value: T[K][P] }>['value'] }
-    : string
+      ? { [P in keyof T[K]]: SchemaToOutput<{ value: T[K][P] }>['value'] }
+      : string
 }
 
 // Function callback type
@@ -52,5 +59,8 @@ export type AI = {
 
 // Dynamic AI instance type
 export type AI_Instance = {
-  [K: string]: AIFunction
+  [K: string]: AIFunction<any, any> & (<T = any>(input?: any, config?: AIConfig) => Promise<T>)
 }
+
+// Helper type to infer array element types
+export type ArrayElementType<T> = T extends (infer U)[] ? U : never;

@@ -157,7 +157,10 @@ describe('functions.do', () => {
       let asyncCallbackExecuted = false;
       
       const functions = AI({
-        asyncCallback: async ({ ai, args }) => {
+        nameStartup: {
+          name: 'What is the startup name'
+        },
+        launchStartup: async ({ ai, args }) => {
           await new Promise(resolve => setTimeout(resolve, 100));
           asyncCallbackExecuted = true;
           return { success: true, data: args };
@@ -165,7 +168,8 @@ describe('functions.do', () => {
       });
 
       const mockAi: any = {}; // Create a mock AI instance
-      const result = await functions.asyncCallback({ ai: mockAi, args: { test: 'async' } });
+      const result = await functions.launchStartup({ ai: mockAi, args: { test: 'async' } });
+      const namingResults = await functions.nameStartup({ ai: mockAi, args: { test: 'async' } });
       
       expect(asyncCallbackExecuted).toBe(true);
       expect(result).toEqual({ success: true, data: { test: 'async' } });

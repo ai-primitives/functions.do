@@ -29,7 +29,15 @@ const ai = AI({
     title: 'title of the blog post',
     content: 'updated blog post content',
     changes: ['list of changes made']
-  }
+  },
+
+  // createBlog: async ({ ai, args}) => {
+  //   const blogTopics = await ai.listBlogTopics(args)
+  //   const { niche, audience, keywords, topics } = blogTopics
+  //   const titles = await Promise.all(topics.map(topic => ai.listBlogTitles({ background: args, niche, audience, topic })))
+  //   const posts = await Promise.all(titles.map(title => ai.writeBlogPost({ background: args, niche, audience, title })))
+  //   return { posts, titles, topics }
+  // }
   
 })
 
