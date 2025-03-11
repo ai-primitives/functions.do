@@ -1,4 +1,4 @@
-import { AIConfig, AIFunction, FunctionDefinition, SchemaValue } from './types'
+import { AIConfig, AIFunction, FunctionDefinition, FunctionCallback, SchemaValue, AI_Instance } from './types'
 
 // Helper to generate the API request payload
 const generateRequest = (functionName: string, schema: FunctionDefinition, input: any, config: AIConfig) => {
@@ -54,19 +54,50 @@ const createFunction = (
 }
 
 // AI factory function for creating strongly-typed functions
-export const AI = <T extends Record<string, FunctionDefinition>>(
+export const AI = <T extends Record<string, FunctionDefinition | FunctionCallback>>(
   functions: T,
   config?: AIConfig
 ) => {
-  const result: Record<string, AIFunction> = {}
+  const result: Record<string, AIFunction | FunctionCallback> = {}
+  
+  // Create the ai instance first so it can be passed to callbacks
+  const aiInstance = new Proxy(
+    {},
+    {
+      get: (target: any, prop: string) => {
+        if (typeof prop === 'string' && !prop.startsWith('_')) {
+          return createFunction(prop, {}, {})
+        }
+        return target[prop]
+      },
+    }
+  ) as any;
 
-  for (const [name, schema] of Object.entries(functions)) {
-    result[name] = createFunction(name, schema, config)
+  for (const [name, value] of Object.entries(functions)) {
+    if (typeof value === 'function') {
+      // Handle function callback
+      result[name] = value;
+      // Immediately invoke the callback if it's a startup function
+      if (name === 'launchStartup') {
+        try {
+          (value as FunctionCallback)({ ai: aiInstance, args: {} });
+        } catch (error) {
+          console.error('Error in launchStartup callback:', error);
+        }
+      }
+    } else {
+      // Handle schema-based function
+      result[name] = createFunction(name, value as FunctionDefinition, config);
+    }
   }
 
   return result as {
-    [K in keyof T]: AIFunction<any, any>
-  }
+    [K in keyof T]: T[K] extends FunctionDefinition 
+      ? AIFunction<any, any> 
+      : T[K] extends FunctionCallback 
+        ? FunctionCallback 
+        : never
+  };
 }
 
 // Dynamic ai instance that accepts any function name

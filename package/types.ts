@@ -33,13 +33,20 @@ type SchemaToOutput<T extends FunctionDefinition> = {
     : string
 }
 
+// Function callback type
+export type FunctionCallback<TArgs = any> = (context: { ai: AI_Instance, args: TArgs }) => any | Promise<any>
+
 // Main AI function factory type
 export type AI = {
-  <T extends Record<string, FunctionDefinition>>(
+  <T extends Record<string, FunctionDefinition | FunctionCallback>>(
     functions: T,
     config?: AIConfig
   ): {
-    [K in keyof T]: AIFunction<any, SchemaToOutput<T[K]>>
+    [K in keyof T]: T[K] extends FunctionDefinition 
+      ? AIFunction<any, SchemaToOutput<T[K]>> 
+      : T[K] extends FunctionCallback<infer TArgs> 
+        ? FunctionCallback<TArgs> 
+        : never
   }
 }
 
