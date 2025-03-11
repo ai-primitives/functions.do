@@ -96,4 +96,79 @@ describe('functions.do', () => {
       }
     }, 90000)
   })
+
+  describe('Callback functions', () => {
+    it('should support callback functions', async () => {
+      let callbackExecuted = false;
+      let receivedAiInstance: any = null;
+      let receivedArgs = null;
+      
+      const functions = AI({
+        testFunction: {
+          name: 'string',
+          description: 'string'
+        },
+        testCallback: ({ ai, args }) => {
+          callbackExecuted = true;
+          receivedAiInstance = ai;
+          receivedArgs = args;
+          return 'callback result';
+        }
+      });
+
+      // Access the callback function result
+      const mockAi: any = {}; // Create a mock AI instance
+      const result = functions.testCallback({ ai: mockAi, args: { test: 123 } });
+      
+      // Verify the function properties
+      expect(callbackExecuted).toBe(true);
+      expect(receivedAiInstance).not.toBeNull();
+      expect(typeof receivedAiInstance.testFunction).toBe('function');
+      expect(result).toBe('callback result');
+    });
+
+    it('should automatically execute launchStartup callback', async () => {
+      let startupExecuted = false;
+      let receivedAiInstance: any = null;
+      
+      const functions = AI({
+        someFunction: {
+          result: 'string'
+        },
+        launchStartup: ({ ai, args }) => {
+          startupExecuted = true;
+          receivedAiInstance = ai;
+          return { initialized: true };
+        }
+      });
+
+      // Verify the launchStartup was auto-executed
+      expect(startupExecuted).toBe(true);
+      expect(receivedAiInstance).not.toBeNull();
+      expect(typeof receivedAiInstance.someFunction).toBe('function');
+      
+      // Also verify we can call the callback explicitly
+      const mockAi: any = {}; // Create a mock AI instance
+      const result = functions.launchStartup({ ai: mockAi, args: {} });
+      expect(result).toEqual({ initialized: true });
+    });
+
+    it('should support async callbacks', async () => {
+      let asyncCallbackExecuted = false;
+      
+      const functions = AI({
+        asyncCallback: async ({ ai, args }) => {
+          await new Promise(resolve => setTimeout(resolve, 100));
+          asyncCallbackExecuted = true;
+          return { success: true, data: args };
+        }
+      });
+
+      const mockAi: any = {}; // Create a mock AI instance
+      const result = await functions.asyncCallback({ ai: mockAi, args: { test: 'async' } });
+      
+      expect(asyncCallbackExecuted).toBe(true);
+      expect(result).toEqual({ success: true, data: { test: 'async' } });
+    });
+  });
 })
