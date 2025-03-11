@@ -86,11 +86,11 @@ export default async (args: GenerateObjectArgs) => {
     },
     body: JSON.stringify({
       model: modelName,
-      route: 'fallback',
-      provider: {
-        require_parameters: true,
-        data_collection: 'deny',
-      },
+      // route: 'fallback',
+      // provider: {
+      //   require_parameters: true,
+      //   data_collection: 'deny',
+      // },
       messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }],
       response_format,
       temperature,
