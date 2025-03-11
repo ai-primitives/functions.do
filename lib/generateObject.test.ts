@@ -185,4 +185,23 @@ describe('generateObject', () => {
     expect(result.object).toBeDefined();
   }, TEST_TIMEOUT);
 
+  it('should be able to search the web', async () => {
+    const result = await generateObject({
+      functionName: 'findInvestmentReturns',
+      input: {
+        query: 'What is the YTD return of the Mag7?'
+      },
+      schema: {
+        ytdReturn: 'What is the YTD return of the Mag7?',
+        annualizedReturn: 'What is the annualized return of the Mag7?',
+      },
+      model: 'perplexity/sonar-reasoning-pro',
+      settings: {
+        seed: Date.now()
+      }
+    });
+    // Basic check that we got something back
+    expect(result.object).toBeDefined();
+  }, TEST_TIMEOUT * 3);
+
 });
