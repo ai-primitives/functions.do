@@ -32,10 +32,10 @@ describe('generateObject', () => {
 
     // Check that the result has the expected structure
     expect(result.object).toBeDefined();
-    expect(typeof result.object.name).toBe('string');
-    expect(typeof result.object.age).toBe('string');
-    expect(typeof result.object.email).toBe('string');
-    expect(result.object.email).toMatch(/@/);
+    expect(typeof result.object?.name).toBe('string');
+    expect(typeof result.object?.age).toBe('string');
+    expect(typeof result.object?.email).toBe('string');
+    expect(result.object?.email).toMatch(/@/);
   }, TEST_TIMEOUT);
 
   // Test with a more complex nested schema
@@ -189,7 +189,7 @@ describe('generateObject', () => {
     const result = await generateObject({
       functionName: 'findInvestmentReturns',
       input: {
-        query: 'What is the YTD return of the Mag7?'
+        query: 'What is the YTD, YTD annualized, 1 year, and 3 year return of the Mag7?'
       },
       schema: {
         ytdReturn: 'What is the YTD return of the Mag7?',

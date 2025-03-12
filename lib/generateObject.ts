@@ -19,6 +19,7 @@ import { z } from 'zod'
 // })
 
 
+
 const defaultModels = [
   'qwen/qwq-32b', 
   'deepseek/deepseek-r1', 
@@ -68,82 +69,77 @@ export default async (args: GenerateObjectArgs) => {
   // const model = openRouter(modelName)
   let { system = 'Respond only in JSON.', temperature, seed } = settings || {}
   const prompt = `${functionName}(${JSON.stringify(input, null, 2)})`
-  const zodSchema = args.schema ? generateSchema(args.schema) : undefined
-  let json_schema: any = zodSchema ? { name: functionName, schema: zodToJsonSchema(zodSchema) } : undefined
-  if (json_schema) {
-    delete json_schema.schema?.$schema
-  }
-  const response_format = args.schema ? { type: 'json_schema', json_schema } : { type: 'json_object' }
-  
-  console.log({ modelName, json_schema })
-  const url = (process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1') + '/chat/completions'
-  const response = await fetch(url, {
-    method: 'POST',
+
+
+  const openRouter = createOpenAI({
+    apiKey: process.env.OPENROUTER_API_KEY,
+    baseURL: process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
       'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
       'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
-    },
-    body: JSON.stringify({
-      model: modelName,
-      route: 'fallback',
-      provider: {
-        require_parameters: true,
-        data_collection: 'deny',
-      },
-      messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }],
-      response_format,
+    }
+  })
+
+  const useTools = modelName.startsWith('anthropic')
+  const structuredOutputs = useTools ? false : true
+
+  const results = args.schema ? 
+    await generateObject({
+      model: openRouter(modelName, { structuredOutputs }),
+      system,
+      prompt,
+      mode: useTools ? 'tool' : 'json',
+      schema: generateSchema(args.schema),
+      temperature,
+      seed,
+    }) :
+    await generateObject({
+      model: openRouter(modelName),
+      system,
+      prompt,
+      output: 'no-schema',
       temperature,
       seed,
     })
-  })
-  const headers = Object.fromEntries(response.headers)
-  // console.log(headers)
-  const { id } = headers
-  const cache = headers['cf-aig-cache-status']
-  const status = `${response.status}: ${response.statusText}`
-  const results = await response.json()
+  const { object = {} } = results as any
+  const { id, modelId  } = results.response
   console.log(results)
-  // const results = args.schema ? 
-  //   await generateObject({
-  //     model,
-  //     system,
-  //     prompt,
-  //     mode: 'json',
-  //     schema: generateSchema(args.schema),
-  //   } as any) :
-  //   await generateObject({
-  //     model,
-  //     system,
-  //     prompt,
-  //     output: 'no-schema',
-  //   })
-  // const { object, reasoning } = results as any
-  const { model, provider } = results
-  const message = results.choices[0].message
-  let { content, reasoning, refusal } = message || {}
-  let object: any
+  console.log(results.response)
+
+  const cache = results.response.headers?.['cf-aig-cache-status']
+
+  // console.log(headers)
+  // const { id } = headers
+  // const cache = headers['cf-aig-cache-status']
+  // const status = `${response.status}: ${response.statusText}`
+  // const results = await response.json()
+  // console.log(results)
+
+  // const { model, provider } = results
+  // const message = results.choices[0].message
+  // let { content, reasoning, refusal } = message || {}
+  // let object: any
   let error: any
   // Fixing the bug in Qwen QwQ where the content is empty but JSON in the reasoning
-  if (content === '' && reasoning && reasoning != '') content = reasoning
-  const parsedContent = content.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '')
-  try {
-    object = JSON.parse(parsedContent)
-  } catch(e: any) {
-    console.log(e, parsedContent)
-    error = e.message
-  }
-  let validation: any = { valid: true }
-  if (zodSchema) {
-    try {
-      object = zodSchema.parse(object)
-    } catch(e: any) {
-      validation = JSON.parse(e.message)
-    }
-  }
+  // if (content === '' && reasoning && reasoning != '') content = reasoning
+  // const parsedContent = content.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '')
+  // try {
+  //   object = JSON.parse(parsedContent)
+  // } catch(e: any) {
+  //   console.log(e, parsedContent)
+  //   error = e.message
+  // }
+  // let validation: any = { valid: true }
+  // if (zodSchema) {
+  //   try {
+  //     object = zodSchema.parse(object)
+  //   } catch(e: any) {
+  //     validation = JSON.parse(e.message)
+  //   }
+  // }
   // console.log(results)
-  const data = { functionName, results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema, validation }
+  // const data = { functionName, results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema, validation }
+  const data = { functionName, results, modelName, model: modelId, id, object, cache, error }
   console.log(data)
   return data
 }
