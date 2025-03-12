@@ -29,6 +29,8 @@
     "@types/js-yaml": "^4.0.9",
     "@vercel/functions": "^2.0.0",
     "ai": "^4.1.47",
+    "ai-functions": "^0.3.0",
+    "ai-workflows": "^1.1.0",
     "camelcase-keys": "^9.1.3",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",

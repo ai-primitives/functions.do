@@ -1,7 +1,6 @@
 import { FunctionDefinition } from '@/package/types'
 import { createOpenRouter } from '@openrouter/ai-sdk-provider'
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible'
-import { createOpenAI } from '@ai-sdk/openai'
 import { generateObject } from 'ai'
 import { sample } from 'lodash-es'
 import { generateSchema } from './generateSchema'
@@ -87,11 +86,11 @@ export default async (args: GenerateObjectArgs) => {
     },
     body: JSON.stringify({
       model: modelName,
-      route: 'fallback',
-      provider: {
-        require_parameters: true,
-        data_collection: 'deny',
-      },
+      // route: 'fallback',
+      // provider: {
+      //   require_parameters: true,
+      //   data_collection: 'deny',
+      // },
       messages: [{ role: 'system', content: system }, { role: 'user', content: prompt }],
       response_format,
       temperature,
