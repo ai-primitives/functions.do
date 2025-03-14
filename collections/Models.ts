@@ -6,17 +6,24 @@ export const Models: CollectionConfig = {
     group: 'AI',
     useAsTitle: 'name',
   },
-  // versions: true,
+  versions: true,
   fields: [
-    // {
-    //   type: 'row',
-    //   fields: [
-        { name: 'id', type: 'text', required: true },
-        { name: 'name', type: 'text', required: true },
-    //   ],
-    // },
+    { name: 'id', type: 'text', required: true },
+    { name: 'name', type: 'text', required: true },
+    { name: 'description', type: 'richText' },
+    { 
+      name: 'modelGroup', 
+      type: 'relationship', 
+      relationTo: 'modelGroups',
+      required: true,
+    },
+    { 
+      name: 'provider', 
+      type: 'relationship', 
+      relationTo: 'providers',
+      required: true,
+    },
     { name: 'created', type: 'date' },
-    { name: 'description', type: 'textarea' },
     { name: 'contextLength', type: 'number' },
     {
       name: 'architecture',

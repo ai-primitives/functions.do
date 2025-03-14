@@ -9,6 +9,24 @@ export const Users: CollectionConfig = {
   auth: { tokenExpiration: 60 * 60 * 24 * 30, useAPIKey: true },
   fields: [
     // Email added by default
-    // Add more fields as needed
+    { name: 'name', type: 'text' },
+    { 
+      name: 'role', 
+      type: 'select', 
+      required: true, 
+      options: [
+        { label: 'Admin', value: 'admin' },
+        { label: 'Editor', value: 'editor' },
+        { label: 'Viewer', value: 'viewer' },
+      ],
+      defaultValue: 'viewer',
+    },
+    // Reverse relation to projects
+    { 
+      name: 'projects', 
+      type: 'relationship', 
+      relationTo: 'projects', 
+      hasMany: true,
+    },
   ],
 }

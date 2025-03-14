@@ -16,6 +16,19 @@ import { Tenants } from './collections/Tenants'
 import { Models } from './collections/Models'
 import { Schemas } from './collections/Schemas'
 import { Completions } from './collections/Completions'
+import { Projects } from './collections/Projects'
+import { ModelGroups } from './collections/ModelGroups'
+import { Providers } from './collections/Providers'
+import { Datasets } from './collections/Datasets'
+import { Data } from './collections/Data'
+import { Evals } from './collections/Evals'
+import { EvalRuns } from './collections/EvalRuns'
+import { EvalResults } from './collections/EvalResults'
+import { FunctionCalls } from './collections/FunctionCalls'
+import { Workflows } from './collections/Workflows'
+import { WorkflowCalls } from './collections/WorkflowCalls'
+import { Prompts } from './collections/Prompts'
+import { Groups } from './collections/Groups'
 
 import { isSuperAdmin } from './collections/hooks/isSuperAdmin'
 import { updateModels } from './tasks/updateModels'
@@ -30,7 +43,35 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Functions, Models, Completions, Images, Schemas, Users, Tenants],
+  collections: [
+    // Core collections
+    Users, 
+    Projects,
+    Groups,
+    
+    // AI collections
+    Functions,
+    FunctionCalls, 
+    Models,
+    ModelGroups,
+    Providers,
+    Workflows,
+    WorkflowCalls,
+    Prompts,
+    
+    // Data collections
+    Datasets,
+    Data,
+    Evals,
+    EvalRuns,
+    EvalResults,
+    
+    // Existing collections
+    Completions,
+    Images, 
+    Schemas, 
+    Tenants
+  ],
   jobs: {
     tasks: [updateModels],
   },
