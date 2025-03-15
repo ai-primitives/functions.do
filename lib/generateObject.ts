@@ -2,20 +2,16 @@ import { FunctionDefinition } from '@/package/types'
 import { createOpenRouter } from '@openrouter/ai-sdk-provider'
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible'
 import { createOpenAI } from '@ai-sdk/openai'
-import { generateObject } from 'ai'
+import { generateObject, RepairTextFunction } from 'ai'
 import { sample } from 'lodash-es'
 import { generateSchema } from './generateSchema'
 import { zodToJsonSchema } from 'zod-to-json-schema'
 import { z } from 'zod'
+import { waitUntil } from '@vercel/functions'
+import configPromise from 'payload.config'
+import { getPayload } from 'payload'
+import hashObject from 'object-hash'
 
-// const openRouter = createOpenRouter({
-//   // baseURL: process.env.AI_GATEWAY_URL!,
-//   baseURL: 'https://gateway.ai.cloudflare.com/v1/a826340b3b93189c9ebb7c0eaeba3c46/functions/openrouter',
-//   headers: {
-//     'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
-//     'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
-//   }
-// })
 
 const defaultModels = [
   'qwen/qwq-32b',
@@ -40,6 +36,14 @@ const defaultModels = [
   'meta-llama/llama-3.3-70b-instruct',
 ]
 
+export const experimental_repairText: RepairTextFunction = async ({ text, error }) => {
+  // example: add a closing brace to the text
+  console.log({ text, error })
+  const repairedText = text.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '')
+  console.log({ repairedText })
+  return repairedText
+}
+
 type GenerateObjectArgs = {
   functionName: string
   input: any
@@ -48,8 +52,10 @@ type GenerateObjectArgs = {
   settings?: {
     system?: string
     prompt?: string
-    temperature?: number
-    seed?: number
+    temperature?: number | string
+    seed?: number | string
+    topK?: number | string
+    topP?: number | string
   }
 }
 
@@ -64,8 +70,14 @@ export default async (args: GenerateObjectArgs) => {
   const modelName = args.model || sample(defaultModels)!
   const { functionName, input, settings } = args
   // const model = openRouter(modelName)
-  let { system = 'Respond only in JSON.', temperature, seed } = settings || {}
+  let { system = 'Respond only in JSON.', temperature, seed, topK, topP } = settings || {}
+  if (typeof temperature === 'string') temperature = parseFloat(temperature)
+  if (typeof seed === 'string') seed = parseInt(seed)
+  if (typeof topK === 'string') topK = parseInt(topK)
+  if (typeof topP === 'string') topP = parseFloat(topP)
   const prompt = `${functionName}(${JSON.stringify(input, null, 2)})`
+
+  const start = Date.now()
 
   const openRouter = createOpenAI({
     apiKey: process.env.OPENROUTER_API_KEY,
@@ -74,6 +86,10 @@ export default async (args: GenerateObjectArgs) => {
       'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
       'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
     },
+    fetch: (input, init) => {
+      console.log('fetching', { input, init })
+      return fetch(input, init)
+    }
   })
 
   const useTools = modelName.startsWith('anthropic')
@@ -86,23 +102,49 @@ export default async (args: GenerateObjectArgs) => {
         prompt,
         mode: useTools ? 'tool' : 'json',
         schema: generateSchema(args.schema),
+        experimental_repairText,
         temperature,
         seed,
+        topK,
+        topP,
       })
     : await generateObject({
         model: openRouter(modelName),
         system,
         prompt,
         output: 'no-schema',
+        experimental_repairText,
         temperature,
         seed,
+        topK,
+        topP,
       })
+  
   const { object = {} } = results as any
   const { id, modelId } = results.response
   console.log(results)
   console.log(results.response)
 
   const cache = results.response.headers?.['cf-aig-cache-status']
+
+
+  // waitUntil(
+  //   payload.create({
+  //     collection: 'completions',
+  //     data: {
+  //       tenant,
+  //       hash: inputHash,
+  //       function: func.docs[0],
+  //       input: input ? input : args,
+  //       output: completionResult.object,
+  //       model: completionResult.response.modelId,
+  //       requestId: completionResult.response.id,
+  //       debug: completionResult as any,
+  //       // reasoning: completionResult.,
+  //       seed,
+  //     },
+  //   }),
+  // )
 
   // console.log(headers)
   // const { id } = headers
@@ -135,7 +177,8 @@ export default async (args: GenerateObjectArgs) => {
   // }
   // console.log(results)
   // const data = { functionName, results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema, validation }
-  const data = { functionName, results, modelName, model: modelId, id, object, cache, error }
+  const latency = Date.now() - start
+  const data = { functionName, results, modelName, model: modelId, id, object, cache, error, latency }
   console.log(data)
   return data
 }
