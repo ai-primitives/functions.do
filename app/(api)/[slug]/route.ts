@@ -273,16 +273,16 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       // 
       next: url.toString()
     },
-    // data: object, variant: object, 
+    data: object, variant: object, 
     // control: object, variant: variantResult.object,
-    optionA: object, optionB: variantResult.object,
+    // optionA: object, optionB: variantResult.object,
     feedback: { 
       // 'Prefer Control': origin + 'feedback?prefer=' + completionResult.response.id,
       // 'Prefer Variant': origin + 'feedback?variant=' + completionResult.response.id,
-      'A is better': origin + `/feedback/${completionResult.response.id}?prefer=A`,
-      'B is better': origin + `/feedback/${completionResult.response.id}?prefer=B`,
-      'Both are good': origin + `/feedback/${completionResult.response.id}?both=good`,
-      'Both are bad': origin + `/feedback/${completionResult.response.id}?both=bad`,
+      'Control is better': origin + `/feedback/${completionResult.response.id.slice(16)}?prefer=control`,
+      'Variant is better': origin + `/feedback/${completionResult.response.id.slice(16)}?prefer=variant`,
+      'Both are good': origin + `/feedback/${completionResult.response.id.slice(16)}?both=good`,
+      'Both are bad': origin + `/feedback/${completionResult.response.id.slice(16)}?both=bad`,
     }, latency })
   // return Response.json({ completion: completionResult, 
   //   // func: funcResult, 
