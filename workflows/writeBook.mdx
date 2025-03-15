@@ -1,4 +1,5 @@
 ---
+
 createBookProposal:
   title: proposed title of the book
   subtitle: proposed subtitle of the book
@@ -122,9 +123,10 @@ prepareForPublication:
   pricingRecommendation: suggested pricing strategy
   formatRecommendations: [recommended formats (hardcover, ebook, etc.)]
   distributionChannels: [recommended distribution channels]
+
 ---
 
-{/\*
+{/* 
 // Step 1: Create book proposal
 export const proposal = await ai.createBookProposal(props)
 
@@ -202,12 +204,13 @@ bookTitle: proposal.title
 // Step 8: Prepare for publication
 export const publicationPrep = await ai.prepareForPublication({
 bookTitle: proposal.title
-}) \*/}
+}) 
 
-{/\*
 This MDX file implements a complete book creation workflow.
 It can be used by passing props like:
 
 <WriteBook title='My Amazing Book' author='John Doe' />
 The workflow will: 1. Create a book proposal 2. Generate a table of contents 3. Create detailed chapter outlines 4. Write content for each section 5. Review each chapter 6. Review
-the entire book 7. Edit the book based on reviews 8. Prepare the book for publication The result is a complete book structure with all necessary components. */}
+the entire book 7. Edit the book based on reviews 8. Prepare the book for publication The result is a complete book structure with all necessary components. */} 
+
+*/}

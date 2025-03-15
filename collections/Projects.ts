@@ -39,31 +39,31 @@ export const Projects: CollectionConfig = {
       name: 'modelGroups',
       type: 'join',
       collection: 'modelGroups',
-      on: 'project'
+      on: 'project',
     },
     {
       name: 'datasets',
       type: 'join',
       collection: 'datasets',
-      on: 'project'
+      on: 'project',
     },
     {
       name: 'functions',
       type: 'join',
       collection: 'functions',
-      on: 'project'
+      on: 'project',
     },
     {
       name: 'workflows',
       type: 'join',
       collection: 'workflows',
-      on: 'project'
+      on: 'project',
     },
     {
       name: 'prompts',
       type: 'join',
       collection: 'prompts',
-      on: 'project'
+      on: 'project',
     },
   ],
 }
