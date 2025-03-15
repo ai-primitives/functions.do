@@ -168,6 +168,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       collection: 'functions',
       data: {
         tenant,
+        project: 'default',
         name: slug,
         output: 'Object',
         model: model || 'anthropic/claude-3.7-sonnet',
