@@ -283,7 +283,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       'Variant is better': origin + `/feedback/${completionResult.response.id.slice(16)}?prefer=variant`,
       'Both are good': origin + `/feedback/${completionResult.response.id.slice(16)}?both=good`,
       'Both are bad': origin + `/feedback/${completionResult.response.id.slice(16)}?both=bad`,
-    }, latency })
+    }, latency }, { headers: { 'Content-Type': 'application/json; charset=utf-8' }})
   // return Response.json({ completion: completionResult, 
   //   // func: funcResult, 
   //   cacheHit: false, cacheLatency, latency, completionLatency, input, inputHash, args, query })
