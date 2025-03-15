@@ -38,7 +38,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   const { slug } = await params
   const { seed: seedString, temperature: temperatureString, model = 'google/gemini-2.0-flash-001', input, system, prompt, ...args } = query
-  const seed = seedString ? parseInt(seedString) : undefined
+  const seed = seedString ? parseInt(seedString) : 1
   const temperature = temperatureString ? parseFloat(temperatureString) : 1.0
 
   // get sha1 hash of input
