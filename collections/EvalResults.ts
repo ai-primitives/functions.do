@@ -8,9 +8,9 @@ export const EvalResults: CollectionConfig = {
   },
   versions: true,
   fields: [
-    { 
-      name: 'evalRun', 
-      type: 'relationship', 
+    {
+      name: 'evalRun',
+      type: 'relationship',
       relationTo: 'evalRuns',
       required: true,
     },

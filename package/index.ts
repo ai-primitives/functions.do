@@ -2,7 +2,7 @@ import { AIConfig, AIFunction, FunctionDefinition, FunctionCallback, SchemaValue
 
 // Helper to preserve array types for TypeScript
 const preserveArrayTypes = <T extends Array<any>>(arr: T): T => {
-  return arr;
+  return arr
 }
 
 // Helper to generate the API request payload
@@ -11,7 +11,7 @@ const generateRequest = (functionName: string, schema: FunctionDefinition, input
     functionName,
     schema,
     input,
-    config
+    config,
   }
 }
 
@@ -25,7 +25,7 @@ const callAPI = async (request: any) => {
       'Content-Type': 'application/json',
       Authorization: `users API-Key ${process.env.FUNCTIONS_DO_API_KEY}`,
     },
-    body: JSON.stringify(request)
+    body: JSON.stringify(request),
   })
 
   if (!response.ok) {
@@ -33,39 +33,35 @@ const callAPI = async (request: any) => {
     throw new Error(`API call failed: ${response.statusText}`)
   }
 
-  const data = await response.json() as any
+  const data = (await response.json()) as any
   console.log(data)
   return data
 }
 
 // Helper to generate a function from schema and config
-const createFunction = <T extends FunctionDefinition>(
-  name: string,
-  schema: T,
-  config?: AIConfig
-) => {
+const createFunction = <T extends FunctionDefinition>(name: string, schema: T, config?: AIConfig) => {
   // Extract the output type from the schema, ensuring arrays are handled properly
-  type OutputType = SchemaToOutput<T>;
-  
+  type OutputType = SchemaToOutput<T>
+
   // Return a typed function to ensure TypeScript properly infers types from schema
   return async (input: any, functionConfig?: AIConfig): Promise<OutputType> => {
     const mergedConfig = { ...config, ...functionConfig }
     const request = generateRequest(name, schema, input, mergedConfig)
-    
+
     try {
-      const response = await callAPI(request) as any
+      const response = (await callAPI(request)) as any
       const result = response.data ?? response
-      
+
       // Ensure schema shapes are preserved for TypeScript
       for (const key in schema) {
         // If schema defines an array property and result has that property
         if (Array.isArray(schema[key]) && result[key]) {
           // Use our helper to ensure the array type is preserved for TypeScript inference
-          result[key] = preserveArrayTypes(Array.isArray(result[key]) ? result[key] : [result[key]]);
+          result[key] = preserveArrayTypes(Array.isArray(result[key]) ? result[key] : [result[key]])
         }
       }
-      
-      return result as OutputType;
+
+      return result as OutputType
     } catch (error) {
       console.error('Error calling AI function:', error)
       throw error
@@ -74,10 +70,7 @@ const createFunction = <T extends FunctionDefinition>(
 }
 
 // AI factory function for creating strongly-typed functions
-export const AI = <T extends Record<string, FunctionDefinition | FunctionCallback>>(
-  functions: T,
-  config?: AIConfig
-) => {
+export const AI = <T extends Record<string, FunctionDefinition | FunctionCallback>>(functions: T, config?: AIConfig) => {
   // Use a more specific type definition to ensure array element types are preserved
   type Result = {
     [K in keyof T]: T[K] extends FunctionDefinition
@@ -85,11 +78,11 @@ export const AI = <T extends Record<string, FunctionDefinition | FunctionCallbac
       : T[K] extends FunctionCallback<infer TArgs>
         ? FunctionCallback<TArgs>
         : never
-  };
-  
+  }
+
   // Create a type-safe result object
-  const result = {} as Result;
-  
+  const result = {} as Result
+
   // Create the ai instance first so it can be passed to callbacks
   const aiInstance = new Proxy(
     {},
@@ -101,44 +94,41 @@ export const AI = <T extends Record<string, FunctionDefinition | FunctionCallbac
         }
         return target[prop]
       },
-    }
-  ) as AI_Instance;
+    },
+  ) as AI_Instance
 
   for (const [name, value] of Object.entries(functions)) {
     if (typeof value === 'function') {
       // Handle function callback
-      result[name as keyof T] = value as any;
+      result[name as keyof T] = value as any
       // Immediately invoke the callback if it's a startup function
       if (name === 'launchStartup') {
         try {
-          (value as FunctionCallback)({ ai: aiInstance, args: {} });
+          ;(value as FunctionCallback)({ ai: aiInstance, args: {} })
         } catch (error) {
-          console.error('Error in launchStartup callback:', error);
+          console.error('Error in launchStartup callback:', error)
         }
       }
     } else {
       // Handle schema-based function by preserving the exact schema type
       result[name as keyof T] = createFunction(
-        name, 
+        name,
         value as any, // Cast to any first to avoid TypeScript narrowing issues
-        config
-      ) as any;
+        config,
+      ) as any
     }
   }
 
-  return result;
+  return result
 }
 
 // Dynamic ai instance that accepts any function name
 // Make a specialized version of createFunction that better handles type inference for dynamic calls
-const createDynamicFunction = <T extends SchemaValue>(
-  name: string,
-  config?: AIConfig
-) => {
+const createDynamicFunction = <T extends SchemaValue>(name: string, config?: AIConfig) => {
   // Create an empty schema that will be filled dynamically by the server
-  const emptySchema = {} as Record<string, T>;
-  
-  return createFunction(name, emptySchema, config);
+  const emptySchema = {} as Record<string, T>
+
+  return createFunction(name, emptySchema, config)
 }
 
 // Create a special proxy with improved type inference
@@ -151,5 +141,5 @@ export const ai = new Proxy(
       }
       return target[prop]
     },
-  }
+  },
 ) as AI_Instance

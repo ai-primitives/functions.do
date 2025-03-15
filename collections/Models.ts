@@ -11,15 +11,15 @@ export const Models: CollectionConfig = {
     { name: 'id', type: 'text', required: true },
     { name: 'name', type: 'text', required: true },
     { name: 'description', type: 'richText' },
-    { 
-      name: 'modelGroup', 
-      type: 'relationship', 
+    {
+      name: 'modelGroup',
+      type: 'relationship',
       relationTo: 'modelGroups',
       required: true,
     },
-    { 
-      name: 'provider', 
-      type: 'relationship', 
+    {
+      name: 'provider',
+      type: 'relationship',
       relationTo: 'providers',
       required: true,
     },

@@ -6,10 +6,8 @@ import crypto from 'crypto'
 
 import { generateObject, generateText } from 'ai'
 import { wrapLanguageModel } from 'ai'
-import { createOpenAI} from '@ai-sdk/openai'
+import { createOpenAI } from '@ai-sdk/openai'
 import { openrouter } from '@openrouter/ai-sdk-provider'
-
-
 
 export const maxDuration = 300
 
@@ -81,15 +79,14 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     // model: openrouter(model || 'anthropic/claude-3.7-sonnet'),
     model: openrouter(model || 'google/gemini-2.0-flash-001'),
     middleware: [
-      { 
+      {
         wrapGenerate: async ({ doGenerate, params }) => {
-          console.log('doGenerate called');
-          console.log(`params: ${JSON.stringify(params, null, 2)}`);
-      
+          console.log('doGenerate called')
+          console.log(`params: ${JSON.stringify(params, null, 2)}`)
+
           const result = await doGenerate()
 
           console.log(result)
-
 
           // waitUntil(payload.create({
           //   collection: 'completions',
@@ -105,12 +102,11 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
           //     seed,
           //   },
           // }))
-    
-      
+
           return result
         },
-      }
-    ]
+      },
+    ],
   })
 
   // if function exists but no completion, generate completion
@@ -120,8 +116,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       model: languageModel,
       providerOptions: {
         reasoning: {
-          effort: 'high'
-        }
+          effort: 'high',
+        },
       },
       system,
       prompt: `${slug}(${inputString})`,
@@ -129,20 +125,22 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       seed,
       temperature,
     })
-    waitUntil(payload.create({
-      collection: 'completions',
-      data: {
-        tenant,
-        hash: inputHash,
-        function: func.docs[0],
-        input: input ? input : args,
-        output: completionResult.object,
-        model: completionResult.response.modelId,
-        requestId: completionResult.response.id,
-        debug: completionResult as any,
-        seed,
-      },
-    }))
+    waitUntil(
+      payload.create({
+        collection: 'completions',
+        data: {
+          tenant,
+          hash: inputHash,
+          function: func.docs[0],
+          input: input ? input : args,
+          output: completionResult.object,
+          model: completionResult.response.modelId,
+          requestId: completionResult.response.id,
+          debug: completionResult as any,
+          seed,
+        },
+      }),
+    )
     return Response.json({ cacheHit: false, cacheLatency, func: func.docs[0], completion: completionResult, input, inputHash, args, query })
   }
 
@@ -155,8 +153,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       model: languageModel,
       providerOptions: {
         reasoning: {
-          effort: 'high'
-        }
+          effort: 'high',
+        },
       },
       // reasoning: { effort: 'high' },
       prompt: `${slug}(${inputString})`,
@@ -179,22 +177,23 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const latency = Date.now() - start
   const completionLatency = latency - cacheLatency
 
-
-  waitUntil(payload.create({
-    collection: 'completions',
-    data: {
-      tenant,
-      hash: inputHash,
-      function: func.docs[0],
-      input: input ? input : args,
-      output: completionResult.object,
-      model: completionResult.response.modelId,
-      requestId: completionResult.response.id,
-      debug: completionResult as any,
-      // reasoning: completionResult.,
-      seed,
-    },
-  }))
+  waitUntil(
+    payload.create({
+      collection: 'completions',
+      data: {
+        tenant,
+        hash: inputHash,
+        function: func.docs[0],
+        input: input ? input : args,
+        output: completionResult.object,
+        model: completionResult.response.modelId,
+        requestId: completionResult.response.id,
+        debug: completionResult as any,
+        // reasoning: completionResult.,
+        seed,
+      },
+    }),
+  )
 
   return Response.json({ completion: completionResult, func: funcResult, cacheHit: false, cacheLatency, latency, completionLatency, input, inputHash, args, query })
 }

@@ -45,32 +45,32 @@ export default buildConfig({
   },
   collections: [
     // Core collections
-    Users, 
+    Users,
     Projects,
     Groups,
-    
+
     // AI collections
     Functions,
-    FunctionCalls, 
+    FunctionCalls,
     Models,
     ModelGroups,
     Providers,
     Workflows,
     WorkflowCalls,
     Prompts,
-    
+
     // Data collections
     Datasets,
     Data,
     Evals,
     EvalRuns,
     EvalResults,
-    
+
     // Existing collections
     Completions,
-    Images, 
-    Schemas, 
-    Tenants
+    Images,
+    Schemas,
+    Tenants,
   ],
   jobs: {
     tasks: [updateModels],
@@ -89,19 +89,13 @@ export default buildConfig({
     // storage-adapter-placeholder
     multiTenantPlugin<Config>({
       tenantSelectorLabel: 'Project',
-      tenantsArrayField: {
-        
-      },
-      tenantField: {
-        
-      },
+      tenantsArrayField: {},
+      tenantField: {},
       collections: {
         images: {},
         functions: {},
         schemas: {},
-        completions: {
-          
-        },
+        completions: {},
         // projects: {},
       },
       userHasAccessToAllTenants: isSuperAdmin,

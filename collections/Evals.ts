@@ -9,16 +9,16 @@ export const Evals: CollectionConfig = {
   versions: true,
   fields: [
     { name: 'name', type: 'text', required: true },
-    { 
-      name: 'dataset', 
-      type: 'relationship', 
+    {
+      name: 'dataset',
+      type: 'relationship',
       relationTo: 'datasets',
       required: true,
     },
-    { 
-      name: 'evalRuns', 
-      type: 'relationship', 
-      relationTo: 'evalRuns', 
+    {
+      name: 'evalRuns',
+      type: 'relationship',
+      relationTo: 'evalRuns',
       hasMany: true,
     },
     // Additional configuration fields

@@ -10,10 +10,10 @@ export const Projects: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', required: true },
     { name: 'description', type: 'richText' },
-    { 
-      name: 'status', 
-      type: 'select', 
-      required: true, 
+    {
+      name: 'status',
+      type: 'select',
+      required: true,
       options: [
         { label: 'Draft', value: 'draft' },
         { label: 'Active', value: 'active' },
@@ -33,55 +33,37 @@ export const Projects: CollectionConfig = {
           required: true,
         },
       ],
-      admin: {
-        description: 'Users with access to this project',
-      },
     },
     // Using join fields for one-to-many relationships
     {
       name: 'modelGroups',
       type: 'join',
       collection: 'modelGroups',
-      on: 'project',
-      admin: {
-        description: 'Model groups in this project',
-      },
+      on: 'project'
     },
     {
       name: 'datasets',
       type: 'join',
       collection: 'datasets',
-      on: 'project',
-      admin: {
-        description: 'Datasets in this project',
-      },
+      on: 'project'
     },
     {
       name: 'functions',
       type: 'join',
       collection: 'functions',
-      on: 'project',
-      admin: {
-        description: 'Functions in this project',
-      },
+      on: 'project'
     },
     {
       name: 'workflows',
       type: 'join',
       collection: 'workflows',
-      on: 'project',
-      admin: {
-        description: 'Workflows in this project',
-      },
+      on: 'project'
     },
     {
       name: 'prompts',
       type: 'join',
       collection: 'prompts',
-      on: 'project',
-      admin: {
-        description: 'Prompts in this project',
-      },
+      on: 'project'
     },
   ],
 }

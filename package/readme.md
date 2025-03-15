@@ -3,6 +3,7 @@
 AI is transforming businesses but integrating LLMs into existing systems presents challenges due to the clash between AI's non-deterministic nature and traditional software's deterministic characteristics.
 
 Key challenges include:
+
 - **Reliability**: AI's unpredictable outputs complicate testing and maintenance
 - **Accuracy**: Models can hallucinate or produce incorrect information
 - **Model Selection**: Balancing capabilities, speed, and cost across rapidly evolving models
@@ -12,10 +13,10 @@ Key challenges include:
 ### The Solution
 
 functions.do creates a clean separation between AI capabilities and application code through strongly-typed interfaces that hide model complexities, enabling:
+
 - Rapid prototyping of AI applications
 - Continuous improvement without disrupting application code
 - Comprehensive evaluation and optimization strategies
-
 
 ### Usage
 
@@ -24,10 +25,10 @@ You can use it by simply calling any function name with any arguments on the `ai
 ```typescript
 import { ai } from 'functions.do'
 
-const results = await ai.writeBlogPostTitles({ 
+const results = await ai.writeBlogPostTitles({
   topic: 'automating business workflows with LLMs',
   audience: 'executives',
-  count: 10
+  count: 10,
 })
 
 console.log(results)
@@ -53,55 +54,57 @@ Alternatively, you can define the return type of the function during initializat
 import { AI } from 'functions.do'
 
 const ai = AI({
-
   createLeanCanvas: {
-      problems: ['top 3 problems the business solves'],
-      customerSegments: ['target customers and users for the product'],
-      uniqueValueProposition: 'clear and compelling message that states why you are different and worth buying',
-      solutions: ['outline of the solutions to the identified problems'],
-      unfairAdvantage: 'something that cannot be easily copied or bought',
-      revenueStreams: ['revenue model, lifetime value, revenue, gross margin'],
-      costStructure: ['customer acquisition costs', 'distribution costs', 'hosting', 'people', 'etc.'],
-      keyMetrics: ['key activities you measure (acquisition, retention, referrals, etc.)'],
-      channels: ['path to customers (inbound, outbound, viral, etc.)'],
-      earlyAdopters: 'characteristics of the ideal early adopter'
-    }
-
+    problems: ['top 3 problems the business solves'],
+    customerSegments: ['target customers and users for the product'],
+    uniqueValueProposition: 'clear and compelling message that states why you are different and worth buying',
+    solutions: ['outline of the solutions to the identified problems'],
+    unfairAdvantage: 'something that cannot be easily copied or bought',
+    revenueStreams: ['revenue model, lifetime value, revenue, gross margin'],
+    costStructure: ['customer acquisition costs', 'distribution costs', 'hosting', 'people', 'etc.'],
+    keyMetrics: ['key activities you measure (acquisition, retention, referrals, etc.)'],
+    channels: ['path to customers (inbound, outbound, viral, etc.)'],
+    earlyAdopters: 'characteristics of the ideal early adopter',
+  },
 })
-
 
 const results = await ai.createLeanCanvas({ domain: 'aws.amazon.com' })
 ```
-
 
 Finally, you can also define the return type and override system settings for a specific function like:
 
 ```typescript
 import { ai } from 'functions.do'
 
-const results = await ai.generateLandingPage({ 
-  brand: 'Functions.do', 
-  idea: 'AI-powered Functions-as-a-Service' 
-}, {
-  model: 'anthropic/claude-3.7-sonnet:thinking',
-  system: 'You an expert at generating highly-converting marketing copy for startup landing pages',
-  temperature: 1.0,
-  seed: 1741452228,
-  schema: {
-    headline: 'attention-grabbing headline that clearly states value proposition',
-    subheadline: 'supporting statement that adds clarity to the headline',
-    productDescription: 'concise explanation of what the product does and its benefits',
-    keyFeatures: ['list of main features or benefits'],
-    socialProof: ['testimonials, user counts, or other trust indicators'],
-    captureForm: 'description of email capture form and call to action',
-    incentive: 'what users get for joining the waitlist (early access, discount, etc.)',
-    visualElements: 'description of images, videos, or other visual elements',
-    faq: [{
-      question: 'frequently asked question related to an objection',
-      answer: 'clear answer to the question that overcomes the objection'
-    }],
-    launchDate: 'expected product launch date or timeline',
-    callToAction: 'primary button text and action',
-    secondaryAction: 'secondary button text and action'
-  }
-})
+const results = await ai.generateLandingPage(
+  {
+    brand: 'Functions.do',
+    idea: 'AI-powered Functions-as-a-Service',
+  },
+  {
+    model: 'anthropic/claude-3.7-sonnet:thinking',
+    system: 'You an expert at generating highly-converting marketing copy for startup landing pages',
+    temperature: 1.0,
+    seed: 1741452228,
+    schema: {
+      headline: 'attention-grabbing headline that clearly states value proposition',
+      subheadline: 'supporting statement that adds clarity to the headline',
+      productDescription: 'concise explanation of what the product does and its benefits',
+      keyFeatures: ['list of main features or benefits'],
+      socialProof: ['testimonials, user counts, or other trust indicators'],
+      captureForm: 'description of email capture form and call to action',
+      incentive: 'what users get for joining the waitlist (early access, discount, etc.)',
+      visualElements: 'description of images, videos, or other visual elements',
+      faq: [
+        {
+          question: 'frequently asked question related to an objection',
+          answer: 'clear answer to the question that overcomes the objection',
+        },
+      ],
+      launchDate: 'expected product launch date or timeline',
+      callToAction: 'primary button text and action',
+      secondaryAction: 'secondary button text and action',
+    },
+  },
+)
+```

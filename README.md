@@ -11,4 +11,5 @@ The concept of functions.do is to seperate the iteration and testing of models, 
 - Optimize each function by cost, latency, and/or eval performance
 
 ## Assumptions:
-- 
+
+-

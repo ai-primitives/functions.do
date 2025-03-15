@@ -8,8 +8,6 @@ export const Images: CollectionConfig = {
   admin: {
     group: 'Data',
   },
-  fields: [
-    { name: 'alt', type: 'text', required: false },
-  ],
+  fields: [{ name: 'alt', type: 'text', required: false }],
   upload: true,
 }

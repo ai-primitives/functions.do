@@ -1,5 +1,4 @@
 ---
-
 createBookProposal:
   title: proposed title of the book
   subtitle: proposed subtitle of the book
@@ -123,10 +122,9 @@ prepareForPublication:
   pricingRecommendation: suggested pricing strategy
   formatRecommendations: [recommended formats (hardcover, ebook, etc.)]
   distributionChannels: [recommended distribution channels]
-
 ---
 
-{/* 
+{/\*
 // Step 1: Create book proposal
 export const proposal = await ai.createBookProposal(props)
 
@@ -136,91 +134,80 @@ export const toc = await ai.createTableOfContents(proposal)
 // Step 3: Create chapter outlines
 export const chapterOutlines = [];
 for (let i = 0; i < toc.chapters.length; i++) {
-  const chapterNumber = i + 1;
-  const chapterTitle = toc.chapters[i].title
-  
-  const chapterOutline = await ai.createChapterOutline({
-    bookTitle: proposal.title,
-    chapterNumber: chapterNumber.toString(),
-    chapterTitle
-  })
-  
-  chapterOutlines.push(chapterOutline);
+const chapterNumber = i + 1;
+const chapterTitle = toc.chapters[i].title
+
+const chapterOutline = await ai.createChapterOutline({
+bookTitle: proposal.title,
+chapterNumber: chapterNumber.toString(),
+chapterTitle
+})
+
+chapterOutlines.push(chapterOutline);
 }
 
 // Step 4: Write each section
 export const completedChapters = [];
 for (let i = 0; i < chapterOutlines.length; i++) {
-  const chapterNumber = i + 1;
-  const chapterOutline = chapterOutlines[i];
-  const chapterSections = [];
-  
-  for (let j = 0; j < chapterOutline.sections.length; j++) {
-    const section = chapterOutline.sections[j];
-    
+const chapterNumber = i + 1;
+const chapterOutline = chapterOutlines[i];
+const chapterSections = [];
+
+for (let j = 0; j < chapterOutline.sections.length; j++) {
+const section = chapterOutline.sections[j];
+
     const writtenSection = await ai.writeSection({
       bookTitle: proposal.title,
       chapterNumber: chapterNumber.toString(),
       chapterTitle: chapterOutline.chapterTitle,
       sectionTitle: section.title
     });
-    
+
     chapterSections.push(writtenSection);
-  }
-  
-  completedChapters.push({
-    chapterNumber,
-    chapterTitle: chapterOutline.chapterTitle,
-    sections: chapterSections
-  });
+
+}
+
+completedChapters.push({
+chapterNumber,
+chapterTitle: chapterOutline.chapterTitle,
+sections: chapterSections
+});
 }
 
 // Step 5: Review each chapter
 export const chapterReviews = [];
 for (let i = 0; i < completedChapters.length; i++) {
 
-  const chapter = completedChapters[i];
-  
-  const chapterReview = await ai.reviewChapter({
-    bookTitle: proposal.title,
-    chapterNumber: chapter.chapterNumber.toString(),
-    chapterTitle: chapter.chapterTitle
-  })
-  
-  chapterReviews.push(chapterReview);
+const chapter = completedChapters[i];
+
+const chapterReview = await ai.reviewChapter({
+bookTitle: proposal.title,
+chapterNumber: chapter.chapterNumber.toString(),
+chapterTitle: chapter.chapterTitle
+})
+
+chapterReviews.push(chapterReview);
 }
 
 // Step 6: Review the entire book
 export const bookReview = await ai.reviewBook({
-  bookTitle: proposal.title
+bookTitle: proposal.title
 })
 
 // Step 7: Edit the book
 export const bookEdits = await ai.editBook({
-  bookTitle: proposal.title
+bookTitle: proposal.title
 })
 
 // Step 8: Prepare for publication
 export const publicationPrep = await ai.prepareForPublication({
-  bookTitle: proposal.title
-}) */}
+bookTitle: proposal.title
+}) \*/}
 
+{/\*
+This MDX file implements a complete book creation workflow.
+It can be used by passing props like:
 
-
-{/* 
-  This MDX file implements a complete book creation workflow.
-  It can be used by passing props like:
-  <WriteBook title="My Amazing Book" author="John Doe" />
-  
-  The workflow will:
-  1. Create a book proposal
-  2. Generate a table of contents
-  3. Create detailed chapter outlines
-  4. Write content for each section
-  5. Review each chapter
-  6. Review the entire book
-  7. Edit the book based on reviews
-  8. Prepare the book for publication
-  
-  The result is a complete book structure with all necessary components.
-*/}
+<WriteBook title='My Amazing Book' author='John Doe' />
+The workflow will: 1. Create a book proposal 2. Generate a table of contents 3. Create detailed chapter outlines 4. Write content for each section 5. Review each chapter 6. Review
+the entire book 7. Edit the book based on reviews 8. Prepare the book for publication The result is a complete book structure with all necessary components. */}

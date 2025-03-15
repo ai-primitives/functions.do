@@ -10,9 +10,9 @@ export const Datasets: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', required: true },
     { name: 'description', type: 'richText' },
-    { 
-      name: 'project', 
-      type: 'relationship', 
+    {
+      name: 'project',
+      type: 'relationship',
       relationTo: 'projects',
       required: true,
     },

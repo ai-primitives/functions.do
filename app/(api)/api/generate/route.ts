@@ -20,9 +20,9 @@ export async function POST(request: Request) {
     collection: 'functions',
     where: {
       name: {
-        equals: functionName
-      }
-    }
+        equals: functionName,
+      },
+    },
   })
   const data = await generateObject({ functionName, input, schema, settings })
   const { object, reasoning, model, id, provider, error, validation } = data as any
@@ -30,26 +30,30 @@ export async function POST(request: Request) {
 
   const functionDocs = await functionPromise
 
-  waitUntil(payload.create({
-    collection: 'completions',
-    data: {
-      tenant: auth.user?.tenants?.[0]?.id || 'default',
-      function: functionDocs.docs[0],
-      output: object,
-      input: input,
-      functionName,
-      schema,
-      debug: { body, data },
-      seed: settings?.seed,
-      model: model,
-      reasoning,
-      provider,
-      requestId: id,
-      duration,
-      error,
-      validation,
-    } 
-  }).then(console.log))
+  waitUntil(
+    payload
+      .create({
+        collection: 'completions',
+        data: {
+          tenant: auth.user?.tenants?.[0]?.id || 'default',
+          function: functionDocs.docs[0],
+          output: object,
+          input: input,
+          functionName,
+          schema,
+          debug: { body, data },
+          seed: settings?.seed,
+          model: model,
+          reasoning,
+          provider,
+          requestId: id,
+          duration,
+          error,
+          validation,
+        },
+      })
+      .then(console.log),
+  )
 
   return Response.json({ model, data: object, reasoning })
 }

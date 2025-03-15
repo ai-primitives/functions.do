@@ -17,21 +17,15 @@ export type AIFunction<TInput = any, TOutput = any> = {
 // Define StringArray as an array of string literals to help TypeScript better infer element types
 export type StringArray = Array<string>
 
-export type SchemaValue =
-  | string
-  | StringArray
-  | { [key: string]: SchemaValue }
-  | SchemaValue[]
-
-
+export type SchemaValue = string | StringArray | { [key: string]: SchemaValue } | SchemaValue[]
 
 export type FunctionDefinition = Record<string, SchemaValue>
 
 // Helper type to convert schema to output type
 export type SchemaToOutput<T extends FunctionDefinition> = {
-  [K in keyof T]: T[K] extends Array<any> 
-    ? T[K] extends Array<string> 
-      ? string[] 
+  [K in keyof T]: T[K] extends Array<any>
+    ? T[K] extends Array<string>
+      ? string[]
       : T[K] extends Array<Record<string, any>>
         ? Array<{ [P in keyof T[K][0]]: SchemaToOutput<{ value: T[K][0][P] }>['value'] }>
         : string[]
@@ -41,19 +35,15 @@ export type SchemaToOutput<T extends FunctionDefinition> = {
 }
 
 // Function callback type
-export type FunctionCallback<TArgs = any> = (context: { ai: AI_Instance, args: TArgs }) => any | Promise<any>
+export type FunctionCallback<TArgs = any> = (context: { ai: AI_Instance; args: TArgs }) => any | Promise<any>
 
 // Main AI function factory type
 export type AI = {
   <T extends Record<string, FunctionDefinition | FunctionCallback>>(
     functions: T,
-    config?: AIConfig
+    config?: AIConfig,
   ): {
-    [K in keyof T]: T[K] extends FunctionDefinition 
-      ? AIFunction<any, SchemaToOutput<T[K]>> 
-      : T[K] extends FunctionCallback<infer TArgs> 
-        ? FunctionCallback<TArgs> 
-        : never
+    [K in keyof T]: T[K] extends FunctionDefinition ? AIFunction<any, SchemaToOutput<T[K]>> : T[K] extends FunctionCallback<infer TArgs> ? FunctionCallback<TArgs> : never
   }
 }
 
@@ -63,4 +53,4 @@ export type AI_Instance = {
 }
 
 // Helper type to infer array element types
-export type ArrayElementType<T> = T extends (infer U)[] ? U : never;
+export type ArrayElementType<T> = T extends (infer U)[] ? U : never
