@@ -39,6 +39,7 @@ const defaultModels = [
 export const experimental_repairText: RepairTextFunction = async ({ text, error }) => {
   // example: add a closing brace to the text
   console.log({ text, error })
+  if (text === '') text = '{}'
   const repairedText = text.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '')
   console.log({ repairedText })
   return repairedText
@@ -86,9 +87,13 @@ export default async (args: GenerateObjectArgs) => {
       'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
       'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
     },
-    fetch: (input, init) => {
-      console.log('fetching', { input, init })
-      return fetch(input, init)
+    fetch: async (input, init) => {
+      // console.log('fetching', { input, init })
+      const response = await fetch(input, init)
+      const clonedResponse = response.clone()
+      const body = await clonedResponse.json()
+      console.log(body)
+      return response
     }
   })
 
