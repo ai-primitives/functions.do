@@ -159,7 +159,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   // if no function or completion, generate function and completion
 
-  const [completionResult, funcResult] = await Promise.all([
+  const [completionResult, 
+    // funcResult
+    ] = await Promise.all([
     generateObject({
       // model: openrouter('openrouter/auto'),
       system,
@@ -175,16 +177,16 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       seed,
       temperature,
     }),
-    payload.create({
-      collection: 'functions',
-      data: {
-        tenant,
-        project: 'default',
-        name: slug,
-        output: 'Object',
-        model,
-      },
-    }),
+    // payload.create({
+    //   collection: 'functions',
+    //   data: {
+    //     tenant,
+    //     project: 'default',
+    //     name: slug,
+    //     output: 'Object',
+    //     model,
+    //   },
+    // }),
   ])
 
   const latency = Date.now() - start
@@ -207,6 +209,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       },
     }),
   )
-
-  return Response.json({ completion: completionResult, func: funcResult, cacheHit: false, cacheLatency, latency, completionLatency, input, inputHash, args, query })
+  return Response.json({ function: slug, args, data: completionResult.object, latency })
+  // return Response.json({ completion: completionResult, 
+  //   // func: funcResult, 
+  //   cacheHit: false, cacheLatency, latency, completionLatency, input, inputHash, args, query })
 }
