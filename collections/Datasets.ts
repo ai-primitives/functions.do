@@ -16,17 +16,25 @@ export const Datasets: CollectionConfig = {
       relationTo: 'projects',
       required: true,
     },
-    { 
-      name: 'data', 
-      type: 'relationship', 
-      relationTo: 'data', 
-      hasMany: true,
+    // Using a join field for data entries
+    {
+      name: 'data',
+      type: 'join',
+      collection: 'data',
+      on: 'dataset',
+      admin: {
+        description: 'Data entries in this dataset',
+      },
     },
-    { 
-      name: 'evals', 
-      type: 'relationship', 
-      relationTo: 'evals', 
-      hasMany: true,
+    // Using a join field for evals
+    {
+      name: 'evals',
+      type: 'join',
+      collection: 'evals',
+      on: 'dataset',
+      admin: {
+        description: 'Evaluations for this dataset',
+      },
     },
   ],
 }

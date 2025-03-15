@@ -14,11 +14,15 @@ export const EvalRuns: CollectionConfig = {
       relationTo: 'evals',
       required: true,
     },
-    { 
-      name: 'results', 
-      type: 'relationship', 
-      relationTo: 'evalResults', 
-      hasMany: true,
+    // Using a join field for results
+    {
+      name: 'results',
+      type: 'join',
+      collection: 'evalResults',
+      on: 'evalRun',
+      admin: {
+        description: 'Results from this evaluation run',
+      },
     },
     { name: 'startTime', type: 'date', required: true },
     { name: 'endTime', type: 'date' },

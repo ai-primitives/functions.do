@@ -21,42 +21,67 @@ export const Projects: CollectionConfig = {
       ],
       defaultValue: 'draft',
     },
-    // Relationships
-    { 
-      name: 'users', 
-      type: 'relationship', 
-      relationTo: 'users', 
-      hasMany: true,
+    // Using array fields for many-to-many relationships with users
+    {
+      name: 'users',
+      type: 'array',
+      fields: [
+        {
+          name: 'user',
+          type: 'relationship',
+          relationTo: 'users',
+          required: true,
+        },
+      ],
+      admin: {
+        description: 'Users with access to this project',
+      },
     },
-    { 
-      name: 'modelGroups', 
-      type: 'relationship', 
-      relationTo: 'modelGroups', 
-      hasMany: true,
+    // Using join fields for one-to-many relationships
+    {
+      name: 'modelGroups',
+      type: 'join',
+      collection: 'modelGroups',
+      on: 'project',
+      admin: {
+        description: 'Model groups in this project',
+      },
     },
-    { 
-      name: 'datasets', 
-      type: 'relationship', 
-      relationTo: 'datasets', 
-      hasMany: true,
+    {
+      name: 'datasets',
+      type: 'join',
+      collection: 'datasets',
+      on: 'project',
+      admin: {
+        description: 'Datasets in this project',
+      },
     },
-    { 
-      name: 'functions', 
-      type: 'relationship', 
-      relationTo: 'functions', 
-      hasMany: true,
+    {
+      name: 'functions',
+      type: 'join',
+      collection: 'functions',
+      on: 'project',
+      admin: {
+        description: 'Functions in this project',
+      },
     },
-    { 
-      name: 'workflows', 
-      type: 'relationship', 
-      relationTo: 'workflows', 
-      hasMany: true,
+    {
+      name: 'workflows',
+      type: 'join',
+      collection: 'workflows',
+      on: 'project',
+      admin: {
+        description: 'Workflows in this project',
+      },
     },
-    { 
-      name: 'prompts', 
-      type: 'relationship', 
-      relationTo: 'prompts', 
-      hasMany: true,
+    {
+      name: 'prompts',
+      type: 'join',
+      collection: 'prompts',
+      on: 'project',
+      admin: {
+        description: 'Prompts in this project',
+      },
     },
   ],
 }

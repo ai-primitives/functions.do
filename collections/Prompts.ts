@@ -16,24 +16,52 @@ export const Prompts: CollectionConfig = {
       relationTo: 'projects',
       required: true,
     },
-    { 
-      name: 'functions', 
-      type: 'relationship', 
-      relationTo: 'functions', 
-      hasMany: true,
+    // Using join fields for relationships
+    {
+      name: 'functions',
+      type: 'array',
+      fields: [
+        {
+          name: 'function',
+          type: 'relationship',
+          relationTo: 'functions',
+          required: true,
+        },
+      ],
+      admin: {
+        description: 'Functions referenced by this prompt',
+      },
     },
-    // Additional references
-    { 
-      name: 'models', 
-      type: 'relationship', 
-      relationTo: 'models', 
-      hasMany: true,
+    // Additional references - using array fields for many-to-many relationships
+    {
+      name: 'models',
+      type: 'array',
+      fields: [
+        {
+          name: 'model',
+          type: 'relationship',
+          relationTo: 'models',
+          required: true,
+        },
+      ],
+      admin: {
+        description: 'Models referenced by this prompt',
+      },
     },
-    { 
-      name: 'providers', 
-      type: 'relationship', 
-      relationTo: 'providers', 
-      hasMany: true,
+    {
+      name: 'providers',
+      type: 'array',
+      fields: [
+        {
+          name: 'provider',
+          type: 'relationship',
+          relationTo: 'providers',
+          required: true,
+        },
+      ],
+      admin: {
+        description: 'Providers referenced by this prompt',
+      },
     },
     // Configuration
     { name: 'variables', type: 'array', fields: [

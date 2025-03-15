@@ -21,12 +21,21 @@ export const Users: CollectionConfig = {
       ],
       defaultValue: 'viewer',
     },
-    // Reverse relation to projects
-    { 
-      name: 'projects', 
-      type: 'relationship', 
-      relationTo: 'projects', 
-      hasMany: true,
+    // Using array fields for many-to-many relationships with projects
+    {
+      name: 'projects',
+      type: 'array',
+      fields: [
+        {
+          name: 'project',
+          type: 'relationship',
+          relationTo: 'projects',
+          required: true,
+        },
+      ],
+      admin: {
+        description: 'Projects this user has access to',
+      },
     },
   ],
 }

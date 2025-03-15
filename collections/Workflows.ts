@@ -15,11 +15,15 @@ export const Workflows: CollectionConfig = {
       relationTo: 'projects',
       required: true,
     },
-    { 
-      name: 'workflowCalls', 
-      type: 'relationship', 
-      relationTo: 'workflowCalls', 
-      hasMany: true,
+    // Using a join field for workflow calls
+    {
+      name: 'workflowCalls',
+      type: 'join',
+      collection: 'workflowCalls',
+      on: 'workflow',
+      admin: {
+        description: 'Executions of this workflow',
+      },
     },
     // Additional configuration fields
     { name: 'description', type: 'richText' },
