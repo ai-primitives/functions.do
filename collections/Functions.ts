@@ -20,11 +20,15 @@ export const Functions: CollectionConfig = {
       relationTo: 'projects',
       required: true,
     },
-    { 
-      name: 'functionCalls', 
-      type: 'relationship', 
-      relationTo: 'functionCalls', 
-      hasMany: true,
+    // Using a join field for function calls
+    {
+      name: 'functionCalls',
+      type: 'join',
+      collection: 'functionCalls',
+      on: 'function',
+      admin: {
+        description: 'Calls made to this function',
+      },
     },
     { name: 'system', type: 'code', admin: { language: 'mdx', editorOptions: { padding: { top: 20, bottom: 20 }} } },
     { name: 'user', type: 'code', admin: { language: 'mdx' } },

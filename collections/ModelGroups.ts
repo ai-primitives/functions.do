@@ -15,11 +15,15 @@ export const ModelGroups: CollectionConfig = {
       relationTo: 'projects',
       required: true,
     },
-    { 
-      name: 'models', 
-      type: 'relationship', 
-      relationTo: 'models', 
-      hasMany: true,
+    // Using join field for models relationship
+    {
+      name: 'models',
+      type: 'join',
+      collection: 'models',
+      on: 'modelGroup',
+      admin: {
+        description: 'Models in this group',
+      },
     },
   ],
 }

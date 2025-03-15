@@ -91,7 +91,34 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    projects: {
+      modelGroups: 'modelGroups';
+      datasets: 'datasets';
+      functions: 'functions';
+      workflows: 'workflows';
+      prompts: 'prompts';
+    };
+    functions: {
+      functionCalls: 'functionCalls';
+    };
+    modelGroups: {
+      models: 'models';
+    };
+    providers: {
+      models: 'models';
+    };
+    workflows: {
+      workflowCalls: 'workflowCalls';
+    };
+    datasets: {
+      data: 'data';
+      evals: 'evals';
+    };
+    evalRuns: {
+      results: 'evalResults';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
@@ -164,7 +191,15 @@ export interface User {
   id: string;
   name?: string | null;
   role: 'admin' | 'editor' | 'viewer';
-  projects?: (string | Project)[] | null;
+  /**
+   * Projects this user has access to
+   */
+  projects?:
+    | {
+        project: string | Project;
+        id?: string | null;
+      }[]
+    | null;
   tenants?:
     | {
         tenant: string | Tenant;
@@ -208,12 +243,50 @@ export interface Project {
     [k: string]: unknown;
   } | null;
   status: 'draft' | 'active' | 'archived';
-  users?: (string | User)[] | null;
-  modelGroups?: (string | ModelGroup)[] | null;
-  datasets?: (string | Dataset)[] | null;
-  functions?: (string | Function)[] | null;
-  workflows?: (string | Workflow)[] | null;
-  prompts?: (string | Prompt)[] | null;
+  /**
+   * Users with access to this project
+   */
+  users?:
+    | {
+        user: string | User;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Model groups in this project
+   */
+  modelGroups?: {
+    docs?: (string | ModelGroup)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  /**
+   * Datasets in this project
+   */
+  datasets?: {
+    docs?: (string | Dataset)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  /**
+   * Functions in this project
+   */
+  functions?: {
+    docs?: (string | Function)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  /**
+   * Workflows in this project
+   */
+  workflows?: {
+    docs?: (string | Workflow)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  /**
+   * Prompts in this project
+   */
+  prompts?: {
+    docs?: (string | Prompt)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -225,7 +298,13 @@ export interface ModelGroup {
   id: string;
   name: string;
   project: string | Project;
-  models?: (string | Model)[] | null;
+  /**
+   * Models in this group
+   */
+  models?: {
+    docs?: (string | Model)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -290,7 +369,13 @@ export interface Model {
 export interface Provider {
   id: string;
   name: string;
-  models?: (string | Model)[] | null;
+  /**
+   * Models using this provider
+   */
+  models?: {
+    docs?: (string | Model)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   endpoint?: string | null;
   apiKey?: string | null;
   organizationId?: string | null;
@@ -320,8 +405,20 @@ export interface Dataset {
     [k: string]: unknown;
   } | null;
   project: string | Project;
-  data?: (string | Datum)[] | null;
-  evals?: (string | Eval)[] | null;
+  /**
+   * Data entries in this dataset
+   */
+  data?: {
+    docs?: (string | Datum)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  /**
+   * Evaluations for this dataset
+   */
+  evals?: {
+    docs?: (string | Eval)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -408,7 +505,13 @@ export interface Eval {
 export interface EvalRun {
   id: string;
   eval: string | Eval;
-  results?: (string | EvalResult)[] | null;
+  /**
+   * Results from this evaluation run
+   */
+  results?: {
+    docs?: (string | EvalResult)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   startTime: string;
   endTime?: string | null;
   status: 'pending' | 'running' | 'completed' | 'failed';
@@ -462,7 +565,13 @@ export interface Function {
   output: 'Object' | 'Text';
   schema?: (string | null) | Schema;
   project: string | Project;
-  functionCalls?: (string | FunctionCall)[] | null;
+  /**
+   * Calls made to this function
+   */
+  functionCalls?: {
+    docs?: (string | FunctionCall)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   system?: string | null;
   user?: string | null;
   updatedAt: string;
@@ -541,7 +650,13 @@ export interface Workflow {
   id: string;
   name: string;
   project: string | Project;
-  workflowCalls?: (string | WorkflowCall)[] | null;
+  /**
+   * Executions of this workflow
+   */
+  workflowCalls?: {
+    docs?: (string | WorkflowCall)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
   description?: {
     root: {
       type: string;
@@ -656,9 +771,33 @@ export interface Prompt {
   name: string;
   content: string;
   project: string | Project;
-  functions?: (string | Function)[] | null;
-  models?: (string | Model)[] | null;
-  providers?: (string | Provider)[] | null;
+  /**
+   * Functions referenced by this prompt
+   */
+  functions?:
+    | {
+        function: string | Function;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Models referenced by this prompt
+   */
+  models?:
+    | {
+        model: string | Model;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Providers referenced by this prompt
+   */
+  providers?:
+    | {
+        provider: string | Provider;
+        id?: string | null;
+      }[]
+    | null;
   variables?:
     | {
         name: string;
@@ -677,8 +816,24 @@ export interface Prompt {
 export interface Group {
   id: string;
   name: string;
-  users?: (string | User)[] | null;
-  models?: (string | Model)[] | null;
+  /**
+   * Users in this group
+   */
+  users?:
+    | {
+        user: string | User;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Models in this group
+   */
+  models?:
+    | {
+        model: string | Model;
+        id?: string | null;
+      }[]
+    | null;
   description?: {
     root: {
       type: string;
@@ -1016,7 +1171,12 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
-  projects?: T;
+  projects?:
+    | T
+    | {
+        project?: T;
+        id?: T;
+      };
   tenants?:
     | T
     | {
@@ -1044,7 +1204,12 @@ export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   status?: T;
-  users?: T;
+  users?:
+    | T
+    | {
+        user?: T;
+        id?: T;
+      };
   modelGroups?: T;
   datasets?: T;
   functions?: T;
@@ -1059,8 +1224,18 @@ export interface ProjectsSelect<T extends boolean = true> {
  */
 export interface GroupsSelect<T extends boolean = true> {
   name?: T;
-  users?: T;
-  models?: T;
+  users?:
+    | T
+    | {
+        user?: T;
+        id?: T;
+      };
+  models?:
+    | T
+    | {
+        model?: T;
+        id?: T;
+      };
   description?: T;
   type?: T;
   updatedAt?: T;
@@ -1218,9 +1393,24 @@ export interface PromptsSelect<T extends boolean = true> {
   name?: T;
   content?: T;
   project?: T;
-  functions?: T;
-  models?: T;
-  providers?: T;
+  functions?:
+    | T
+    | {
+        function?: T;
+        id?: T;
+      };
+  models?:
+    | T
+    | {
+        model?: T;
+        id?: T;
+      };
+  providers?:
+    | T
+    | {
+        provider?: T;
+        id?: T;
+      };
   variables?:
     | T
     | {

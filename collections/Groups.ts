@@ -9,17 +9,36 @@ export const Groups: CollectionConfig = {
   versions: true,
   fields: [
     { name: 'name', type: 'text', required: true },
-    { 
-      name: 'users', 
-      type: 'relationship', 
-      relationTo: 'users', 
-      hasMany: true,
+    // Using array fields for many-to-many relationships
+    {
+      name: 'users',
+      type: 'array',
+      fields: [
+        {
+          name: 'user',
+          type: 'relationship',
+          relationTo: 'users',
+          required: true,
+        },
+      ],
+      admin: {
+        description: 'Users in this group',
+      },
     },
-    { 
-      name: 'models', 
-      type: 'relationship', 
-      relationTo: 'models', 
-      hasMany: true,
+    {
+      name: 'models',
+      type: 'array',
+      fields: [
+        {
+          name: 'model',
+          type: 'relationship',
+          relationTo: 'models',
+          required: true,
+        },
+      ],
+      admin: {
+        description: 'Models in this group',
+      },
     },
     // Additional configuration
     { name: 'description', type: 'richText' },
