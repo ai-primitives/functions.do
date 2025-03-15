@@ -95,7 +95,6 @@ export interface Config {
     projects: {
       modelGroups: 'modelGroups';
       datasets: 'datasets';
-      functions: 'functions';
       workflows: 'workflows';
       prompts: 'prompts';
     };
@@ -256,11 +255,6 @@ export interface Project {
   };
   datasets?: {
     docs?: (string | Dataset)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  functions?: {
-    docs?: (string | Function)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -547,96 +541,6 @@ export interface EvalResult {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "functions".
- */
-export interface Function {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  name: string;
-  model?: (string | null) | Model;
-  output: 'Object' | 'Text';
-  schema?: (string | null) | Schema;
-  project: string | Project;
-  /**
-   * Calls made to this function
-   */
-  functionCalls?: {
-    docs?: (string | FunctionCall)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  system?: string | null;
-  user?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tenants".
- */
-export interface Tenant {
-  id: string;
-  name?: string | null;
-  domain?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "schemas".
- */
-export interface Schema {
-  id: string;
-  tenant?: (string | null) | Tenant;
-  name: string;
-  schema:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  schemaYaml?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "functionCalls".
- */
-export interface FunctionCall {
-  id: string;
-  function: string | Function;
-  input:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  output?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  timestamp: string;
-  status: 'pending' | 'running' | 'completed' | 'failed';
-  error?: string | null;
-  duration?: number | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "workflows".
  */
 export interface Workflow {
@@ -753,6 +657,95 @@ export interface WorkflowCall {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "functions".
+ */
+export interface Function {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: string;
+  model?: (string | null) | Model;
+  output: 'Object' | 'Text';
+  schema?: (string | null) | Schema;
+  /**
+   * Calls made to this function
+   */
+  functionCalls?: {
+    docs?: (string | FunctionCall)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  system?: string | null;
+  user?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants".
+ */
+export interface Tenant {
+  id: string;
+  name?: string | null;
+  domain?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schemas".
+ */
+export interface Schema {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name: string;
+  schema:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  schemaYaml?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "functionCalls".
+ */
+export interface FunctionCall {
+  id: string;
+  function: string | Function;
+  input:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  output?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  timestamp: string;
+  status: 'pending' | 'running' | 'completed' | 'failed';
+  error?: string | null;
+  duration?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1206,7 +1199,6 @@ export interface ProjectsSelect<T extends boolean = true> {
       };
   modelGroups?: T;
   datasets?: T;
-  functions?: T;
   workflows?: T;
   prompts?: T;
   updatedAt?: T;
@@ -1245,7 +1237,6 @@ export interface FunctionsSelect<T extends boolean = true> {
   model?: T;
   output?: T;
   schema?: T;
-  project?: T;
   functionCalls?: T;
   system?: T;
   user?: T;
