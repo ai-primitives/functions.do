@@ -274,8 +274,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       next: url.toString()
     },
     // data: object, variant: object, 
-    control: object, variant: variantResult.object,
-    // optionA: object, optionB: object,
+    // control: object, variant: variantResult.object,
+    optionA: object, optionB: variantResult.object,
     feedback: { 
       // 'Prefer Control': origin + 'feedback?prefer=' + completionResult.response.id,
       // 'Prefer Variant': origin + 'feedback?variant=' + completionResult.response.id,
