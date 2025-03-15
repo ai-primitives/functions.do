@@ -18,7 +18,9 @@ export const GET = async (request: Request) => {
   })
 
   const links = {
-    home: origin,
+    // site: origin,
+    home: `${origin}/api`,
+    self: request.url,
     next: page === data.totalPages ? undefined : `${origin}${pathname}?page=${page + 1}`,
     prev: page === 1 ? undefined : `${origin}${pathname}?page=${page - 1}`,
     first: page === 1 ? undefined : `${origin}${pathname}?page=1`,
