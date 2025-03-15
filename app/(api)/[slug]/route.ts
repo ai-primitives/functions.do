@@ -207,7 +207,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       // model: openrouter('openrouter/auto'),
       system,
       // model: openrouter('openai/gpt-4o-mini', { structuredOutputs: true }),
-      model: openrouter('anthropic/claude-3.7-sonnet'),
+      model: openrouter('anthropic/claude-3.5-sonnet'),
       providerOptions: {
         reasoning: {
           effort: 'high',
