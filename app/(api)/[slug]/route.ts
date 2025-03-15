@@ -273,7 +273,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       // 
       next: url.toString()
     },
-    data: object, variant: object, 
+    data: object, variant: variantResult.object, 
     // control: object, variant: variantResult.object,
     // optionA: object, optionB: variantResult.object,
     feedback: { 
