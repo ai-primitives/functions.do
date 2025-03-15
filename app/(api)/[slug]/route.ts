@@ -39,6 +39,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const inputString = typeof input === 'string' ? input : JSON.stringify(args)
   const inputHash = crypto.createHash('sha1').update(inputString).digest('hex')
 
+  console.log({ inputString, inputHash })
+
   // check if completion and/or function exists
   const [completion, func] = await Promise.all([
     payload.find({
@@ -87,6 +89,10 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     model: openrouter(model, { structuredOutputs: true }),
     middleware: [
       {
+        transformParams: async (options) => {
+          console.log({ transformParams: options})
+          return options.params
+        },
         wrapGenerate: async ({ doGenerate, params }) => {
           console.log('doGenerate called')
           console.log(`params: ${JSON.stringify(params, null, 2)}`)
