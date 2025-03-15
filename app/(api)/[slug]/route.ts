@@ -143,6 +143,13 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       output: 'no-schema',
       seed,
       temperature,
+      experimental_repairText: async ({ text, error }) => {
+        // example: add a closing brace to the text
+        console.log({ text, error })
+        const repairedText = text.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '')
+        console.log({ repairedText })
+        return repairedText
+      },
     })
     // waitUntil(
     //   payload.create({
@@ -165,7 +172,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   // if no function or completion, generate function and completion
 
-  const [completionResult, 
+  const [completionResult, variantResult
     // funcResult
     ] = await Promise.all([
     generateObject({
@@ -187,6 +194,42 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       output: 'no-schema',
       seed,
       temperature,
+      experimental_repairText: async ({ text, error }) => {
+        console.log({ text, error })
+        if (text === '') return '{}'
+        const repairedText = text.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '')
+        console.log({ repairedText })
+        return repairedText
+      },
+    }),
+
+    generateObject({
+      // model: openrouter('openrouter/auto'),
+      system,
+      // model: openrouter('openai/gpt-4o-mini', { structuredOutputs: true }),
+      model: openrouter('anthropic/claude-3.7-sonnet'),
+      providerOptions: {
+        reasoning: {
+          effort: 'high',
+        },
+        openai: {
+          provider: {
+            require_parameters: true
+          }
+        }
+      },
+      // reasoning: { effort: 'high' },
+      prompt: `${slug}(${inputString})`,
+      output: 'no-schema',
+      seed,
+      temperature,
+      experimental_repairText: async ({ text, error }) => {
+        console.log({ text, error })
+        if (text === '') return '{}'
+        const repairedText = text.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '')
+        console.log({ repairedText })
+        return repairedText
+      },
     }),
     // payload.create({
     //   collection: 'functions',
@@ -221,10 +264,18 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     }),
   )
 
+  const url = new URL(request.url)
   const { object, reasoning } = completionResult as any
   return Response.json({ function: slug, args, 
+    links: {
+      home: origin + '/api',
+      // variant: origin + `/variant/${completionResult.response.id}`,
+      // 
+      next: url.toString()
+    },
     // data: object, variant: object, 
-    optionA: object, optionB: object,
+    control: object, variant: variantResult.object,
+    // optionA: object, optionB: object,
     feedback: { 
       // 'Prefer Control': origin + 'feedback?prefer=' + completionResult.response.id,
       // 'Prefer Variant': origin + 'feedback?variant=' + completionResult.response.id,
