@@ -1,3 +1,1 @@
-export const enrichRequest = (request: Request) => {
-  
-}
+export const enrichRequest = (request: Request) => {}

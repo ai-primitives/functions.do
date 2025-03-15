@@ -9,16 +9,14 @@ export const Data: CollectionConfig = {
   versions: true,
   fields: [
     { name: 'content', type: 'richText', required: true },
-    { 
-      name: 'dataset', 
-      type: 'relationship', 
+    {
+      name: 'dataset',
+      type: 'relationship',
       relationTo: 'datasets',
       required: true,
     },
     // Additional metadata fields
     { name: 'metadata', type: 'json' },
-    { name: 'tags', type: 'array', fields: [
-      { name: 'tag', type: 'text' }
-    ]},
+    { name: 'tags', type: 'array', fields: [{ name: 'tag', type: 'text' }] },
   ],
 }

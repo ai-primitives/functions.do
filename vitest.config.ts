@@ -1,9 +1,9 @@
-import { defineConfig } from 'vitest/config';
-import { resolve } from 'path';
-import { config } from 'dotenv';
+import { defineConfig } from 'vitest/config'
+import { resolve } from 'path'
+import { config } from 'dotenv'
 
 // Explicitly load .env.local file
-config({ path: resolve(process.cwd(), '.env.local') });
+config({ path: resolve(process.cwd(), '.env.local') })
 
 export default defineConfig({
   test: {
@@ -13,7 +13,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, './')
+      '@': resolve(__dirname, './'),
     },
   },
-});
+})

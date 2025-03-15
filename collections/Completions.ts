@@ -7,23 +7,29 @@ export const Completions: CollectionConfig = {
     // useAsTitle: 'name',
   },
   fields: [
-    { type: 'row', fields: [
-      { name: 'function', type: 'relationship', relationTo: 'functions' },
-      { name: 'functionName', type: 'text' }, //, admin: { hidden: true } },
-      { name: 'model', type: 'relationship', relationTo: 'models' },
-      { name: 'hash', type: 'text' },
-      { name: 'requestId', type: 'text' },
-      { name: 'seed', type: 'number' },
-    ]},
+    {
+      type: 'row',
+      fields: [
+        { name: 'function', type: 'relationship', relationTo: 'functions' },
+        { name: 'functionName', type: 'text' }, //, admin: { hidden: true } },
+        { name: 'model', type: 'relationship', relationTo: 'models' },
+        { name: 'hash', type: 'text' },
+        { name: 'requestId', type: 'text' },
+        { name: 'seed', type: 'number' },
+      ],
+    },
     { name: 'output', type: 'json' },
     { name: 'input', type: 'json' },
     { name: 'schema', type: 'json' },
     { name: 'reasoning', type: 'code', admin: { language: 'markdown' } },
-    { type: 'row', fields: [
-      { name: 'duration', type: 'number' },
-      { name: 'provider', type: 'text' },
-      { name: 'refusal', type: 'text' },
-    ]},
+    {
+      type: 'row',
+      fields: [
+        { name: 'duration', type: 'number' },
+        { name: 'provider', type: 'text' },
+        { name: 'refusal', type: 'text' },
+      ],
+    },
     { name: 'error', type: 'textarea' },
     { name: 'validation', type: 'json' },
     { name: 'debug', type: 'json' },

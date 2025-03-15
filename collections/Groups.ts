@@ -42,9 +42,9 @@ export const Groups: CollectionConfig = {
     },
     // Additional configuration
     { name: 'description', type: 'richText' },
-    { 
-      name: 'type', 
-      type: 'select', 
+    {
+      name: 'type',
+      type: 'select',
       options: [
         { label: 'User Group', value: 'userGroup' },
         { label: 'Model Group', value: 'modelGroup' },

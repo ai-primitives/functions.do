@@ -1,4 +1,3 @@
-
 Initial version:
 
 - [ ] generateObject - JSON Object

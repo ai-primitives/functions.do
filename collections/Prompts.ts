@@ -10,9 +10,9 @@ export const Prompts: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', required: true },
     { name: 'content', type: 'code', admin: { language: 'mdx' }, required: true },
-    { 
-      name: 'project', 
-      type: 'relationship', 
+    {
+      name: 'project',
+      type: 'relationship',
       relationTo: 'projects',
       required: true,
     },
@@ -64,10 +64,14 @@ export const Prompts: CollectionConfig = {
       },
     },
     // Configuration
-    { name: 'variables', type: 'array', fields: [
-      { name: 'name', type: 'text', required: true },
-      { name: 'description', type: 'text' },
-      { name: 'defaultValue', type: 'text' },
-    ]},
+    {
+      name: 'variables',
+      type: 'array',
+      fields: [
+        { name: 'name', type: 'text', required: true },
+        { name: 'description', type: 'text' },
+        { name: 'defaultValue', type: 'text' },
+      ],
+    },
   ],
 }

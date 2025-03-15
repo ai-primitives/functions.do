@@ -9,9 +9,9 @@ export const ModelGroups: CollectionConfig = {
   versions: true,
   fields: [
     { name: 'name', type: 'text', required: true },
-    { 
-      name: 'project', 
-      type: 'relationship', 
+    {
+      name: 'project',
+      type: 'relationship',
       relationTo: 'projects',
       required: true,
     },

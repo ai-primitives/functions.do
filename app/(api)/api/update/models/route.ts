@@ -16,7 +16,7 @@ export const GET = async () => {
   // const results = await payload.jobs.
   const job = await payload.jobs.queue({
     task: 'updateModels',
-    input: {}, 
+    input: {},
   })
   const queueTime = Date.now() - start
 

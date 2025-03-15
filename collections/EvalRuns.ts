@@ -8,9 +8,9 @@ export const EvalRuns: CollectionConfig = {
   },
   versions: true,
   fields: [
-    { 
-      name: 'eval', 
-      type: 'relationship', 
+    {
+      name: 'eval',
+      type: 'relationship',
       relationTo: 'evals',
       required: true,
     },
@@ -27,10 +27,10 @@ export const EvalRuns: CollectionConfig = {
     { name: 'startTime', type: 'date', required: true },
     { name: 'endTime', type: 'date' },
     // Additional status fields
-    { 
-      name: 'status', 
-      type: 'select', 
-      required: true, 
+    {
+      name: 'status',
+      type: 'select',
+      required: true,
       options: [
         { label: 'Pending', value: 'pending' },
         { label: 'Running', value: 'running' },

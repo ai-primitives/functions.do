@@ -8,9 +8,9 @@ export const FunctionCalls: CollectionConfig = {
   },
   versions: true,
   fields: [
-    { 
-      name: 'function', 
-      type: 'relationship', 
+    {
+      name: 'function',
+      type: 'relationship',
       relationTo: 'functions',
       required: true,
     },
@@ -18,10 +18,10 @@ export const FunctionCalls: CollectionConfig = {
     { name: 'output', type: 'json' },
     { name: 'timestamp', type: 'date', required: true },
     // Additional status fields
-    { 
-      name: 'status', 
-      type: 'select', 
-      required: true, 
+    {
+      name: 'status',
+      type: 'select',
+      required: true,
       options: [
         { label: 'Pending', value: 'pending' },
         { label: 'Running', value: 'running' },
