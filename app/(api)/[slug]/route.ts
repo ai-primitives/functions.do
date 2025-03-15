@@ -7,6 +7,7 @@ import generateObject from '@/lib/generateObject'
 // import { generateObject, generateText } from 'ai'
 import { wrapLanguageModel } from 'ai'
 import { createOpenAI, openai } from '@ai-sdk/openai'
+import fetchObject from '@/lib/fetchObject'
 // import { openrouter } from '@openrouter/ai-sdk-provider'
 
 const openrouter = createOpenAI({
@@ -37,9 +38,11 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   const { slug: functionName } = await params
   const [completionResult, variantResult] = await Promise.all([
+    // fetchObject({ functionName, input, model, settings: { system, prompt, seed, temperature, topK, topP } }),
     generateObject({ functionName, input, model, settings: { system, prompt, seed, temperature, topK, topP } }),
     // TODO: Figure out a more effective way to create & test variants
     generateObject({ functionName, input, model: variant, settings: { system, prompt, seed: 1, temperature, topK, topP } })
+    // fetchObject({ functionName, input, model: variant, settings: { system, prompt, seed: 1, temperature, topK, topP } })
   ])
 
   const latency = Date.now() - start

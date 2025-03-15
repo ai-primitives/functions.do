@@ -47,8 +47,10 @@ type GenerateObjectArgs = {
   settings?: {
     system?: string
     prompt?: string
-    temperature?: number
-    seed?: number
+    temperature?: number | string
+    seed?: number | string
+    topK?: number | string
+    topP?: number | string
   }
 }
 
@@ -60,10 +62,15 @@ type GenerateObjectArgs = {
  * @returns The generated object.
  */
 export default async (args: GenerateObjectArgs) => {
+  const start = Date.now()
   const modelName = args.model || sample(defaultModels)!
   const { functionName, input, settings } = args
   // const model = openRouter(modelName)
-  let { system = 'Respond only in JSON.', temperature, seed } = settings || {}
+  let { system = 'Respond only in JSON.', temperature, seed, topK, topP } = settings || {}
+  if (typeof temperature === 'string') temperature = parseFloat(temperature)
+  if (typeof seed === 'string') seed = parseInt(seed)
+  if (typeof topK === 'string') topK = parseInt(topK)
+  if (typeof topP === 'string') topP = parseFloat(topP)
   const prompt = `${functionName}(${JSON.stringify(input, null, 2)})`
   const zodSchema = args.schema ? generateSchema(args.schema) : undefined
   let json_schema: any = zodSchema ? { name: functionName, schema: zodToJsonSchema(zodSchema) } : undefined
@@ -84,11 +91,11 @@ export default async (args: GenerateObjectArgs) => {
     },
     body: JSON.stringify({
       model: modelName,
-      // route: 'fallback',
-      // provider: {
-      //   require_parameters: true,
-      //   data_collection: 'deny',
-      // },
+      route: 'fallback',
+      provider: {
+        require_parameters: modelName === 'openai/gpt-4.5-preview' ? false : true,
+        data_collection: 'deny',
+      },
       messages: [
         { role: 'system', content: system },
         { role: 'user', content: prompt },
@@ -96,11 +103,13 @@ export default async (args: GenerateObjectArgs) => {
       response_format,
       temperature,
       seed,
+      topK,
+      topP,
     }),
   })
   const headers = Object.fromEntries(response.headers)
   // console.log(headers)
-  const { id } = headers
+  // const { id } = headers
   const cache = headers['cf-aig-cache-status']
   const status = `${response.status}: ${response.statusText}`
   const results = await response.json()
@@ -120,7 +129,7 @@ export default async (args: GenerateObjectArgs) => {
   //     output: 'no-schema',
   //   })
   // const { object, reasoning } = results as any
-  const { model, provider } = results
+  const { model, provider, id } = results
   const message = results.choices[0].message
   let { content, reasoning, refusal } = message || {}
   let object: any
@@ -142,6 +151,7 @@ export default async (args: GenerateObjectArgs) => {
       validation = JSON.parse(e.message)
     }
   }
+  const latency = Date.now() - start
   // console.log(results)
   const data = { functionName, results, modelName, model, provider, id, status, cache, object, reasoning, refusal, error, json_schema, validation }
   console.log(data)
