@@ -47,12 +47,12 @@ export const Projects: CollectionConfig = {
       collection: 'datasets',
       on: 'project',
     },
-    {
-      name: 'functions',
-      type: 'join',
-      collection: 'functions',
-      on: 'project',
-    },
+    // {
+    //   name: 'functions',
+    //   type: 'join',
+    //   collection: 'functions',
+    //   on: 'project',
+    // },
     {
       name: 'workflows',
       type: 'join',

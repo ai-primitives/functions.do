@@ -17,12 +17,12 @@ export const Functions: CollectionConfig = {
         { name: 'schema', type: 'relationship', relationTo: 'schemas', admin: { condition: (data) => data.output === 'Object' } },
       ],
     },
-    {
-      name: 'project',
-      type: 'relationship',
-      relationTo: 'projects',
-      required: true,
-    },
+    // {
+    //   name: 'project',
+    //   type: 'relationship',
+    //   relationTo: 'projects',
+    //   required: true,
+    // },
     // Using a join field for function calls
     {
       name: 'functionCalls',
