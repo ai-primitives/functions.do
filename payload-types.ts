@@ -256,37 +256,42 @@ export interface Project {
    * Model groups in this project
    */
   modelGroups?: {
-    docs?: (string | ModelGroup)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | ModelGroup)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   /**
    * Datasets in this project
    */
   datasets?: {
-    docs?: (string | Dataset)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Dataset)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   /**
    * Functions in this project
    */
   functions?: {
-    docs?: (string | Function)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Function)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   /**
    * Workflows in this project
    */
   workflows?: {
-    docs?: (string | Workflow)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Workflow)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   /**
    * Prompts in this project
    */
   prompts?: {
-    docs?: (string | Prompt)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Prompt)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -302,9 +307,10 @@ export interface ModelGroup {
    * Models in this group
    */
   models?: {
-    docs?: (string | Model)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Model)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -373,9 +379,10 @@ export interface Provider {
    * Models using this provider
    */
   models?: {
-    docs?: (string | Model)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Model)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   endpoint?: string | null;
   apiKey?: string | null;
   organizationId?: string | null;
@@ -409,16 +416,18 @@ export interface Dataset {
    * Data entries in this dataset
    */
   data?: {
-    docs?: (string | Datum)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Datum)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   /**
    * Evaluations for this dataset
    */
   evals?: {
-    docs?: (string | Eval)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | Eval)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -509,9 +518,10 @@ export interface EvalRun {
    * Results from this evaluation run
    */
   results?: {
-    docs?: (string | EvalResult)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | EvalResult)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   startTime: string;
   endTime?: string | null;
   status: 'pending' | 'running' | 'completed' | 'failed';
@@ -569,9 +579,10 @@ export interface Function {
    * Calls made to this function
    */
   functionCalls?: {
-    docs?: (string | FunctionCall)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | FunctionCall)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   system?: string | null;
   user?: string | null;
   updatedAt: string;
@@ -654,9 +665,10 @@ export interface Workflow {
    * Executions of this workflow
    */
   workflowCalls?: {
-    docs?: (string | WorkflowCall)[] | null;
-    hasNextPage?: boolean | null;
-  } | null;
+    docs?: (string | WorkflowCall)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   description?: {
     root: {
       type: string;
