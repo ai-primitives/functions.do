@@ -6,8 +6,13 @@ import crypto from 'crypto'
 
 import { generateObject, generateText } from 'ai'
 import { wrapLanguageModel } from 'ai'
-import { createOpenAI } from '@ai-sdk/openai'
-import { openrouter } from '@openrouter/ai-sdk-provider'
+import { createOpenAI, openai } from '@ai-sdk/openai'
+// import { openrouter } from '@openrouter/ai-sdk-provider'
+
+const openrouter = createOpenAI({
+  baseURL: process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1',
+  apiKey: process.env.OPENROUTER_API_KEY,
+})
 
 export const maxDuration = 300
 
@@ -26,7 +31,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   console.log(query)
 
   const { slug } = await params
-  const { seed: seedString, temperature: temperatureString, model, input, system, prompt, ...args } = query
+  const { seed: seedString, temperature: temperatureString, model = 'google/gemini-2.0-flash-001', input, system, prompt, ...args } = query
   const seed = seedString ? parseInt(seedString) : undefined
   const temperature = temperatureString ? parseFloat(temperatureString) : 1.0
 
@@ -59,6 +64,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   console.log(func)
 
   const cacheLatency = Date.now() - start
+  console.log({ cacheLatency })
 
   // if completion exists, return it
   if (completion.docs.length > 0) {
@@ -77,7 +83,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   const languageModel = wrapLanguageModel({
     // model: openrouter(model || 'anthropic/claude-3.7-sonnet'),
-    model: openrouter(model || 'google/gemini-2.0-flash-001'),
+    // model: openrouter(model || 'google/gemini-2.0-flash-001'),
+    model: openrouter(model, { structuredOutputs: true }),
     middleware: [
       {
         wrapGenerate: async ({ doGenerate, params }) => {
@@ -125,22 +132,22 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       seed,
       temperature,
     })
-    waitUntil(
-      payload.create({
-        collection: 'completions',
-        data: {
-          tenant,
-          hash: inputHash,
-          function: func.docs[0],
-          input: input ? input : args,
-          output: completionResult.object,
-          model: completionResult.response.modelId,
-          requestId: completionResult.response.id,
-          debug: completionResult as any,
-          seed,
-        },
-      }),
-    )
+    // waitUntil(
+    //   payload.create({
+    //     collection: 'completions',
+    //     data: {
+    //       tenant,
+    //       hash: inputHash,
+    //       function: func.docs[0],
+    //       input: input ? input : args,
+    //       output: completionResult.object,
+    //       model: completionResult.response.modelId,
+    //       requestId: completionResult.response.id,
+    //       debug: completionResult as any,
+    //       seed,
+    //     },
+    //   }),
+    // )
     return Response.json({ cacheHit: false, cacheLatency, func: func.docs[0], completion: completionResult, input, inputHash, args, query })
   }
 
@@ -169,7 +176,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
         project: 'default',
         name: slug,
         output: 'Object',
-        model: model || 'anthropic/claude-3.7-sonnet',
+        model,
       },
     }),
   ])
