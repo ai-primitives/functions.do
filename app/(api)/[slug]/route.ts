@@ -12,6 +12,10 @@ import { createOpenAI, openai } from '@ai-sdk/openai'
 const openrouter = createOpenAI({
   baseURL: process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1',
   apiKey: process.env.OPENROUTER_API_KEY,
+  headers: {
+    'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
+    'X-Title': 'Functions.do - Simple & Fast Strongly-Typed AI Functions', // Optional. Site name for rankings on openrouter.ai.
+  }
 })
 
 export const maxDuration = 300
@@ -20,6 +24,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const payload = await getPayload({
     config: configPromise,
   })
+
+  const { origin } = new URL(request.url)
 
   const auth = await payload.auth(request)
   console.log(auth.user)
@@ -170,6 +176,11 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
         reasoning: {
           effort: 'high',
         },
+        openai: {
+          provider: {
+            require_parameters: true
+          }
+        }
       },
       // reasoning: { effort: 'high' },
       prompt: `${slug}(${inputString})`,
@@ -209,7 +220,19 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       },
     }),
   )
-  return Response.json({ function: slug, args, data: completionResult.object, latency })
+
+  const { object, reasoning } = completionResult as any
+  return Response.json({ function: slug, args, 
+    // data: object, variant: object, 
+    optionA: object, optionB: object,
+    feedback: { 
+      // 'Prefer Control': origin + 'feedback?prefer=' + completionResult.response.id,
+      // 'Prefer Variant': origin + 'feedback?variant=' + completionResult.response.id,
+      'A is better': origin + `/feedback/${completionResult.response.id}?prefer=A`,
+      'B is better': origin + `/feedback/${completionResult.response.id}?prefer=B`,
+      'Both are good': origin + `/feedback/${completionResult.response.id}?both=good`,
+      'Both are bad': origin + `/feedback/${completionResult.response.id}?both=bad`,
+    }, latency })
   // return Response.json({ completion: completionResult, 
   //   // func: funcResult, 
   //   cacheHit: false, cacheLatency, latency, completionLatency, input, inputHash, args, query })
