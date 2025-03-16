@@ -3,7 +3,7 @@ import { getPayload } from 'payload'
 import generateObject from '@/lib/generateObject'
 import { waitUntil } from '@vercel/functions'
 
-export const maxDuration = 300
+export const maxDuration = 800
 
 export async function POST(request: Request) {
   const payload = await getPayload({ config })
@@ -11,6 +11,7 @@ export async function POST(request: Request) {
   console.log(auth.user?.tenants)
   // if (!auth.user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
+  const { hostname } = new URL(request.url)
   const body = await request.json()
   const { functionName, input, schema, settings } = body
   console.log({ body })
@@ -35,7 +36,8 @@ export async function POST(request: Request) {
       .create({
         collection: 'completions',
         data: {
-          tenant: auth.user?.tenants?.[0]?.id || 'default',
+          // tenant: auth.user?.tenants?.[0]?.id || 'default',
+          tenant: hostname,
           function: functionDocs.docs[0],
           output: object,
           input: input,

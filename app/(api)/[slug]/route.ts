@@ -19,7 +19,7 @@ const openrouter = createOpenAI({
   }
 })
 
-export const maxDuration = 300
+export const maxDuration = 800
 
 export const GET = async (request: Request, { params }: { params: Promise<{ slug: string }>; searchParams: Promise<{ [key: string]: string | string[] }> }) => {
   
@@ -47,7 +47,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   const latency = Date.now() - start
 
-  const url = new URL(request.url)
+  const url = new URL(request.url.replaceAll('%20', '+'))
   // const { object, reasoning } = completionResult as any
   return Response.json({ function: functionName, args: input, 
     links: {
