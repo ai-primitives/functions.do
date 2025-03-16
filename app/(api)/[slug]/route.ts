@@ -39,8 +39,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   const { slug } = await params
   // match `listBlogPostTitles(topic:puppies)` function name and args for yaml flow style parse
-  const functionName = slug.split('(')[0]
-  const args = slug.split('(')[1].split(')')[0]
+  const functionName = decodeURIComponent(slug.split('(')[0])
+  let args = slug.split('(')[1].split(')')[0]
+  if (args[0] !== '{') args = '{' + args + '}'
   const inputArgs = yaml.parse(args.replaceAll('_', ' '))
   const input = args ? inputArgs : rest
 
