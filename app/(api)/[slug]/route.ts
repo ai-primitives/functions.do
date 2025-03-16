@@ -45,11 +45,13 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const inputArgs = yaml.parse(args.replaceAll('_', ' '))
   const input = args ? inputArgs : rest
 
-  const [completionResult, variantResult] = await Promise.all([
+  const [completionResult, 
+    // variantResult
+  ] = await Promise.all([
     // fetchObject({ functionName, input, model, settings: { system, prompt, seed, temperature, topK, topP } }),
     generateObject({ functionName, input, model, settings: { system, prompt, seed, temperature, topK, topP } }),
     // TODO: Figure out a more effective way to create & test variants
-    generateObject({ functionName, input, model: variant, settings: { system, prompt, seed: 1, temperature, topK, topP } })
+    // generateObject({ functionName, input, model: variant, settings: { system, prompt, seed: 1, temperature, topK, topP } })
     // fetchObject({ functionName, input, model: variant, settings: { system, prompt, seed: 1, temperature, topK, topP } })
   ])
 
@@ -64,17 +66,21 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
       // 
       next: url.toString()
     },
-    data: completionResult.object, variant: variantResult.object, 
+    data: completionResult.object, 
+    
+    // variant: variantResult.object, 
     // control: object, variant: variantResult.object,
     // optionA: object, optionB: variantResult.object,
-    feedback: { 
-      // 'Prefer Control': origin + 'feedback?prefer=' + completionResult.response.id,
-      // 'Prefer Variant': origin + 'feedback?variant=' + completionResult.response.id,
-      'Control is better': origin + `/feedback/${completionResult.id.slice(16)}?prefer=control`,
-      'Variant is better': origin + `/feedback/${completionResult.id.slice(16)}?prefer=variant`,
-      'Both are good': origin + `/feedback/${completionResult.id.slice(16)}?both=good`,
-      'Both are bad': origin + `/feedback/${completionResult.id.slice(16)}?both=bad`,
-    }, latency }, { headers: { 'Content-Type': 'application/json; charset=utf-8' }})
+    // feedback: { 
+    //   // 'Prefer Control': origin + 'feedback?prefer=' + completionResult.response.id,
+    //   // 'Prefer Variant': origin + 'feedback?variant=' + completionResult.response.id,
+    //   'Control is better': origin + `/feedback/${completionResult.id.slice(16)}?prefer=control`,
+    //   'Variant is better': origin + `/feedback/${completionResult.id.slice(16)}?prefer=variant`,
+    //   'Both are good': origin + `/feedback/${completionResult.id.slice(16)}?both=good`,
+    //   'Both are bad': origin + `/feedback/${completionResult.id.slice(16)}?both=bad`,
+    // }, 
+    
+    latency }, { headers: { 'Content-Type': 'application/json; charset=utf-8' }})
   // return Response.json({ completion: completionResult, 
   //   // func: funcResult, 
   //   cacheHit: false, cacheLatency, latency, completionLatency, input, inputHash, args, query })
