@@ -1,5 +1,6 @@
 import { DB } from './lib/payload';
 
+
 const collections = DB({
   // Core entities
   users: {
@@ -216,6 +217,71 @@ const collections = DB({
     functions: 'functions[]',
     variables: 'array',
     metadata: 'json'
+  }
+}, {
+  admin: {
+    // Group collections under 'Core' heading
+    Core: {
+      users: [
+        ['name', 'email', 'password'],
+        ['firstName', 'lastName'],
+        ['active', 'role', 'avatar'],
+        ['permissions', 'preferences'],
+      ],
+      tenants: [
+        ['name', 'domain'],
+        ['apiKey', 'active', 'deployed'],
+      ],
+      projects: [
+        ['name', 'description'],
+        ['active', 'status'],
+      ]
+    },
+    // Group collections under 'Functions' heading
+    Functions: {
+      functions: [
+        ['name', 'description'],
+        ['active', 'deployment', 'output'],
+        ['modelGroup', 'code'],
+      ],
+      functionCalls: [
+        ['function', 'model', 'status'],
+        ['input', 'output'],
+        ['cost', 'tokens', 'duration'],
+      ]
+    },
+    // Group collections under 'Models' heading
+    Models: {
+      modelGroups: [
+        ['name', 'family', 'version'],
+        ['active'],
+      ],
+      models: [
+        ['name', 'description'],
+        ['modelGroup', 'provider', 'family', 'version'],
+        ['active', 'architecture', 'pricing', 'capabilities'],
+      ],
+      providers: [
+        ['name', 'description'],
+        ['active', 'endpoint', 'apiUrl'],
+        ['apiKey', 'organizationId', 'authType'],
+      ]
+    },
+    // Group collections under 'Evaluation' heading
+    Evaluation: {
+      evals: [
+        ['name', 'type', 'method', 'metric'],
+        ['description', 'dataset'],
+      ],
+      evalRuns: [
+        ['eval', 'model', 'function', 'dataset'],
+        ['metrics', 'summary', 'status'],
+      ],
+      evalResults: [
+        ['evalRun', 'score', 'pass'],
+        ['metrics', 'result', 'details'],
+      ]
+    }
   }
 })
 

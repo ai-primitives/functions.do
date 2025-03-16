@@ -2,6 +2,22 @@ import { describe, it, expect } from 'vitest'
 import { DB } from './payload'
 import type { CollectionConfig } from 'payload'
 
+// Helper function to find a field by name in a collection
+const findField = (collection: any, name: string): any => {
+  // First look for the field directly in the fields array
+  for (const field of collection.fields) {
+    if (field.name === name) return field;
+    
+    // Check if this is a row field that might contain our target field
+    if (field.type === 'row' && Array.isArray(field.fields)) {
+      for (const rowField of field.fields) {
+        if (rowField.name === name) return rowField;
+      }
+    }
+  }
+  return undefined;
+}
+
 describe('DB Schema Function', () => {
   // Test basic field types
   it('should transform basic field types correctly', () => {
@@ -295,5 +311,228 @@ describe('DB Schema Function', () => {
     const unknownField = fields.find(f => f.name === 'unknownField')
     // Should fall back to text type
     expect(unknownField).toHaveProperty('type', 'text')
+  })
+
+  // ====== ADMIN UI CUSTOMIZATION TESTS ======
+
+  // Test admin UI group assignment
+  it('should assign collections to admin UI groups', () => {
+    const schema = {
+      posts: {
+        title: 'text',
+        content: 'richText',
+      },
+      categories: {
+        name: 'text',
+        description: 'richText',
+      },
+      authors: {
+        name: 'text',
+        bio: 'richText',
+      }
+    }
+
+    const adminConfig = {
+      admin: {
+        Content: {
+          posts: [],
+          categories: []
+        },
+        Users: {
+          authors: []
+        }
+      }
+    }
+
+    const result = DB(schema, adminConfig)
+    
+    // Check that collections were assigned to the correct groups
+    expect(result.posts.admin).toHaveProperty('group', 'Content')
+    expect(result.categories.admin).toHaveProperty('group', 'Content')
+    expect(result.authors.admin).toHaveProperty('group', 'Users')
+  })
+
+  // Test field row layout - simple case with one row
+  it('should organize fields into rows based on admin config', () => {
+    const schema = {
+      authors: {
+        firstName: 'text',
+        lastName: 'text',
+        email: 'email',
+        bio: 'richText',
+      }
+    }
+
+    const adminConfig = {
+      admin: {
+        Users: {
+          authors: [
+            ['firstName', 'lastName'] // Group these two fields in a row
+          ]
+        }
+      }
+    }
+
+    const result = DB(schema, adminConfig)
+    
+    // Check that a row was created
+    const fields = result.authors.fields as any[]
+    const rowField = fields.find(f => f.type === 'row')
+    expect(rowField).toBeDefined()
+    expect(rowField.type).toBe('row')
+    expect(rowField.fields).toHaveLength(2)
+    
+    // Check that the row contains the expected fields
+    const fieldNames = rowField.fields.map((f: any) => f.name)
+    expect(fieldNames).toContain('firstName')
+    expect(fieldNames).toContain('lastName')
+    
+    // Check that other fields are still present at the top level
+    expect(findField(result.authors, 'email')).toBeDefined()
+    expect(findField(result.authors, 'bio')).toBeDefined()
+  })
+
+  // Test complex field row layout with multiple rows
+  it('should support complex layouts with multiple rows', () => {
+    const schema = {
+      products: {
+        name: 'text',
+        description: 'richText',
+        price: 'number',
+        discountPrice: 'number',
+        sku: 'text',
+        inventory: 'number',
+        featured: 'checkbox',
+        category: 'categories',
+      }
+    }
+
+    const adminConfig = {
+      admin: {
+        Shop: {
+          products: [
+            ['name', 'sku'],              // Row 1: Basic info
+            ['price', 'discountPrice'],   // Row 2: Pricing
+            ['featured', 'inventory'],    // Row 3: Status
+          ]
+        }
+      }
+    }
+
+    const result = DB(schema, adminConfig)
+    
+    // Check that the correct number of row fields were created
+    const fields = result.products.fields as any[]
+    const rowFields = fields.filter(f => f.type === 'row')
+    expect(rowFields).toHaveLength(3)
+    
+    // Check first row (name, sku)
+    const nameSkuRow = rowFields.find(r => 
+      r.fields.some((f: any) => f.name === 'name') && 
+      r.fields.some((f: any) => f.name === 'sku')
+    )
+    expect(nameSkuRow).toBeDefined()
+    expect(nameSkuRow.fields).toHaveLength(2)
+    
+    // Check second row (price, discountPrice)
+    const priceRow = rowFields.find(r => 
+      r.fields.some((f: any) => f.name === 'price') && 
+      r.fields.some((f: any) => f.name === 'discountPrice')
+    )
+    expect(priceRow).toBeDefined()
+    expect(priceRow.fields).toHaveLength(2)
+    
+    // Check third row (featured, inventory)
+    const statusRow = rowFields.find(r => 
+      r.fields.some((f: any) => f.name === 'featured') && 
+      r.fields.some((f: any) => f.name === 'inventory')
+    )
+    expect(statusRow).toBeDefined()
+    expect(statusRow.fields).toHaveLength(2)
+    
+    // Check that other fields are still present at the top level
+    expect(findField(result.products, 'description')).toBeDefined()
+    expect(findField(result.products, 'category')).toBeDefined()
+  })
+
+  // Test empty or missing admin config
+  it('should handle missing or empty admin config gracefully', () => {
+    const schema = {
+      posts: {
+        title: 'text',
+        content: 'richText',
+      }
+    }
+
+    // Test with undefined admin config (default parameter in DB function)
+    const result1 = DB(schema)
+    expect(result1.posts).toBeDefined()
+    expect(result1.posts.fields).toHaveLength(2)
+    
+    // Test with empty admin config
+    const result2 = DB(schema, {})
+    expect(result2.posts).toBeDefined()
+    expect(result2.posts.fields).toHaveLength(2)
+    
+    // Test with admin config that doesn't include this collection
+    const result3 = DB(schema, {
+      admin: {
+        Content: {
+          someOtherCollection: []
+        }
+      }
+    })
+    expect(result3.posts).toBeDefined()
+    expect(result3.posts.fields).toHaveLength(2)
+  })
+
+  // Test combination of admin UI customization with other features
+  it('should work with all other features simultaneously', () => {
+    const schema = {
+      products: {
+        name: 'text',
+        price: 'number',
+        status: 'Active | Draft | Archived',
+        category: 'categories',
+        tags: 'tags[]',
+        code: 'code:javascript',
+        _hooks: { beforeChange: [] },
+        _access: { read: () => true }
+      }
+    }
+
+    const adminConfig = {
+      admin: {
+        Shop: {
+          products: [
+            ['name', 'price'],          // Row 1: Basic info
+            ['status', 'category'],     // Row 2: Classification
+          ]
+        }
+      }
+    }
+
+    const result = DB(schema, adminConfig)
+    
+    // Check admin grouping
+    expect(result.products.admin).toHaveProperty('group', 'Shop')
+    
+    // Check row layout
+    const fields = result.products.fields as any[]
+    const rowFields = fields.filter(f => f.type === 'row')
+    expect(rowFields).toHaveLength(2)
+    
+    // Check that underscore properties were passed correctly
+    expect(result.products).toHaveProperty('hooks')
+    expect(result.products).toHaveProperty('access')
+    
+    // Check that code field with language was processed correctly
+    const codeField = findField(result.products, 'code')
+    expect(codeField).toBeDefined()
+    expect(codeField).toMatchObject({
+      name: 'code',
+      type: 'code',
+      admin: { language: 'javascript' }
+    })
   })
 })

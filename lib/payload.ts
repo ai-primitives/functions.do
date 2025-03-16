@@ -7,9 +7,21 @@ type SimpleSchemaField = string | any;
 type SimpleSchema = Record<string, Record<string, SimpleSchemaField>>;
 
 /**
+ * Admin UI customization options
+ */
+type AdminUIFieldRow = string[];
+type AdminUICollection = Record<string, AdminUIFieldRow[]>;
+type AdminUIConfig = {
+  admin?: Record<string, AdminUICollection>;
+};
+
+/**
  * DB function transforms a simplified schema syntax into PayloadCMS collection configurations
  * 
- * Syntax examples:
+ * @param schema - The simplified schema definition
+ * @param options - Additional configuration options
+ * 
+ * Schema Syntax examples:
  * - Simple fields: 'text', 'richText', 'checkbox', 'date', 'email', etc.
  * - Select fields: 'Option1 | Option2 | Option3'
  * - Relations: 'collectionName'
@@ -17,8 +29,15 @@ type SimpleSchema = Record<string, Record<string, SimpleSchemaField>>;
  * - Reverse relations: '<-collectionName.fieldName'
  * - JSON fields: 'json'
  * - Array fields: 'array'
+ * - Code with language: 'code:language' (e.g. 'code:markdown')
+ * 
+ * Options can include:
+ * - admin: Configuration for Admin UI grouping and field layouts
  */
-export const DB = (schema: SimpleSchema): Record<string, CollectionConfig> => {
+export const DB = (
+  schema: SimpleSchema, 
+  options: AdminUIConfig = {}
+): Record<string, CollectionConfig> => {
   const result: Record<string, CollectionConfig> = {};
 
   for (const [collectionSlug, fields] of Object.entries(schema)) {
@@ -34,6 +53,7 @@ export const DB = (schema: SimpleSchema): Record<string, CollectionConfig> => {
     else if ('function' in fields) useAsTitle = 'function';
     else if ('id' in fields) useAsTitle = 'id';
     
+    // Initialize collection config with basic settings
     const collection: CollectionConfig = {
       slug: collectionSlug,
       admin: {
@@ -41,10 +61,34 @@ export const DB = (schema: SimpleSchema): Record<string, CollectionConfig> => {
       },
       fields: [],
     };
+    
+    // Store field layout if specified for later processing
+    let fieldLayout: AdminUIFieldRow[] | undefined;
+    
+    // Process admin UI customization if provided
+    const adminConfig = options.admin;
+    if (adminConfig) {
+      // Find which group this collection belongs to
+      for (const [groupName, groupCollections] of Object.entries(adminConfig)) {
+        if (collectionSlug in groupCollections) {
+          // Set the group for this collection
+          if (collection.admin) {
+            collection.admin.group = groupName;
+          }
+          
+          // Store field layout if specified for later processing
+          fieldLayout = groupCollections[collectionSlug];
+          break;
+        }
+      }
+    }
 
     // Add versions by default
     collection.versions = true;
 
+    // Create a map to store all fields by name for later reference
+    const fieldMap = new Map<string, any>();
+    
     // Process each field in the collection
     for (const [key, value] of Object.entries(fields)) {
       // Skip empty values
@@ -60,7 +104,56 @@ export const DB = (schema: SimpleSchema): Record<string, CollectionConfig> => {
       // Add the field based on its type
       const field = parseField(key, value, collectionSlug);
       if (field) {
+        // Store field in map and add to collection
+        fieldMap.set(key, field);
         collection.fields.push(field);
+      }
+    }
+    
+    // Apply field layout if specified
+    if (fieldLayout && fieldLayout.length > 0 && collection.admin) {
+      // Extract the original fields to rebuild with the row structure
+      const originalFields = [...collection.fields] as any[];
+      collection.fields = [];
+      
+      // Add field rows according to the layout
+      for (const rowFields of fieldLayout) {
+        if (rowFields.length > 1) {
+          // Create a row with fields
+          const row: any = {
+            name: `row_${Math.random().toString(36).substring(2, 7)}`, // Create a unique name for the row
+            type: 'row',
+            fields: []
+          };
+          
+          // Add fields to the row
+          for (const fieldName of rowFields) {
+            const field = fieldMap.get(fieldName);
+            if (field) {
+              row.fields.push(field);
+              // Remove from map to track which fields have been used
+              fieldMap.delete(fieldName);
+            }
+          }
+          
+          if (row.fields.length > 0) {
+            collection.fields.push(row);
+          }
+        } else if (rowFields.length === 1) {
+          // Single field in a row - just add it directly
+          const field = fieldMap.get(rowFields[0]);
+          if (field) {
+            collection.fields.push(field);
+            fieldMap.delete(rowFields[0]);
+          }
+        }
+      }
+      
+      // Add any remaining fields that weren't in the layout
+      for (const field of originalFields) {
+        if ('name' in field && fieldMap.has(field.name)) {
+          collection.fields.push(field);
+        }
       }
     }
 
