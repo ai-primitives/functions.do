@@ -20,7 +20,8 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   
   const payload = await getPayload({ config })
 
-  const { origin, hostname, searchParams } = new URL(decodeURI(decode(request.url)))
+  let { origin, hostname, searchParams } = new URL(decode(request.url))
+
 
   const api = {
     admin: origin + '/admin',
