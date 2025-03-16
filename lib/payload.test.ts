@@ -313,6 +313,30 @@ describe('DB Schema Function', () => {
     expect(unknownField).toHaveProperty('type', 'text')
   })
 
+  // Test that useAsTitle is not automatically set
+  it('should not automatically set useAsTitle to avoid field existence issues', () => {
+    const schema = {
+      users: {
+        email: 'email',
+        password: 'text',
+        // No 'name' field
+      },
+      posts: {
+        title: 'text',
+        content: 'richText',
+        _admin: { useAsTitle: 'title' } // Explicitly set useAsTitle
+      },
+    }
+
+    const result = DB(schema)
+    
+    // For users collection, useAsTitle should not be set at all
+    expect(result.users.admin).not.toHaveProperty('useAsTitle')
+    
+    // For posts collection, useAsTitle should be set to 'title' because it was explicitly set
+    expect(result.posts.admin).toHaveProperty('useAsTitle', 'title')
+  })
+
   // ====== ADMIN UI CUSTOMIZATION TESTS ======
 
   // Test admin UI group assignment

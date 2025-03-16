@@ -163,13 +163,13 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   name?: string | null;
+  email: string;
   password?: string | null;
   firstName?: string | null;
   lastName?: string | null;
   active?: boolean | null;
+  role?: ('admin' | 'editor' | 'viewer') | null;
   avatar?: string | null;
-  projects?: (string | Project)[] | null;
-  function?: (string | Function)[] | null;
   permissions?:
     | {
         [k: string]: unknown;
@@ -179,7 +179,6 @@ export interface User {
     | number
     | boolean
     | null;
-  role?: ('admin' | 'editor' | 'viewer') | null;
   preferences?:
     | {
         [k: string]: unknown;
@@ -189,6 +188,8 @@ export interface User {
     | number
     | boolean
     | null;
+  projects?: (string | Project)[] | null;
+  function?: (string | Function)[] | null;
   tenants?:
     | {
         tenant: string | Tenant;
@@ -200,7 +201,6 @@ export interface User {
   enableAPIKey?: boolean | null;
   apiKey?: string | null;
   apiKeyIndex?: string | null;
-  email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
   salt?: string | null;
@@ -278,8 +278,8 @@ export interface Function {
     };
     [k: string]: unknown;
   } | null;
-  deployment?: ('dev' | 'test' | 'prod') | null;
   active?: boolean | null;
+  deployment?: ('dev' | 'test' | 'prod') | null;
   output?: ('object' | 'text') | null;
   modelGroup?: (string | null) | ModelGroup;
   code?:
@@ -459,6 +459,7 @@ export interface FunctionCall {
   id: string;
   function?: (string | null) | Function;
   model?: (string | null) | Model;
+  status?: ('pending' | 'running' | 'completed' | 'failed') | null;
   input?:
     | {
         [k: string]: unknown;
@@ -477,7 +478,6 @@ export interface FunctionCall {
     | number
     | boolean
     | null;
-  status?: ('pending' | 'running' | 'completed' | 'failed') | null;
   cost?: number | null;
   tokens?:
     | {
@@ -554,7 +554,6 @@ export interface Dataset {
   imported?: string | null;
   version?: string | null;
   format?: ('text' | 'json' | 'csv' | 'images' | 'mixed') | null;
-  collection?: string | null;
   metadata?:
     | {
         [k: string]: unknown;
@@ -582,6 +581,9 @@ export interface Dataset {
 export interface Eval {
   id: string;
   name?: string | null;
+  type?: ('accuracy' | 'performance' | 'robustness' | 'safety' | 'custom') | null;
+  method?: string | null;
+  metric?: string | null;
   description?: {
     root: {
       type: string;
@@ -597,9 +599,6 @@ export interface Eval {
     };
     [k: string]: unknown;
   } | null;
-  type?: ('accuracy' | 'performance' | 'robustness' | 'safety' | 'custom') | null;
-  method?: string | null;
-  metric?: string | null;
   dataset?: (string | null) | Dataset;
   functions?: (string | Function)[] | null;
   /**
@@ -652,6 +651,8 @@ export interface EvalRun {
 export interface EvalResult {
   id: string;
   evalRun?: (string | null) | EvalRun;
+  score?: number | null;
+  pass?: boolean | null;
   metrics?:
     | {
         [k: string]: unknown;
@@ -661,8 +662,6 @@ export interface EvalResult {
     | number
     | boolean
     | null;
-  score?: number | null;
-  pass?: boolean | null;
   result?:
     | {
         [k: string]: unknown;
@@ -1217,16 +1216,17 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  email?: T;
   password?: T;
   firstName?: T;
   lastName?: T;
   active?: T;
+  role?: T;
   avatar?: T;
+  permissions?: T;
+  preferences?: T;
   projects?: T;
   function?: T;
-  permissions?: T;
-  role?: T;
-  preferences?: T;
   tenants?:
     | T
     | {
@@ -1238,7 +1238,6 @@ export interface UsersSelect<T extends boolean = true> {
   enableAPIKey?: T;
   apiKey?: T;
   apiKeyIndex?: T;
-  email?: T;
   resetPasswordToken?: T;
   resetPasswordExpiration?: T;
   salt?: T;
@@ -1285,8 +1284,8 @@ export interface FunctionsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
   description?: T;
-  deployment?: T;
   active?: T;
+  deployment?: T;
   output?: T;
   modelGroup?: T;
   code?: T;
@@ -1305,9 +1304,9 @@ export interface FunctionsSelect<T extends boolean = true> {
 export interface FunctionCallsSelect<T extends boolean = true> {
   function?: T;
   model?: T;
+  status?: T;
   input?: T;
   output?: T;
-  status?: T;
   cost?: T;
   tokens?: T;
   duration?: T;
@@ -1413,7 +1412,6 @@ export interface DatasetsSelect<T extends boolean = true> {
   imported?: T;
   version?: T;
   format?: T;
-  collection?: T;
   metadata?: T;
   data?: T;
   evals?: T;
@@ -1426,10 +1424,10 @@ export interface DatasetsSelect<T extends boolean = true> {
  */
 export interface EvalsSelect<T extends boolean = true> {
   name?: T;
-  description?: T;
   type?: T;
   method?: T;
   metric?: T;
+  description?: T;
   dataset?: T;
   functions?: T;
   evalRuns?: T;
@@ -1458,9 +1456,9 @@ export interface EvalRunsSelect<T extends boolean = true> {
  */
 export interface EvalResultsSelect<T extends boolean = true> {
   evalRun?: T;
-  metrics?: T;
   score?: T;
   pass?: T;
+  metrics?: T;
   result?: T;
   details?: T;
   updatedAt?: T;

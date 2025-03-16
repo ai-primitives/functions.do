@@ -25,5 +25,5 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   
   const start = Date.now()
 
-  return Response.json({ message: 'Hello, world!', user: auth.user?.email ? { email: auth.user?.email } : undefined })
+  return Response.json({ message: 'Hello, world!', tenant, user: auth.user?.email })
 }

@@ -68,7 +68,7 @@ const collections = DB({
     meta: 'json',
     data: 'data[]',
     workflow: 'workflowCalls',
-    _admin: { useAsTitle: 'function' }
+    // Removed useAsTitle setting to avoid field existence issues
   },
 
   // Model-related entities
@@ -142,7 +142,7 @@ const collections = DB({
     imported: 'date',
     version: 'text',
     format: 'Text | JSON | CSV | Images | Mixed',
-    collection: 'text',
+    // collection: 'text',
     metadata: 'json',
     data: '<-data.dataset',
     evals: '<-evals.dataset'

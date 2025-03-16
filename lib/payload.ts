@@ -41,26 +41,15 @@ export const DB = (
   const result: Record<string, CollectionConfig> = {};
 
   for (const [collectionSlug, fields] of Object.entries(schema)) {
-    // Determine which field to use as the title
-    // Priority: id field if no other candidates exist
-    // Then check for common title fields: name, title, label, etc.
-    let useAsTitle = 'id';
-    
-    // Check for common title fields
-    if ('name' in fields) useAsTitle = 'name';
-    else if ('title' in fields) useAsTitle = 'title';
-    else if ('label' in fields) useAsTitle = 'label';
-    else if ('function' in fields) useAsTitle = 'function';
-    else if ('id' in fields) useAsTitle = 'id';
-    
     // Initialize collection config with basic settings
     const collection: CollectionConfig = {
       slug: collectionSlug,
-      admin: {
-        useAsTitle,
-      },
+      admin: {},
       fields: [],
     };
+    
+    // We'll determine the useAsTitle field after processing all fields
+    // to ensure the field actually exists in the collection
     
     // Store field layout if specified for later processing
     let fieldLayout: AdminUIFieldRow[] | undefined;
@@ -97,7 +86,15 @@ export const DB = (
       // Underscore fields are passed directly to the collection config
       if (key.startsWith('_')) {
         const configKey = key.substring(1); // Remove leading underscore
-        (collection as any)[configKey] = value;
+        
+        // Special handling for _admin to ensure useAsTitle is properly set
+        if (configKey === 'admin' && typeof value === 'object' && value !== null) {
+          // Merge with existing admin config instead of replacing it
+          collection.admin = { ...collection.admin, ...value };
+        } else {
+          // For other underscore fields, pass directly to collection config
+          (collection as any)[configKey] = value;
+        }
         continue;
       }
 
@@ -109,6 +106,10 @@ export const DB = (
         collection.fields.push(field);
       }
     }
+    
+    // We're not automatically setting useAsTitle to avoid issues with fields that don't exist
+    // If a specific collection needs useAsTitle, it should be set explicitly using _admin: { useAsTitle: 'fieldName' }
+    // in the schema definition
     
     // Apply field layout if specified
     if (fieldLayout && fieldLayout.length > 0 && collection.admin) {
