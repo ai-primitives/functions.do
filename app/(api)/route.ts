@@ -26,7 +26,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     origin = origin.replace(hostname, decode(hostname))
     hostname = decode(hostname)
   } catch (error) {
-    
+    console.log(error)
   }
 
 
