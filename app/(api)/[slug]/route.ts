@@ -33,7 +33,9 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const tenant = hostname
   
   const start = Date.now()
-  const { system, prompt, seed, temperature, topK, topP, model = 'google/gemini-2.0-flash-001', variant, ...rest } = Object.fromEntries(searchParams) || {}
+  const { system, prompt, seed: seedString, temperature, topK, topP, model = 'google/gemini-2.0-flash-001', variant, ...rest } = Object.fromEntries(searchParams) || {}
+
+  const seed = seedString ? Number(seedString) : 1
 
   console.log(rest)
 
@@ -42,29 +44,45 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const functionName = decodeURIComponent(slug.split('(')[0])
   let args = slug.split('(')[1].split(')')[0]
   if (args[0] !== '{') args = '{' + args + '}'
+  // if there is a `:` without a space after it, add a space
+  args = args.replace(/:/g, ': ')
   const inputArgs = yaml.parse(args.replaceAll('_', ' '))
   const input = args ? inputArgs : rest
+
+  const settings = { system, prompt, seed, temperature, topK, topP }
 
   const [completionResult, 
     // variantResult
   ] = await Promise.all([
-    // fetchObject({ functionName, input, model, settings: { system, prompt, seed, temperature, topK, topP } }),
-    generateObject({ functionName, input, model, settings: { system, prompt, seed, temperature, topK, topP } }),
+    // fetchObject({ functionName, input, model, settings }),
+    generateObject({ functionName, input, model, settings }),
+
     // TODO: Figure out a more effective way to create & test variants
     // generateObject({ functionName, input, model: variant, settings: { system, prompt, seed: 1, temperature, topK, topP } })
     // fetchObject({ functionName, input, model: variant, settings: { system, prompt, seed: 1, temperature, topK, topP } })
   ])
 
-  const latency = Date.now() - start
+  const latency = (Date.now() - start) / 1000
+
+  // create a function that returns the url string, override specified query params
+  const urlParams = (overrides: Record<string, string | number>) => {
+    const url = new URL(request.url.replaceAll('%20', '+'))
+    Object.entries(overrides).forEach(([key, value]) => {
+      url.searchParams.set(key, String(value))
+    })
+    return url.toString()
+  }
 
   const url = new URL(request.url.replaceAll('%20', '+'))
   // const { object, reasoning } = completionResult as any
-  return Response.json({ function: functionName, args: input, 
+  return Response.json({ function: functionName, args: input, settings,
     links: {
       home: origin + '/api',
       // variant: origin + `/variant/${completionResult.response.id}`,
       // 
-      next: url.toString()
+      // self: url.toString(),
+      next: urlParams({ seed: seed + 1}),
+      prev: seed > 1 ? urlParams({ seed: seed - 1}) : undefined,
     },
     data: completionResult.object, 
     
