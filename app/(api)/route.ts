@@ -1,0 +1,29 @@
+import config from 'payload.config'
+import { getPayload } from 'payload'
+import { waitUntil } from '@vercel/functions'
+import { NextApiRequest } from 'next'
+import crypto from 'crypto'
+import generateObject from '@/lib/generateObject'
+// import { generateObject, generateText } from 'ai'
+import { wrapLanguageModel } from 'ai'
+import { createOpenAI, openai } from '@ai-sdk/openai'
+import fetchObject from '@/lib/fetchObject'
+// import { openrouter } from '@openrouter/ai-sdk-provider'
+import yaml from 'yaml'
+
+export const maxDuration = 800
+
+export const GET = async (request: Request, { params }: { params: Promise<{ slug: string }>; searchParams: Promise<{ [key: string]: string | string[] }> }) => {
+  
+  const payload = await getPayload({ config })
+
+  const { origin, hostname, searchParams } = new URL(request.url)
+  const auth = await payload.auth(request)
+  console.log(auth.user?.email)
+  // const tenant = auth.user?.tenants?.[0]?.id
+  const tenant = hostname
+  
+  const start = Date.now()
+
+  return Response.json({ message: 'Hello, world!', user: auth.user?.email ? { email: auth.user?.email } : undefined })
+}
