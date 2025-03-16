@@ -1,0 +1,1105 @@
+occupation_code,occupation_name,display_level,selectable,sort_sequence
+000000,All Occupations,0,T,0
+110000,Management Occupations,0,T,1
+111000,Top Executives,1,T,2
+111011,Chief Executives,3,T,3
+111021,General and Operations Managers,3,T,4
+111031,Legislators,3,T,5
+112000,Advertising, Marketing, Promotions, Public Relations, and Sales Managers,1,T,6
+112011,Advertising and Promotions Managers,3,T,7
+112020,Marketing and Sales Managers,2,T,8
+112021,Marketing Managers,3,T,9
+112022,Sales Managers,3,T,10
+112030,Public Relations and Fundraising Managers,2,T,11
+112032,Public Relations Managers,3,T,12
+112033,Fundraising Managers,3,T,13
+113000,Operations Specialties Managers,1,T,14
+113010,Administrative Services and Facilities Managers,2,T,15
+113012,Administrative Services Managers,3,T,16
+113013,Facilities Managers,3,T,17
+113021,Computer and Information Systems Managers,3,T,18
+113031,Financial Managers,3,T,19
+113051,Industrial Production Managers,3,T,20
+113061,Purchasing Managers,3,T,21
+113071,Transportation, Storage, and Distribution Managers,3,T,22
+113111,Compensation and Benefits Managers,3,T,23
+113121,Human Resources Managers,3,T,24
+113131,Training and Development Managers,3,T,25
+119000,Other Management Occupations,1,T,26
+119013,Farmers, Ranchers, and Other Agricultural Managers,3,T,27
+119021,Construction Managers,3,T,28
+119030,Education and Childcare Administrators,2,T,29
+119031,Education and Childcare Administrators, Preschool and Daycare,3,T,30
+119032,Education Administrators, Kindergarten through Secondary,3,T,31
+119033,Education Administrators, Postsecondary,3,T,32
+119039,Education Administrators, All Other,3,T,33
+119041,Architectural and Engineering Managers,3,T,34
+119051,Food Service Managers,3,T,35
+119070,Entertainment and Recreation Managers,2,T,36
+119071,Gambling Managers,3,T,37
+119072,Entertainment and Recreation Managers, Except Gambling,3,T,38
+119081,Lodging Managers,3,T,39
+119111,Medical and Health Services Managers,3,T,40
+119121,Natural Sciences Managers,3,T,41
+119131,Postmasters and Mail Superintendents,3,T,42
+119141,Property, Real Estate, and Community Association Managers,3,T,43
+119151,Social and Community Service Managers,3,T,44
+119161,Emergency Management Directors,3,T,45
+119170,Personal Service Managers,2,T,46
+119171,Funeral Home Managers,3,T,47
+119179,Personal Service Managers, All Other,3,T,48
+119199,Managers, All Other,3,T,49
+130000,Business and Financial Operations Occupations,0,T,50
+131000,Business Operations Specialists,1,T,51
+131011,Agents and Business Managers of Artists, Performers, and Athletes,3,T,52
+131020,Buyers and Purchasing Agents,2,T,53
+131030,Claims Adjusters, Appraisers, Examiners, and Investigators,2,T,54
+131031,Claims Adjusters, Examiners, and Investigators,3,T,55
+131032,Insurance Appraisers, Auto Damage,3,T,56
+131041,Compliance Officers,3,T,57
+131051,Cost Estimators,3,T,58
+131070,Human Resources Workers,2,T,59
+131071,Human Resources Specialists,3,T,60
+131074,Farm Labor Contractors,3,T,61
+131075,Labor Relations Specialists,3,T,62
+131080,Logisticians and Project Management Specialists,2,T,63
+131081,Logisticians,3,T,64
+131082,Project Management Specialists,3,T,65
+131111,Management Analysts,3,T,66
+131121,Meeting, Convention, and Event Planners,3,T,67
+131131,Fundraisers,3,T,68
+131141,Compensation, Benefits, and Job Analysis Specialists,3,T,69
+131151,Training and Development Specialists,3,T,70
+131161,Market Research Analysts and Marketing Specialists,3,T,71
+131199,Business Operations Specialists, All Other,3,T,72
+132000,Financial Specialists,1,T,73
+132011,Accountants and Auditors,3,T,74
+132020,Property Appraisers and Assessors,2,T,75
+132031,Budget Analysts,3,T,76
+132041,Credit Analysts,3,T,77
+132050,Financial Analysts and Advisors,2,T,78
+132051,Financial and Investment Analysts,3,T,79
+132052,Personal Financial Advisors,3,T,80
+132053,Insurance Underwriters,3,T,81
+132054,Financial Risk Specialists,3,T,82
+132061,Financial Examiners,3,T,83
+132070,Credit Counselors and Loan Officers,2,T,84
+132071,Credit Counselors,3,T,85
+132072,Loan Officers,3,T,86
+132080,Tax Examiners, Collectors and Preparers, and Revenue Agents,2,T,87
+132081,Tax Examiners and Collectors, and Revenue Agents,3,T,88
+132082,Tax Preparers,3,T,89
+132099,Financial Specialists, All Other,3,T,90
+150000,Computer and Mathematical Occupations,0,T,91
+151200,Computer Occupations,1,T,92
+151210,Computer and Information Analysts,2,T,93
+151211,Computer Systems Analysts,3,T,94
+151212,Information Security Analysts,3,T,95
+151221,Computer and Information Research Scientists,3,T,96
+151230,Computer Support Specialists,2,T,97
+151231,Computer Network Support Specialists,3,T,98
+151232,Computer User Support Specialists,3,T,99
+151240,Database and Network Administrators and Architects,2,T,100
+151241,Computer Network Architects,3,T,101
+151242,Database Administrators,3,T,102
+151243,Database Architects,3,T,103
+151244,Network and Computer Systems Administrators,3,T,104
+151250,Software and Web Developers, Programmers, and Testers,2,T,105
+151251,Computer Programmers,3,T,106
+151252,Software Developers,3,T,107
+151253,Software Quality Assurance Analysts and Testers,3,T,108
+151254,Web Developers,3,T,109
+151255,Web and Digital Interface Designers,3,T,110
+151299,Computer Occupations, All Other,3,T,111
+152000,Mathematical Science Occupations,1,T,112
+152011,Actuaries,3,T,113
+152021,Mathematicians,3,T,114
+152031,Operations Research Analysts,3,T,115
+152041,Statisticians,3,T,116
+152051,Data Scientists,3,T,118
+152099,Mathematical Science Occupations, All Other,3,T,119
+170000,Architecture and Engineering Occupations,0,T,120
+171000,Architects, Surveyors, and Cartographers,1,T,121
+171010,Architects, Except Naval,2,T,122
+171011,Architects, Except Landscape and Naval,3,T,123
+171012,Landscape Architects,3,T,124
+171020,Surveyors, Cartographers, and Photogrammetrists,2,T,125
+171021,Cartographers and Photogrammetrists,3,T,126
+171022,Surveyors,3,T,127
+172000,Engineers,1,T,128
+172011,Aerospace Engineers,3,T,129
+172021,Agricultural Engineers,3,T,130
+172031,Bioengineers and Biomedical Engineers,3,T,131
+172041,Chemical Engineers,3,T,132
+172051,Civil Engineers,3,T,133
+172061,Computer Hardware Engineers,3,T,134
+172070,Electrical and Electronics Engineers,2,T,135
+172071,Electrical Engineers,3,T,136
+172072,Electronics Engineers, Except Computer,3,T,137
+172081,Environmental Engineers,3,T,138
+172110,Industrial Engineers, Including Health and Safety,2,T,139
+172111,Health and Safety Engineers, Except Mining Safety Engineers and Inspectors,3,T,140
+172112,Industrial Engineers,3,T,141
+172121,Marine Engineers and Naval Architects,3,T,142
+172131,Materials Engineers,3,T,143
+172141,Mechanical Engineers,3,T,144
+172151,Mining and Geological Engineers, Including Mining Safety Engineers,3,T,145
+172161,Nuclear Engineers,3,T,146
+172171,Petroleum Engineers,3,T,147
+172199,Engineers, All Other,3,T,148
+173000,Drafters, Engineering Technicians, and Mapping Technicians,1,T,149
+173010,Drafters,2,T,150
+173011,Architectural and Civil Drafters,3,T,151
+173012,Electrical and Electronics Drafters,3,T,152
+173013,Mechanical Drafters,3,T,153
+173019,Drafters, All Other,3,T,154
+173020,Engineering Technologists and Technicians, Except Drafters,2,T,155
+173021,Aerospace Engineering and Operations Technologists and Technicians,3,T,156
+173022,Civil Engineering Technologists and Technicians,3,T,157
+173023,Electrical and Electronic Engineering Technologists and Technicians,3,T,158
+173024,Electro-Mechanical and Mechatronics Technologists and Technicians,3,T,159
+173025,Environmental Engineering Technologists and Technicians,3,T,160
+173026,Industrial Engineering Technologists and Technicians,3,T,161
+173027,Mechanical Engineering Technologists and Technicians,3,T,162
+173028,Calibration Technologists and Technicians,3,T,163
+173029,Engineering Technologists and Technicians, Except Drafters, All Other,3,T,164
+173031,Surveying and Mapping Technicians,3,T,165
+190000,Life, Physical, and Social Science Occupations,0,T,166
+191000,Life Scientists,1,T,167
+191010,Agricultural and Food Scientists,2,T,168
+191011,Animal Scientists,3,T,169
+191012,Food Scientists and Technologists,3,T,170
+191013,Soil and Plant Scientists,3,T,171
+191020,Biological Scientists,2,T,172
+191021,Biochemists and Biophysicists,3,T,173
+191022,Microbiologists,3,T,174
+191023,Zoologists and Wildlife Biologists,3,T,175
+191029,Biological Scientists, All Other,3,T,176
+191030,Conservation Scientists and Foresters,2,T,177
+191031,Conservation Scientists,3,T,178
+191032,Foresters,3,T,179
+191040,Medical Scientists,2,T,180
+191041,Epidemiologists,3,T,181
+191042,Medical Scientists, Except Epidemiologists,3,T,182
+191099,Life Scientists, All Other,3,T,183
+192000,Physical Scientists,1,T,184
+192010,Astronomers and Physicists,2,T,185
+192011,Astronomers,3,T,186
+192012,Physicists,3,T,187
+192021,Atmospheric and Space Scientists,3,T,188
+192030,Chemists and Materials Scientists,2,T,189
+192031,Chemists,3,T,190
+192032,Materials Scientists,3,T,191
+192040,Environmental Scientists and Geoscientists,2,T,192
+192041,Environmental Scientists and Specialists, Including Health,3,T,193
+192042,Geoscientists, Except Hydrologists and Geographers,3,T,194
+192043,Hydrologists,3,T,195
+192099,Physical Scientists, All Other,3,T,196
+193000,Social Scientists and Related Workers,1,T,197
+193011,Economists,3,T,198
+193022,Survey Researchers,3,T,199
+193030,Psychologists,2,T,200
+193032,Industrial-Organizational Psychologists,3,T,201
+193033,Clinical and Counseling Psychologists,3,T,202
+193034,School Psychologists,3,T,203
+193039,Psychologists, All Other,3,T,204
+193041,Sociologists,3,T,205
+193051,Urban and Regional Planners,3,T,206
+193090,Miscellaneous Social Scientists and Related Workers,2,T,207
+193091,Anthropologists and Archeologists,3,T,208
+193092,Geographers,3,T,209
+193093,Historians,3,T,210
+193094,Political Scientists,3,T,211
+193099,Social Scientists and Related Workers, All Other,3,T,212
+194000,Life, Physical, and Social Science Technicians,1,T,213
+194010,Agricultural and Food Science Technicians,2,T,214
+194012,Agricultural Technicians,3,T,215
+194013,Food Science Technicians,3,T,216
+194021,Biological Technicians,3,T,217
+194031,Chemical Technicians,3,T,218
+194040,Environmental Science and Geoscience Technicians,2,T,219
+194042,Environmental Science and Protection Technicians, Including Health,3,T,220
+194043,Geological Technicians, Except Hydrologic Technicians,3,T,221
+194044,Hydrologic Technicians,3,T,222
+194051,Nuclear Technicians,3,T,223
+194061,Social Science Research Assistants,3,T,224
+194071,Forest and Conservation Technicians,3,T,225
+194090,Miscellaneous Life, Physical, and Social Science Technicians,2,T,226
+194092,Forensic Science Technicians,3,T,227
+194099,Life, Physical, and Social Science Technicians, All Other,3,T,228
+195010,Occupational Health and Safety Specialists and Technicians,2,T,230
+195011,Occupational Health and Safety Specialists,3,T,231
+195012,Occupational Health and Safety Technicians,3,T,232
+210000,Community and Social Service Occupations,0,T,233
+211000,Counselors, Social Workers, and Other Community and Social Service Specialists,1,T,234
+211010,Counselors,2,T,235
+211012,Educational, Guidance, and Career Counselors and Advisors,3,T,236
+211013,Marriage and Family Therapists,3,T,237
+211015,Rehabilitation Counselors,3,T,238
+211018,Substance abuse, behavioral disorder, and mental health counselors,3,T,239
+211019,Counselors, All Other,3,T,240
+211020,Social Workers,2,T,241
+211021,Child, Family, and School Social Workers,3,T,242
+211022,Healthcare Social Workers,3,T,243
+211023,Mental Health and Substance Abuse Social Workers,3,T,244
+211029,Social Workers, All Other,3,T,245
+211090,Miscellaneous Community and Social Service Specialists,2,T,246
+211091,Health Education Specialists,3,T,247
+211092,Probation Officers and Correctional Treatment Specialists,3,T,248
+211093,Social and Human Service Assistants,3,T,249
+211094,Community Health Workers,3,T,250
+211099,Community and Social Service Specialists, All Other,3,T,251
+212000,Religious Workers,1,T,252
+212011,Clergy,3,T,253
+212021,Directors, Religious Activities and Education,3,T,254
+212099,Religious Workers, All Other,3,T,255
+230000,Legal Occupations,0,T,256
+231000,Lawyers, Judges, and Related Workers,1,T,257
+231010,Lawyers and Judicial Law Clerks,2,T,258
+231011,Lawyers,3,T,259
+231012,Judicial Law Clerks,3,T,260
+231020,Judges, Magistrates, and Other Judicial Workers,2,T,261
+231021,Administrative Law Judges, Adjudicators, and Hearing Officers,3,T,262
+231022,Arbitrators, Mediators, and Conciliators,3,T,263
+231023,Judges, Magistrate Judges, and Magistrates,3,T,264
+232000,Legal Support Workers,1,T,265
+232011,Paralegals and Legal Assistants,3,T,266
+232090,Miscellaneous Legal Support Workers,2,T,267
+232093,Title Examiners, Abstractors, and Searchers,3,T,268
+232099,Legal Support Workers, All Other,3,T,269
+250000,Educational Instruction and Library Occupations,0,T,270
+251000,Postsecondary Teachers,1,T,271
+251011,Business Teachers, Postsecondary,3,T,272
+251020,Math and Computer Science Teachers, Postsecondary,2,T,273
+251021,Computer Science Teachers, Postsecondary,3,T,274
+251022,Mathematical Science Teachers, Postsecondary,3,T,275
+251030,Engineering and Architecture Teachers, Postsecondary,2,T,276
+251031,Architecture Teachers, Postsecondary,3,T,277
+251032,Engineering Teachers, Postsecondary,3,T,278
+251040,Life Sciences Teachers, Postsecondary,2,T,279
+251041,Agricultural Sciences Teachers, Postsecondary,3,T,280
+251042,Biological Science Teachers, Postsecondary,3,T,281
+251043,Forestry and Conservation Science Teachers, Postsecondary,3,T,282
+251050,Physical Sciences Teachers, Postsecondary,2,T,283
+251051,Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary,3,T,284
+251052,Chemistry Teachers, Postsecondary,3,T,285
+251053,Environmental Science Teachers, Postsecondary,3,T,286
+251054,Physics Teachers, Postsecondary,3,T,287
+251060,Social Sciences Teachers, Postsecondary,2,T,288
+251061,Anthropology and Archeology Teachers, Postsecondary,3,T,289
+251062,Area, Ethnic, and Cultural Studies Teachers, Postsecondary,3,T,290
+251063,Economics Teachers, Postsecondary,3,T,291
+251064,Geography Teachers, Postsecondary,3,T,292
+251065,Political Science Teachers, Postsecondary,3,T,293
+251066,Psychology Teachers, Postsecondary,3,T,294
+251067,Sociology Teachers, Postsecondary,3,T,295
+251069,Social Sciences Teachers, Postsecondary, All Other,3,T,296
+251070,Health Teachers, Postsecondary,2,T,297
+251071,Health Specialties Teachers, Postsecondary,3,T,298
+251072,Nursing Instructors and Teachers, Postsecondary,3,T,299
+251080,Education and Library Science Teachers, Postsecondary,2,T,300
+251081,Education Teachers, Postsecondary,3,T,301
+251082,Library Science Teachers, Postsecondary,3,T,302
+251110,Law, Criminal Justice, and Social Work Teachers, Postsecondary,2,T,303
+251111,Criminal Justice and Law Enforcement Teachers, Postsecondary,3,T,304
+251112,Law Teachers, Postsecondary,3,T,305
+251113,Social Work Teachers, Postsecondary,3,T,306
+251120,Arts, Communications, History, and Humanities Teachers, Postsecondary,2,T,307
+251121,Art, Drama, and Music Teachers, Postsecondary,3,T,308
+251122,Communications Teachers, Postsecondary,3,T,309
+251123,English Language and Literature Teachers, Postsecondary,3,T,310
+251124,Foreign Language and Literature Teachers, Postsecondary,3,T,311
+251125,History Teachers, Postsecondary,3,T,312
+251126,Philosophy and Religion Teachers, Postsecondary,3,T,313
+251190,Miscellaneous Postsecondary Teachers,2,T,314
+251192,Family and Consumer Sciences Teachers, Postsecondary,3,T,315
+251193,Recreation and Fitness Studies Teachers, Postsecondary,3,T,316
+251194,Career/Technical Education Teachers, Postsecondary,3,T,317
+251199,Postsecondary Teachers, All Other,3,T,318
+252000,Preschool, Elementary, Middle, Secondary, and Special Education Teachers,1,T,319
+252010,Preschool and Kindergarten Teachers,2,T,320
+252011,Preschool Teachers, Except Special Education,3,T,321
+252012,Kindergarten Teachers, Except Special Education,3,T,322
+252020,Elementary and Middle School Teachers,2,T,323
+252021,Elementary School Teachers, Except Special Education,3,T,324
+252022,Middle School Teachers, Except Special and Career/Technical Education,3,T,325
+252023,Career/Technical Education Teachers, Middle School,3,T,326
+252030,Secondary School Teachers,2,T,327
+252031,Secondary School Teachers, Except Special and Career/Technical Education,3,T,328
+252032,Career/Technical Education Teachers, Secondary School,3,T,329
+252050,Special Education Teachers,2,T,330
+252051,Special Education Teachers, Preschool,3,T,331
+252052,Special Education Teachers, Kindergarten and Elementary School,3,T,332
+252057,Special Education Teachers, Middle School,3,T,333
+252058,Special Education Teachers, Secondary School,3,T,334
+252059,Special Education Teachers, All Other,3,T,335
+253000,Other Teachers and Instructors,1,T,336
+253011,Adult Basic Education, Adult Secondary Education, and English as a Second Language Instructors,3,T,337
+253021,Self-Enrichment Teachers,3,T,338
+253031,Substitute Teachers, Short-Term,3,T,339
+253041,Tutors,3,T,340
+253099,Teachers and Instructors, All Other,3,T,341
+254000,Librarians, Curators, and Archivists,1,T,342
+254010,Archivists, Curators, and Museum Technicians,2,T,343
+254011,Archivists,3,T,344
+254012,Curators,3,T,345
+254013,Museum Technicians and Conservators,3,T,346
+254022,Librarians and Media Collections Specialists,3,T,347
+254031,Library Technicians,3,T,348
+259000,Other Educational Instruction and Library Occupations,1,T,349
+259021,Farm and Home Management Educators,3,T,350
+259031,Instructional Coordinators,3,T,351
+259040,Teaching Assistants,2,T,352
+259044,Teaching Assistants, Postsecondary,3,T,353
+259045,Teaching Assistants, Except Postsecondary,3,T,354
+259099,Educational Instruction and Library Workers, All Other,3,T,355
+270000,Arts, Design, Entertainment, Sports, and Media Occupations,0,T,356
+271000,Art and Design Workers,1,T,357
+271010,Artists and Related Workers,2,T,358
+271011,Art Directors,3,T,359
+271012,Craft Artists,3,T,360
+271013,Fine Artists, Including Painters, Sculptors, and Illustrators,3,T,361
+271014,Special Effects Artists and Animators,3,T,362
+271019,Artists and Related Workers, All Other,3,T,363
+271020,Designers,2,T,364
+271021,Commercial and Industrial Designers,3,T,365
+271022,Fashion Designers,3,T,366
+271023,Floral Designers,3,T,367
+271024,Graphic Designers,3,T,368
+271025,Interior Designers,3,T,369
+271026,Merchandise Displayers and Window Trimmers,3,T,370
+271027,Set and Exhibit Designers,3,T,371
+271029,Designers, All Other,3,T,372
+272000,Entertainers and Performers, Sports and Related Workers,1,T,373
+272010,Actors, Producers, and Directors,2,T,374
+272011,Actors,3,T,375
+272012,Producers and Directors,3,T,376
+272020,Athletes, Coaches, Umpires, and Related Workers,2,T,377
+272021,Athletes and Sports Competitors,3,T,378
+272022,Coaches and Scouts,3,T,379
+272023,Umpires, Referees, and Other Sports Officials,3,T,380
+272030,Dancers and Choreographers,2,T,381
+272031,Dancers,3,T,382
+272032,Choreographers,3,T,383
+272040,Musicians, Singers, and Related Workers,2,T,384
+272041,Music Directors and Composers,3,T,385
+272042,Musicians and Singers,3,T,386
+272090,Miscellaneous Entertainers and Performers, Sports and Related Workers,2,T,387
+272091,Disc Jockeys, Except Radio,3,T,388
+272099,Entertainers and Performers, Sports and Related Workers, All Other,3,T,389
+273000,Media and Communication Workers,1,T,390
+273011,Broadcast Announcers and Radio Disc Jockeys,3,T,391
+273023,News Analysts, Reporters, and Journalists,3,T,392
+273031,Public Relations Specialists,3,T,393
+273040,Writers and Editors,2,T,394
+273041,Editors,3,T,395
+273042,Technical Writers,3,T,396
+273043,Writers and Authors,3,T,397
+273090,Miscellaneous Media and Communication Workers,2,T,398
+273091,Interpreters and Translators,3,T,399
+273092,Court Reporters and Simultaneous Captioners,3,T,400
+273099,Media and Communication Workers, All Other,3,T,401
+274000,Media and Communication Equipment Workers,1,T,402
+274010,Broadcast, Sound, and Lighting Technicians,2,T,403
+274011,Audio and Video Technicians,3,T,404
+274012,Broadcast Technicians,3,T,405
+274014,Sound Engineering Technicians,3,T,406
+274015,Lighting Technicians,3,T,407
+274021,Photographers,3,T,408
+274030,Television, Video, and Film Camera Operators and Editors,2,T,409
+274031,Camera Operators, Television, Video, and Film,3,T,410
+274032,Film and Video Editors,3,T,411
+274099,Media and Communication Equipment Workers, All Other,3,T,412
+290000,Healthcare Practitioners and Technical Occupations,0,T,413
+291000,Healthcare Diagnosing or Treating Practitioners,1,T,414
+291011,Chiropractors,3,T,415
+291020,Dentists,2,T,416
+291021,Dentists, General,3,T,417
+291022,Oral and Maxillofacial Surgeons,3,T,418
+291023,Orthodontists,3,T,419
+291029,Dentists, All Other Specialists,3,T,421
+291031,Dietitians and Nutritionists,3,T,422
+291041,Optometrists,3,T,423
+291051,Pharmacists,3,T,424
+291071,Physician Assistants,3,T,425
+291081,Podiatrists,3,T,426
+291120,Therapists,2,T,427
+291122,Occupational Therapists,3,T,428
+291123,Physical Therapists,3,T,429
+291124,Radiation Therapists,3,T,430
+291125,Recreational Therapists,3,T,431
+291126,Respiratory Therapists,3,T,432
+291127,Speech-Language Pathologists,3,T,433
+291128,Exercise Physiologists,3,T,434
+291129,Therapists, All Other,3,T,435
+291131,Veterinarians,3,T,436
+291141,Registered Nurses,3,T,437
+291151,Nurse Anesthetists,3,T,438
+291161,Nurse Midwives,3,T,439
+291171,Nurse Practitioners,3,T,440
+291181,Audiologists,3,T,441
+291210,Physicians,2,T,442
+291211,Anesthesiologists,3,T,443
+291212,Cardiologists,3,T,444
+291213,Dermatologists,3,T,445
+291214,Emergency Medicine Physicians,3,T,446
+291215,Family Medicine Physicians,3,T,447
+291216,General Internal Medicine Physicians,3,T,448
+291217,Neurologists,3,T,449
+291218,Obstetricians and Gynecologists,3,T,450
+291221,Pediatricians, General,3,T,451
+291222,Physicians, Pathologists,3,T,452
+291223,Psychiatrists,3,T,453
+291224,Radiologists,3,T,454
+291229,Physicians, All Other,3,T,455
+291240,Surgeons,2,T,456
+291241,Ophthalmologists, Except Pediatric,3,T,457
+291242,Orthopedic Surgeons, Except Pediatric,3,T,458
+291243,Pediatric Surgeons,3,T,459
+291249,Surgeons, All Other,3,T,460
+291290,Miscellaneous Healthcare Diagnosing or Treating Practitioners,2,T,461
+291291,Acupuncturists,3,T,462
+291292,Dental Hygienists,3,T,463
+291299,Healthcare Diagnosing or Treating Practitioners, All Other,3,T,464
+292000,Health Technologists and Technicians,1,T,465
+292010,Clinical Laboratory Technologists and Technicians,2,T,466
+292030,Diagnostic Related Technologists and Technicians,2,T,467
+292031,Cardiovascular Technologists and Technicians,3,T,468
+292032,Diagnostic Medical Sonographers,3,T,469
+292033,Nuclear Medicine Technologists,3,T,470
+292034,Radiologic Technologists and Technicians,3,T,471
+292035,Magnetic Resonance Imaging Technologists,3,T,472
+292036,Medical Dosimetrists,3,T,473
+292040,Emergency Medical Technicians and Paramedics,2,T,474
+292042,Emergency Medical Technicians,3,T,475
+292043,Paramedics,3,T,476
+292050,Health Practitioner Support Technologists and Technicians,2,T,477
+292051,Dietetic Technicians,3,T,478
+292052,Pharmacy Technicians,3,T,479
+292053,Psychiatric Technicians,3,T,480
+292055,Surgical Technologists,3,T,481
+292056,Veterinary Technologists and Technicians,3,T,482
+292057,Ophthalmic Medical Technicians,3,T,483
+292061,Licensed Practical and Licensed Vocational Nurses,3,T,484
+292072,Medical Records Specialists,3,T,485
+292081,Opticians, Dispensing,3,T,486
+292090,Miscellaneous Health Technologists and Technicians,2,T,487
+292091,Orthotists and Prosthetists,3,T,488
+292092,Hearing Aid Specialists,3,T,489
+292099,Health Technologists and Technicians, All Other,3,T,490
+299000,Other Healthcare Practitioners and Technical Occupations,1,T,491
+299021,Health Information Technologists and Medical Registrars,3,T,493
+299090,Miscellaneous Health Practitioners and Technical Workers,2,T,494
+299091,Athletic Trainers,3,T,495
+299092,Genetic Counselors,3,T,496
+299093,Surgical Assistants,3,T,497
+299099,Healthcare Practitioners and Technical Workers, All Other,3,T,498
+310000,Healthcare Support Occupations,0,T,499
+311100,Home Health and Personal Care Aides; and Nursing Assistants, Orderlies, and Psychiatric Aides,2,T,500
+311120,Home Health and Personal Care Aides,2,T,501
+311130,Nursing Assistants, Orderlies, and Psychiatric Aides,2,T,502
+311131,Nursing Assistants,3,T,503
+311132,Orderlies,3,T,504
+311133,Psychiatric Aides,3,T,505
+312000,Occupational Therapy and Physical Therapist Assistants and Aides,1,T,506
+312010,Occupational Therapy Assistants and Aides,2,T,507
+312011,Occupational Therapy Assistants,3,T,508
+312012,Occupational Therapy Aides,3,T,509
+312020,Physical Therapist Assistants and Aides,2,T,510
+312021,Physical Therapist Assistants,3,T,511
+312022,Physical Therapist Aides,3,T,512
+319000,Other Healthcare Support Occupations,1,T,513
+319011,Massage Therapists,3,T,514
+319090,Miscellaneous Healthcare Support Occupations,2,T,515
+319091,Dental Assistants,3,T,516
+319092,Medical Assistants,3,T,517
+319093,Medical Equipment Preparers,3,T,518
+319094,Medical Transcriptionists,3,T,519
+319095,Pharmacy Aides,3,T,520
+319096,Veterinary Assistants and Laboratory Animal Caretakers,3,T,521
+319097,Phlebotomists,3,T,522
+319099,Healthcare Support Workers, All Other,3,T,523
+330000,Protective Service Occupations,0,T,524
+331000,Supervisors of Protective Service Workers,1,T,525
+331010,First-Line Supervisors of Law Enforcement Workers,2,T,526
+331011,First-Line Supervisors of Correctional Officers,3,T,527
+331012,First-Line Supervisors of Police and Detectives,3,T,528
+331021,First-Line Supervisors of Firefighting and Prevention Workers,3,T,529
+331090,Miscellaneous First-Line Supervisors, Protective Service Workers,2,T,530
+331091,First-Line Supervisors of Security Workers,3,T,531
+331099,First-Line Supervisors of Protective Service Workers, All Other,3,T,532
+332000,Firefighting and Prevention Workers,1,T,533
+332011,Firefighters,3,T,534
+332020,Fire Inspectors,2,T,535
+332021,Fire Inspectors and Investigators,3,T,536
+332022,Forest Fire Inspectors and Prevention Specialists,3,T,537
+333000,Law Enforcement Workers,1,T,538
+333010,Bailiffs, Correctional Officers, and Jailers,2,T,539
+333011,Bailiffs,3,T,540
+333012,Correctional Officers and Jailers,3,T,541
+333021,Detectives and Criminal Investigators,3,T,542
+333031,Fish and Game Wardens,3,T,543
+333041,Parking Enforcement Workers,3,T,544
+333050,Police Officers,2,T,545
+333051,Police and Sheriff's Patrol Officers,3,T,546
+333052,Transit and Railroad Police,3,T,547
+339000,Other Protective Service Workers,1,T,548
+339011,Animal Control Workers,3,T,549
+339021,Private Detectives and Investigators,3,T,550
+339030,Security Guards and Gambling Surveillance Officers,2,T,551
+339031,Gaming Surveillance Officers and Gambling Investigators,3,T,552
+339032,Security Guards,3,T,553
+339090,Miscellaneous Protective Service Workers,2,T,554
+339091,Crossing Guards and Flaggers,3,T,555
+339092,Lifeguards, Ski Patrol, and Other Recreational Protective Service Workers,3,T,556
+339093,Transportation Security Screeners,3,T,557
+339094,School Bus Monitors,3,T,558
+339099,Protective Service Workers, All Other,3,T,559
+350000,Food Preparation and Serving Related Occupations,0,T,560
+351010,Supervisors of Food Preparation and Serving Workers,2,T,561
+351011,Chefs and Head Cooks,3,T,562
+351012,First-Line Supervisors of Food Preparation and Serving Workers,3,T,563
+352000,Cooks and Food Preparation Workers,1,T,564
+352010,Cooks,2,T,565
+352011,Cooks, Fast Food,3,T,566
+352012,Cooks, Institution and Cafeteria,3,T,567
+352013,Cooks, Private Household,3,T,568
+352014,Cooks, Restaurant,3,T,569
+352015,Cooks, Short Order,3,T,570
+352019,Cooks, All Other,3,T,571
+352021,Food Preparation Workers,3,T,572
+353000,Food and Beverage Serving Workers,1,T,573
+353011,Bartenders,3,T,574
+353023,Fast Food and Counter Workers,3,T,575
+353031,Waiters and Waitresses,3,T,576
+353041,Food Servers, Nonrestaurant,3,T,577
+359000,Other Food Preparation and Serving Related Workers,1,T,578
+359011,Dining Room and Cafeteria Attendants and Bartender Helpers,3,T,579
+359021,Dishwashers,3,T,580
+359031,Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop,3,T,581
+359099,Food Preparation and Serving Related Workers, All Other,3,T,582
+370000,Building and Grounds Cleaning and Maintenance Occupations,0,T,583
+371010,First-Line Supervisors of Building and Grounds Cleaning and Maintenance Workers,2,T,584
+371011,First-Line Supervisors of Housekeeping and Janitorial Workers,3,T,585
+371012,First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers,3,T,586
+372000,Building Cleaning and Pest Control Workers,1,T,587
+372010,Building Cleaning Workers,2,T,588
+372011,Janitors and Cleaners, Except Maids and Housekeeping Cleaners,3,T,589
+372012,Maids and Housekeeping Cleaners,3,T,590
+372019,Building Cleaning Workers, All Other,3,T,591
+372021,Pest Control Workers,3,T,592
+373010,Grounds Maintenance Workers,2,T,593
+373011,Landscaping and Groundskeeping Workers,3,T,594
+373012,Pesticide Handlers, Sprayers, and Applicators, Vegetation,3,T,595
+373013,Tree Trimmers and Pruners,3,T,596
+373019,Grounds Maintenance Workers, All Other,3,T,597
+390000,Personal Care and Service Occupations,0,T,598
+391000,Supervisors of Personal Care and Service Workers,1,T,599
+391010,First-Line Supervisors of Entertainment and Recreation Workers,2,T,600
+391013,First-Line Supervisors of Gambling Services Workers,3,T,601
+391014,First-Line Supervisors of Entertainment and Recreation Workers, Except Gambling Services,3,T,602
+391022,First-Line Supervisors of Personal Service Workers,3,T,603
+392000,Animal Care and Service Workers,1,T,604
+392011,Animal Trainers,3,T,605
+392021,Animal Caretakers,3,T,606
+393000,Entertainment Attendants and Related Workers,1,T,607
+393010,Gambling Services Workers,2,T,608
+393011,Gambling Dealers,3,T,609
+393012,Gambling and Sports Book Writers and Runners,3,T,610
+393019,Gambling Service Workers, All Other,3,T,611
+393021,Motion Picture Projectionists,3,T,612
+393031,Ushers, Lobby Attendants, and Ticket Takers,3,T,613
+393090,Miscellaneous Entertainment Attendants and Related Workers,2,T,614
+393091,Amusement and Recreation Attendants,3,T,615
+393092,Costume Attendants,3,T,616
+393093,Locker Room, Coatroom, and Dressing Room Attendants,3,T,617
+393099,Entertainment Attendants and Related Workers, All Other,3,T,618
+394000,Funeral Service Workers,1,T,619
+394010,Embalmers and Crematory Operators,2,T,620
+394011,Embalmers,3,T,621
+394012,Crematory Operators,3,T,622
+394021,Funeral Attendants,3,T,623
+394031,Morticians, Undertakers, and Funeral Arrangers,3,T,624
+395000,Personal Appearance Workers,1,T,625
+395010,Barbers, Hairdressers, Hairstylists and Cosmetologists,2,T,626
+395011,Barbers,3,T,627
+395012,Hairdressers, Hairstylists, and Cosmetologists,3,T,628
+395090,Miscellaneous Personal Appearance Workers,2,T,629
+395091,Makeup Artists, Theatrical and Performance,3,T,630
+395092,Manicurists and Pedicurists,3,T,631
+395093,Shampooers,3,T,632
+395094,Skincare Specialists,3,T,633
+396010,Baggage Porters, Bellhops, and Concierges,2,T,634
+396011,Baggage Porters and Bellhops,3,T,635
+396012,Concierges,3,T,636
+397010,Tour and Travel Guides,2,T,637
+399000,Other Personal Care and Service Workers,1,T,638
+399011,Childcare Workers,3,T,639
+399030,Recreation and Fitness Workers,2,T,640
+399031,Exercise Trainers and Group Fitness Instructors,3,T,641
+399032,Recreation Workers,3,T,642
+399041,Residential Advisors,3,T,643
+399099,Personal Care and Service Workers, All Other,3,T,644
+410000,Sales and Related Occupations,0,T,645
+411010,First-Line Supervisors of Sales Workers,2,T,646
+411011,First-Line Supervisors of Retail Sales Workers,3,T,647
+411012,First-Line Supervisors of Non-Retail Sales Workers,3,T,648
+412000,Retail Sales Workers,1,T,649
+412010,Cashiers,2,T,650
+412011,Cashiers,3,T,651
+412012,Gambling Change Persons and Booth Cashiers,3,T,652
+412020,Counter and Rental Clerks and Parts Salespersons,2,T,653
+412021,Counter and Rental Clerks,3,T,654
+412022,Parts Salespersons,3,T,655
+412031,Retail Salespersons,3,T,656
+413000,Sales Representatives, Services,1,T,657
+413011,Advertising Sales Agents,3,T,658
+413021,Insurance Sales Agents,3,T,659
+413031,Securities, Commodities, and Financial Services Sales Agents,3,T,660
+413041,Travel Agents,3,T,661
+413091,Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel,3,T,662
+414010,Sales Representatives, Wholesale and Manufacturing,2,T,663
+414011,Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products,3,T,664
+414012,Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products,3,T,665
+419000,Other Sales and Related Workers,1,T,666
+419010,Models, Demonstrators, and Product Promoters,2,T,667
+419011,Demonstrators and Product Promoters,3,T,668
+419012,Models,3,T,669
+419020,Real Estate Brokers and Sales Agents,2,T,670
+419021,Real Estate Brokers,3,T,671
+419022,Real Estate Sales Agents,3,T,672
+419031,Sales Engineers,3,T,673
+419041,Telemarketers,3,T,674
+419090,Miscellaneous Sales and Related Workers,2,T,675
+419091,Door-to-Door Sales Workers, News and Street Vendors, and Related Workers,3,T,676
+419099,Sales and Related Workers, All Other,3,T,677
+430000,Office and Administrative Support Occupations,0,T,678
+431011,First-Line Supervisors of Office and Administrative Support Workers,3,T,679
+432000,Communications Equipment Operators,1,T,680
+432011,Switchboard Operators, Including Answering Service,3,T,681
+432021,Telephone Operators,3,T,682
+432099,Communications Equipment Operators, All Other,3,T,683
+433000,Financial Clerks,1,T,684
+433011,Bill and Account Collectors,3,T,685
+433021,Billing and Posting Clerks,3,T,686
+433031,Bookkeeping, Accounting, and Auditing Clerks,3,T,687
+433041,Gambling Cage Workers,3,T,688
+433051,Payroll and Timekeeping Clerks,3,T,689
+433061,Procurement Clerks,3,T,690
+433071,Tellers,3,T,691
+433099,Financial Clerks, All Other,3,T,692
+434000,Information and Record Clerks,1,T,693
+434011,Brokerage Clerks,3,T,694
+434021,Correspondence Clerks,3,T,695
+434031,Court, Municipal, and License Clerks,3,T,696
+434041,Credit Authorizers, Checkers, and Clerks,3,T,697
+434051,Customer Service Representatives,3,T,698
+434061,Eligibility Interviewers, Government Programs,3,T,699
+434071,File Clerks,3,T,700
+434081,Hotel, Motel, and Resort Desk Clerks,3,T,701
+434111,Interviewers, Except Eligibility and Loan,3,T,702
+434121,Library Assistants, Clerical,3,T,703
+434131,Loan Interviewers and Clerks,3,T,704
+434141,New Accounts Clerks,3,T,705
+434151,Order Clerks,3,T,706
+434161,Human Resources Assistants, Except Payroll and Timekeeping,3,T,707
+434171,Receptionists and Information Clerks,3,T,708
+434181,Reservation and Transportation Ticket Agents and Travel Clerks,3,T,709
+434199,Information and Record Clerks, All Other,3,T,710
+435000,Material Recording, Scheduling, Dispatching, and Distributing Workers,1,T,711
+435011,Cargo and Freight Agents,3,T,712
+435021,Couriers and Messengers,3,T,713
+435030,Dispatchers,2,T,714
+435031,Public Safety Telecommunicators,3,T,715
+435032,Dispatchers, Except Police, Fire, and Ambulance,3,T,716
+435041,Meter Readers, Utilities,3,T,717
+435050,Postal Service Workers,2,T,718
+435051,Postal Service Clerks,3,T,719
+435052,Postal Service Mail Carriers,3,T,720
+435053,Postal Service Mail Sorters, Processors, and Processing Machine Operators,3,T,721
+435061,Production, Planning, and Expediting Clerks,3,T,722
+435071,Shipping, Receiving, and Inventory Clerks,3,T,723
+435111,Weighers, Measurers, Checkers, and Samplers, Recordkeeping,3,T,724
+436010,Secretaries and Administrative Assistants,2,T,725
+436011,Executive Secretaries and Executive Administrative Assistants,3,T,726
+436012,Legal Secretaries and Administrative Assistants,3,T,727
+436013,Medical Secretaries and Administrative Assistants,3,T,728
+436014,Secretaries and Administrative Assistants, Except Legal, Medical, and Executive,3,T,729
+439000,Other Office and Administrative Support Workers,1,T,730
+439020,Data Entry and Information Processing Workers,2,T,731
+439021,Data Entry Keyers,3,T,732
+439022,Word Processors and Typists,3,T,733
+439031,Desktop Publishers,3,T,734
+439041,Insurance Claims and Policy Processing Clerks,3,T,735
+439051,Mail Clerks and Mail Machine Operators, Except Postal Service,3,T,736
+439061,Office Clerks, General,3,T,737
+439071,Office Machine Operators, Except Computer,3,T,738
+439081,Proofreaders and Copy Markers,3,T,739
+439111,Statistical Assistants,3,T,740
+439199,Office and Administrative Support Workers, All Other,3,T,741
+450000,Farming, Fishing, and Forestry Occupations,0,T,742
+451011,First-Line Supervisors of Farming, Fishing, and Forestry Workers,3,T,743
+452000,Agricultural Workers,1,T,744
+452011,Agricultural Inspectors,3,T,745
+452021,Animal Breeders,3,T,746
+452041,Graders and Sorters, Agricultural Products,3,T,747
+452090,Miscellaneous Agricultural Workers,2,T,748
+452091,Agricultural Equipment Operators,3,T,749
+452092,Farmworkers and Laborers, Crop, Nursery, and Greenhouse,3,T,750
+452093,Farmworkers, Farm, Ranch, and Aquacultural Animals,3,T,751
+452099,Agricultural Workers, All Other,3,T,752
+454000,Forest, Conservation, and Logging Workers,1,T,753
+454011,Forest and Conservation Workers,3,T,754
+454020,Logging Workers,2,T,755
+454021,Fallers,3,T,756
+454022,Logging Equipment Operators,3,T,757
+454023,Log Graders and Scalers,3,T,758
+454029,Logging Workers, All Other,3,T,759
+470000,Construction and Extraction Occupations,0,T,760
+471011,First-Line Supervisors of Construction Trades and Extraction Workers,3,T,761
+472000,Construction Trades Workers,1,T,762
+472011,Boilermakers,3,T,763
+472020,Brickmasons, Blockmasons, and Stonemasons,2,T,764
+472021,Brickmasons and Blockmasons,3,T,765
+472022,Stonemasons,3,T,766
+472031,Carpenters,3,T,767
+472040,Carpet, Floor, and Tile Installers and Finishers,2,T,768
+472041,Carpet Installers,3,T,769
+472042,Floor Layers, Except Carpet, Wood, and Hard Tiles,3,T,770
+472043,Floor Sanders and Finishers,3,T,771
+472044,Tile and Stone Setters,3,T,772
+472050,Cement Masons, Concrete Finishers, and Terrazzo Workers,2,T,773
+472051,Cement Masons and Concrete Finishers,3,T,774
+472053,Terrazzo Workers and Finishers,3,T,775
+472061,Construction Laborers,3,T,776
+472070,Construction Equipment Operators,2,T,777
+472071,Paving, Surfacing, and Tamping Equipment Operators,3,T,778
+472072,Pile Driver Operators,3,T,779
+472073,Operating Engineers and Other Construction Equipment Operators,3,T,780
+472080,Drywall Installers, Ceiling Tile Installers, and Tapers,2,T,781
+472081,Drywall and Ceiling Tile Installers,3,T,782
+472082,Tapers,3,T,783
+472111,Electricians,3,T,784
+472121,Glaziers,3,T,785
+472130,Insulation Workers,2,T,786
+472131,Insulation Workers, Floor, Ceiling, and Wall,3,T,787
+472132,Insulation Workers, Mechanical,3,T,788
+472140,Painters and Paperhangers,2,T,789
+472141,Painters, Construction and Maintenance,3,T,790
+472142,Paperhangers,3,T,791
+472150,Pipelayers, Plumbers, Pipefitters, and Steamfitters,2,T,792
+472151,Pipelayers,3,T,793
+472152,Plumbers, Pipefitters, and Steamfitters,3,T,794
+472161,Plasterers and Stucco Masons,3,T,795
+472171,Reinforcing Iron and Rebar Workers,3,T,796
+472181,Roofers,3,T,797
+472211,Sheet Metal Workers,3,T,798
+472221,Structural Iron and Steel Workers,3,T,799
+472231,Solar Photovoltaic Installers,3,T,800
+473010,Helpers, Construction Trades,2,T,801
+473011,Helpers--Brickmasons, Blockmasons, Stonemasons, and Tile and Marble Setters,3,T,802
+473012,Helpers--Carpenters,3,T,803
+473013,Helpers--Electricians,3,T,804
+473014,Helpers--Painters, Paperhangers, Plasterers, and Stucco Masons,3,T,805
+473015,Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters,3,T,806
+473016,Helpers--Roofers,3,T,807
+473019,Helpers, Construction Trades, All Other,3,T,808
+474000,Other Construction and Related Workers,1,T,809
+474011,Construction and Building Inspectors,3,T,810
+474021,Elevator and Escalator Installers and Repairers,3,T,811
+474031,Fence Erectors,3,T,812
+474041,Hazardous Materials Removal Workers,3,T,813
+474051,Highway Maintenance Workers,3,T,814
+474061,Rail-Track Laying and Maintenance Equipment Operators,3,T,815
+474071,Septic Tank Servicers and Sewer Pipe Cleaners,3,T,816
+474090,Miscellaneous Construction and Related Workers,2,T,817
+475000,Extraction Workers,1,T,818
+475010,Derrick, Rotary Drill, and Service Unit Operators, Oil and Gas,2,T,819
+475011,Derrick Operators, Oil and Gas,3,T,820
+475012,Rotary Drill Operators, Oil and Gas,3,T,821
+475013,Service Unit Operators, Oil and Gas,3,T,822
+475020,Surface Mining Machine Operators and Earth Drillers,2,T,823
+475022,Excavating and Loading Machine and Dragline Operators, Surface Mining,3,T,824
+475023,Earth Drillers, Except Oil and Gas,3,T,825
+475032,Explosives Workers, Ordnance Handling Experts, and Blasters,3,T,826
+475040,Underground Mining Machine Operators,2,T,827
+475041,Continuous Mining Machine Operators,3,T,828
+475043,Roof Bolters, Mining,3,T,829
+475044,Loading and Moving Machine Operators, Underground Mining,3,T,830
+475049,Underground Mining Machine Operators, All Other,3,T,831
+475051,Rock Splitters, Quarry,3,T,832
+475071,Roustabouts, Oil and Gas,3,T,833
+475081,Helpers--Extraction Workers,3,T,834
+475099,Extraction Workers, All Other,3,T,835
+490000,Installation, Maintenance, and Repair Occupations,0,T,836
+491011,First-Line Supervisors of Mechanics, Installers, and Repairers,3,T,837
+492000,Electrical and Electronic Equipment Mechanics, Installers, and Repairers,1,T,838
+492011,Computer, Automated Teller, and Office Machine Repairers,3,T,839
+492020,Radio and Telecommunications Equipment Installers and Repairers,2,T,840
+492021,Radio, Cellular, and Tower Equipment Installers and Repairers,3,T,841
+492022,Telecommunications Equipment Installers and Repairers, Except Line Installers,3,T,842
+492090,Miscellaneous Electrical and Electronic Equipment Mechanics, Installers, and Repairers,2,T,843
+492091,Avionics Technicians,3,T,844
+492092,Electric Motor, Power Tool, and Related Repairers,3,T,845
+492093,Electrical and Electronics Installers and Repairers, Transportation Equipment,3,T,846
+492094,Electrical and Electronics Repairers, Commercial and Industrial Equipment,3,T,847
+492095,Electrical and Electronics Repairers, Powerhouse, Substation, and Relay,3,T,848
+492096,Electronic Equipment Installers and Repairers, Motor Vehicles,3,T,849
+492097,Audiovisual Equipment Installers and Repairers,3,T,850
+492098,Security and Fire Alarm Systems Installers,3,T,851
+493000,Vehicle and Mobile Equipment Mechanics, Installers, and Repairers,1,T,852
+493011,Aircraft Mechanics and Service Technicians,3,T,853
+493020,Automotive Technicians and Repairers,2,T,854
+493021,Automotive Body and Related Repairers,3,T,855
+493022,Automotive Glass Installers and Repairers,3,T,856
+493023,Automotive Service Technicians and Mechanics,3,T,857
+493031,Bus and Truck Mechanics and Diesel Engine Specialists,3,T,858
+493040,Heavy Vehicle and Mobile Equipment Service Technicians and Mechanics,2,T,859
+493041,Farm Equipment Mechanics and Service Technicians,3,T,860
+493042,Mobile Heavy Equipment Mechanics, Except Engines,3,T,861
+493043,Rail Car Repairers,3,T,862
+493050,Small Engine Mechanics,2,T,863
+493051,Motorboat Mechanics and Service Technicians,3,T,864
+493052,Motorcycle Mechanics,3,T,865
+493053,Outdoor Power Equipment and Other Small Engine Mechanics,3,T,866
+493090,Miscellaneous Vehicle and Mobile Equipment Mechanics, Installers, and Repairers,2,T,867
+493091,Bicycle Repairers,3,T,868
+493092,Recreational Vehicle Service Technicians,3,T,869
+493093,Tire Repairers and Changers,3,T,870
+499000,Other Installation, Maintenance, and Repair Occupations,1,T,871
+499010,Control and Valve Installers and Repairers,2,T,872
+499011,Mechanical Door Repairers,3,T,873
+499012,Control and Valve Installers and Repairers, Except Mechanical Door,3,T,874
+499021,Heating, Air Conditioning, and Refrigeration Mechanics and Installers,3,T,875
+499031,Home Appliance Repairers,3,T,876
+499040,Industrial Machinery Installation, Repair, and Maintenance Workers,2,T,877
+499041,Industrial Machinery Mechanics,3,T,878
+499043,Maintenance Workers, Machinery,3,T,879
+499044,Millwrights,3,T,880
+499045,Refractory Materials Repairers, Except Brickmasons,3,T,881
+499050,Line Installers and Repairers,2,T,882
+499051,Electrical Power-Line Installers and Repairers,3,T,883
+499052,Telecommunications Line Installers and Repairers,3,T,884
+499060,Precision Instrument and Equipment Repairers,2,T,885
+499061,Camera and Photographic Equipment Repairers,3,T,886
+499062,Medical Equipment Repairers,3,T,887
+499063,Musical Instrument Repairers and Tuners,3,T,888
+499064,Watch and Clock Repairers,3,T,889
+499069,Precision Instrument and Equipment Repairers, All Other,3,T,890
+499071,Maintenance and Repair Workers, General,3,T,891
+499081,Wind Turbine Service Technicians,3,T,892
+499090,Miscellaneous Installation, Maintenance, and Repair Workers,2,T,893
+499091,Coin, Vending, and Amusement Machine Servicers and Repairers,3,T,894
+499092,Commercial Divers,3,T,895
+499094,Locksmiths and Safe Repairers,3,T,896
+499095,Manufactured Building and Mobile Home Installers,3,T,897
+499096,Riggers,3,T,898
+499097,Signal and Track Switch Repairers,3,T,899
+499098,Helpers--Installation, Maintenance, and Repair Workers,3,T,900
+499099,Installation, Maintenance, and Repair Workers, All Other,3,T,901
+510000,Production Occupations,0,T,902
+511011,First-Line Supervisors of Production and Operating Workers,3,T,903
+512000,Assemblers and Fabricators,1,T,904
+512011,Aircraft Structure, Surfaces, Rigging, and Systems Assemblers,3,T,905
+512020,Electrical, Electronics, and Electromechanical Assemblers,2,T,906
+512021,Coil Winders, Tapers, and Finishers,3,T,907
+512028,Electrical, electronic, and electromechanical assemblers, except coil winders, tapers, and finishers,3,T,908
+512031,Engine and Other Machine Assemblers,3,T,909
+512041,Structural Metal Fabricators and Fitters,3,T,910
+512051,Fiberglass Laminators and Fabricators,3,T,911
+512061,Timing Device Assemblers and Adjusters,3,T,912
+512090,Miscellaneous Assemblers and Fabricators,2,T,913
+513000,Food Processing Workers,1,T,914
+513011,Bakers,3,T,915
+513020,Butchers and Other Meat, Poultry, and Fish Processing Workers,2,T,916
+513021,Butchers and Meat Cutters,3,T,917
+513022,Meat, Poultry, and Fish Cutters and Trimmers,3,T,918
+513023,Slaughterers and Meat Packers,3,T,919
+513090,Miscellaneous Food Processing Workers,2,T,920
+513091,Food and Tobacco Roasting, Baking, and Drying Machine Operators and Tenders,3,T,921
+513092,Food Batchmakers,3,T,922
+513093,Food Cooking Machine Operators and Tenders,3,T,923
+513099,Food Processing Workers, All Other,3,T,924
+514000,Metal Workers and Plastic Workers,1,T,925
+514020,Forming Machine Setters, Operators, and Tenders, Metal and Plastic,2,T,926
+514021,Extruding and Drawing Machine Setters, Operators, and Tenders, Metal and Plastic,3,T,927
+514022,Forging Machine Setters, Operators, and Tenders, Metal and Plastic,3,T,928
+514023,Rolling Machine Setters, Operators, and Tenders, Metal and Plastic,3,T,929
+514030,Machine Tool Cutting Setters, Operators, and Tenders, Metal and Plastic,2,T,930
+514031,Cutting, Punching, and Press Machine Setters, Operators, and Tenders, Metal and Plastic,3,T,931
+514032,Drilling and Boring Machine Tool Setters, Operators, and Tenders, Metal and Plastic,3,T,932
+514033,Grinding/Lapping/Polishing/Buffing Machine Tool Setters, Operators, and Tenders, Metal and Plastic,3,T,933
+514034,Lathe and Turning Machine Tool Setters, Operators, and Tenders, Metal and Plastic,3,T,934
+514035,Milling and Planing Machine Setters, Operators, and Tenders, Metal and Plastic,3,T,935
+514041,Machinists,3,T,936
+514050,Metal Furnace Operators, Tenders, Pourers, and Casters,2,T,937
+514051,Metal-Refining Furnace Operators and Tenders,3,T,938
+514052,Pourers and Casters, Metal,3,T,939
+514060,Model Makers and Patternmakers, Metal and Plastic,2,T,940
+514061,Model Makers, Metal and Plastic,3,T,941
+514062,Patternmakers, Metal and Plastic,3,T,942
+514070,Molders and Molding Machine Setters, Operators, and Tenders, Metal and Plastic,2,T,943
+514071,Foundry Mold and Coremakers,3,T,944
+514072,Molding, Coremaking, and Casting Machine Setters, Operators, and Tenders, Metal and Plastic,3,T,945
+514081,Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plastic,3,T,946
+514111,Tool and Die Makers,3,T,947
+514120,Welding, Soldering, and Brazing Workers,2,T,948
+514121,Welders, Cutters, Solderers, and Brazers,3,T,949
+514122,Welding, Soldering, and Brazing Machine Setters, Operators, and Tenders,3,T,950
+514190,Miscellaneous Metal Workers and Plastic Workers,2,T,951
+514191,Heat Treating Equipment Setters, Operators, and Tenders, Metal and Plastic,3,T,952
+514192,Layout Workers, Metal and Plastic,3,T,953
+514193,Plating Machine Setters, Operators, and Tenders, Metal and Plastic,3,T,954
+514194,Tool Grinders, Filers, and Sharpeners,3,T,955
+514199,Metal Workers and Plastic Workers, All Other,3,T,956
+515110,Printing Workers,2,T,957
+515111,Prepress Technicians and Workers,3,T,958
+515112,Printing Press Operators,3,T,959
+515113,Print Binding and Finishing Workers,3,T,960
+516000,Textile, Apparel, and Furnishings Workers,1,T,961
+516011,Laundry and Dry-Cleaning Workers,3,T,962
+516021,Pressers, Textile, Garment, and Related Materials,3,T,963
+516031,Sewing Machine Operators,3,T,964
+516040,Shoe and Leather Workers,2,T,965
+516041,Shoe and Leather Workers and Repairers,3,T,966
+516042,Shoe Machine Operators and Tenders,3,T,967
+516050,Tailors, Dressmakers, and Sewers,2,T,968
+516051,Sewers, Hand,3,T,969
+516052,Tailors, Dressmakers, and Custom Sewers,3,T,970
+516060,Textile Machine Setters, Operators, and Tenders,2,T,971
+516061,Textile Bleaching and Dyeing Machine Operators and Tenders,3,T,972
+516062,Textile Cutting Machine Setters, Operators, and Tenders,3,T,973
+516063,Textile Knitting and Weaving Machine Setters, Operators, and Tenders,3,T,974
+516064,Textile Winding, Twisting, and Drawing Out Machine Setters, Operators, and Tenders,3,T,975
+516090,Miscellaneous Textile, Apparel, and Furnishings Workers,2,T,976
+516091,Extruding and Forming Machine Setters, Operators, and Tenders, Synthetic and Glass Fibers,3,T,977
+516092,Fabric and Apparel Patternmakers,3,T,978
+516093,Upholsterers,3,T,979
+516099,Textile, Apparel, and Furnishings Workers, All Other,3,T,980
+517000,Woodworkers,1,T,981
+517011,Cabinetmakers and Bench Carpenters,3,T,982
+517021,Furniture Finishers,3,T,983
+517030,Model Makers and Patternmakers, Wood,2,T,984
+517031,Model Makers, Wood,3,T,985
+517032,Patternmakers, Wood,3,T,986
+517040,Woodworking Machine Setters, Operators, and Tenders,2,T,987
+517041,Sawing Machine Setters, Operators, and Tenders, Wood,3,T,988
+517042,Woodworking Machine Setters, Operators, and Tenders, Except Sawing,3,T,989
+517099,Woodworkers, All Other,3,T,990
+518000,Plant and System Operators,1,T,991
+518010,Power Plant Operators, Distributors, and Dispatchers,2,T,992
+518011,Nuclear Power Reactor Operators,3,T,993
+518012,Power Distributors and Dispatchers,3,T,994
+518013,Power Plant Operators,3,T,995
+518021,Stationary Engineers and Boiler Operators,3,T,996
+518031,Water and Wastewater Treatment Plant and System Operators,3,T,997
+518090,Miscellaneous Plant and System Operators,2,T,998
+518091,Chemical Plant and System Operators,3,T,999
+518092,Gas Plant Operators,3,T,1000
+518093,Petroleum Pump System Operators, Refinery Operators, and Gaugers,3,T,1001
+518099,Plant and System Operators, All Other,3,T,1002
+519000,Other Production Occupations,1,T,1003
+519010,Chemical Processing Machine Setters, Operators, and Tenders,2,T,1004
+519011,Chemical Equipment Operators and Tenders,3,T,1005
+519012,Separating, Filtering, Clarifying, Precipitating, and Still Machine Setters, Operators, and Tenders,3,T,1006
+519020,Crushing, Grinding, Polishing, Mixing, and Blending Workers,2,T,1007
+519021,Crushing, Grinding, and Polishing Machine Setters, Operators, and Tenders,3,T,1008
+519022,Grinding and Polishing Workers, Hand,3,T,1009
+519023,Mixing and Blending Machine Setters, Operators, and Tenders,3,T,1010
+519030,Cutting Workers,2,T,1011
+519031,Cutters and Trimmers, Hand,3,T,1012
+519032,Cutting and Slicing Machine Setters, Operators, and Tenders,3,T,1013
+519041,Extruding, Forming, Pressing, and Compacting Machine Setters, Operators, and Tenders,3,T,1014
+519051,Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders,3,T,1015
+519061,Inspectors, Testers, Sorters, Samplers, and Weighers,3,T,1016
+519071,Jewelers and Precious Stone and Metal Workers,3,T,1017
+519080,Dental and Ophthalmic Laboratory Technicians and Medical Appliance Technicians,2,T,1018
+519081,Dental Laboratory Technicians,3,T,1019
+519082,Medical Appliance Technicians,3,T,1020
+519083,Ophthalmic Laboratory Technicians,3,T,1021
+519111,Packaging and Filling Machine Operators and Tenders,3,T,1022
+519120,Painting Workers,2,T,1023
+519123,Painting, Coating, and Decorating Workers,3,T,1024
+519124,Coating, Painting, and Spraying Machine Setters, Operators, and Tenders,3,T,1025
+519141,Semiconductor Processing Technicians,3,T,1026
+519151,Photographic Process Workers and Processing Machine Operators,3,T,1027
+519160,Computer Numerically Controlled Tool Operators and Programmers,2,T,1028
+519161,Computer Numerically Controlled Tool Operators,3,T,1029
+519162,Computer Numerically Controlled Tool Programmers,3,T,1030
+519190,Miscellaneous Production Workers,2,T,1031
+519191,Adhesive Bonding Machine Operators and Tenders,3,T,1032
+519192,Cleaning, Washing, and Metal Pickling Equipment Operators and Tenders,3,T,1033
+519193,Cooling and Freezing Equipment Operators and Tenders,3,T,1034
+519194,Etchers and Engravers,3,T,1035
+519195,Molders, Shapers, and Casters, Except Metal and Plastic,3,T,1036
+519196,Paper Goods Machine Setters, Operators, and Tenders,3,T,1037
+519197,Tire Builders,3,T,1038
+519198,Helpers--Production Workers,3,T,1039
+519199,Production Workers, All Other,3,T,1040
+530000,Transportation and Material Moving Occupations,0,T,1041
+531040,First-Line Supervisors of Transportation and Material Moving Workers,2,T,1043
+531041,Aircraft Cargo Handling Supervisors,3,T,1044
+531047,First-Line Supervisors of Transportation Workers, Except Aircraft Cargo Handling Supervisors,3,T,1045
+532000,Air Transportation Workers,1,T,1046
+532010,Aircraft Pilots and Flight Engineers,2,T,1047
+532011,Airline Pilots, Copilots, and Flight Engineers,3,T,1048
+532012,Commercial Pilots,3,T,1049
+532020,Air Traffic Controllers and Airfield Operations Specialists,2,T,1050
+532021,Air Traffic Controllers,3,T,1051
+532022,Airfield Operations Specialists,3,T,1052
+532031,Flight Attendants,3,T,1053
+533000,Motor Vehicle Operators,1,T,1054
+533011,Ambulance Drivers and Attendants, Except Emergency Medical Technicians,3,T,1055
+533030,Driver/Sales Workers and Truck Drivers,2,T,1056
+533031,Driver/Sales Workers,3,T,1057
+533032,Heavy and Tractor-Trailer Truck Drivers,3,T,1058
+533033,Light Truck Drivers,3,T,1059
+533050,Passenger Vehicle Drivers,2,T,1060
+533051,Bus Drivers, School,3,T,1061
+533052,Bus Drivers, Transit and Intercity,3,T,1062
+533053,Shuttle Drivers and Chauffeurs,3,T,1063
+533054,Taxi Drivers,3,T,1064
+533099,Motor Vehicle Operators, All Other,3,T,1065
+534000,Rail Transportation Workers,1,T,1066
+534010,Locomotive Engineers and Operators,2,T,1067
+534011,Locomotive Engineers,3,T,1068
+534013,Rail Yard Engineers, Dinkey Operators, and Hostlers,3,T,1069
+534022,Railroad Brake, Signal, and Switch Operators and Locomotive Firers,3,T,1070
+534031,Railroad Conductors and Yardmasters,3,T,1071
+534041,Subway and Streetcar Operators,3,T,1072
+534099,Rail Transportation Workers, All Other,3,T,1073
+535000,Water Transportation Workers,1,T,1074
+535011,Sailors and Marine Oilers,3,T,1075
+535020,Ship and Boat Captains and Operators,2,T,1076
+535021,Captains, Mates, and Pilots of Water Vessels,3,T,1077
+535022,Motorboat Operators,3,T,1078
+535031,Ship Engineers,3,T,1079
+536000,Other Transportation Workers,1,T,1080
+536011,Bridge and Lock Tenders,3,T,1081
+536021,Parking Attendants,3,T,1082
+536030,Transportation Service Attendants,2,T,1083
+536031,Automotive and Watercraft Service Attendants,3,T,1084
+536032,Aircraft Service Attendants,3,T,1085
+536041,Traffic Technicians,3,T,1086
+536051,Transportation Inspectors,3,T,1087
+536061,Passenger Attendants,3,T,1088
+536099,Transportation Workers, All Other,3,T,1089
+537000,Material Moving Workers,1,T,1090
+537011,Conveyor Operators and Tenders,3,T,1091
+537021,Crane and Tower Operators,3,T,1092
+537031,Dredge Operators,3,T,1094
+537041,Hoist and Winch Operators,3,T,1095
+537051,Industrial Truck and Tractor Operators,3,T,1096
+537060,Laborers and Material Movers,2,T,1097
+537061,Cleaners of Vehicles and Equipment,3,T,1098
+537062,Laborers and Freight, Stock, and Material Movers, Hand,3,T,1099
+537063,Machine Feeders and Offbearers,3,T,1100
+537064,Packers and Packagers, Hand,3,T,1101
+537065,Stockers and Order Fillers,3,T,1102
+537070,Pumping Station Operators,2,T,1103
+537071,Gas Compressor and Gas Pumping Station Operators,3,T,1104
+537072,Pump Operators, Except Wellhead Pumpers,3,T,1105
+537073,Wellhead Pumpers,3,T,1106
+537081,Refuse and Recyclable Material Collectors,3,T,1107
+537121,Tank Car, Truck, and Ship Loaders,3,T,1109
+537199,Material Moving Workers, All Other,3,T,1110

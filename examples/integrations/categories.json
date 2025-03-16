@@ -1,0 +1,192 @@
+[
+  {
+    "id": 87,
+    "title": "All",
+    "slug": "all",
+    "description": "Contains all the services.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/all/",
+    "type_of": "auto",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 95,
+    "title": "App Families",
+    "slug": "app-families",
+    "description": "Collections of integrations from or related to the same platform.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/app-families/",
+    "type_of": "curated",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 105,
+    "title": "Artificial Intelligence",
+    "slug": "artificial-intelligence",
+    "description": "Tools that offer AI features such as natural language processing, image classification, and more.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/artificial-intelligence/",
+    "type_of": "curated",
+    "featured_entry_slug": "gpt-3-prompt",
+    "role": "parent"
+  },
+  {
+    "id": 94,
+    "title": "Business Intelligence",
+    "slug": "business-intelligence",
+    "description": "Tools to gather, analyze, and visualize business data.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/business-intelligence/",
+    "type_of": "curated",
+    "featured_entry_slug": "side-hustle-from-idea-to-full-time-business",
+    "role": "parent"
+  },
+  {
+    "id": 88,
+    "title": "Commerce",
+    "slug": "commerce",
+    "description": "Tools to facilitate all aspects of business transactions, both online and offline.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/commerce/",
+    "type_of": "curated",
+    "featured_entry_slug": "automate-ecommerce-business",
+    "role": "parent"
+  },
+  {
+    "id": 101,
+    "title": "Communication",
+    "slug": "communication",
+    "description": "Tools to streamline and enhance communication across various channels.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/communication/",
+    "type_of": "curated",
+    "featured_entry_slug": "automate-gmail-with-zapier",
+    "role": "parent"
+  },
+  {
+    "id": 89,
+    "title": "Content & Files",
+    "slug": "content-files",
+    "description": "Tools to create, manage, and share various types of content and files.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/content-files/",
+    "type_of": "curated",
+    "featured_entry_slug": "organize-files-with-automation",
+    "role": "parent"
+  },
+  {
+    "id": 100,
+    "title": "Filters",
+    "slug": "filters",
+    "description": "",
+    "url": "https://zapier.com/api/v4/app-directory/categories/filters/",
+    "type_of": "auto",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 93,
+    "title": "Human Resources",
+    "slug": "human-resources",
+    "description": "Tools to manage all aspects of human resources, from hiring and recruitment to employee management and development.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/human-resources/",
+    "type_of": "curated",
+    "featured_entry_slug": "automate-employee-onboarding-offboarding",
+    "role": "parent"
+  },
+  {
+    "id": 98,
+    "title": "Internet of Things",
+    "slug": "internet-of-things",
+    "description": "Tools to connect and manage IoT devices and services.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/internet-of-things/",
+    "type_of": "curated",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 102,
+    "title": "IT Operations",
+    "slug": "it-operations",
+    "description": "Tools to manage and optimize IT infrastructure and services.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/it-operations/",
+    "type_of": "curated",
+    "featured_entry_slug": "automate-it-management",
+    "role": "parent"
+  },
+  {
+    "id": 91,
+    "title": "Lifestyle & Entertainment",
+    "slug": "lifestyle-entertainment",
+    "description": "Tools to enhance various aspects of your personal life and leisure activities.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/lifestyle-entertainment/",
+    "type_of": "curated",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 99,
+    "title": "Marketing",
+    "slug": "marketing",
+    "description": "Tools to plan, execute, and measure marketing campaigns across various channels.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/marketing/",
+    "type_of": "curated",
+    "featured_entry_slug": "marketing-automation-use-cases",
+    "role": "parent"
+  },
+  {
+    "id": 104,
+    "title": "New",
+    "slug": "new",
+    "description": "New and noteworthy apps on Zapier.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/new/",
+    "type_of": "curated",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 90,
+    "title": "Productivity",
+    "slug": "productivity",
+    "description": "Tools to enhance efficiency and organization in your personal and professional life.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/productivity/",
+    "type_of": "curated",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 96,
+    "title": "Sales & CRM",
+    "slug": "sales-crm",
+    "description": "Tools to manage and optimize your sales processes and customer relationships.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/sales-crm/",
+    "type_of": "curated",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 92,
+    "title": "Support",
+    "slug": "support",
+    "description": "Tools to enhance customer satisfaction and provide effective assistance.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/support/",
+    "type_of": "curated",
+    "featured_entry_slug": "ways-your-clients-benefit-from-support-automation",
+    "role": "parent"
+  },
+  {
+    "id": 97,
+    "title": "Website & App Building",
+    "slug": "website-app-building",
+    "description": "Tools to create and customize websites and applications.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/website-app-building/",
+    "type_of": "curated",
+    "featured_entry_slug": null,
+    "role": "parent"
+  },
+  {
+    "id": 107,
+    "title": "Zapier products",
+    "slug": "zapier-products",
+    "description": "Products offered by the Zapier team.",
+    "url": "https://zapier.com/api/v4/app-directory/categories/zapier-products/",
+    "type_of": "other",
+    "featured_entry_slug": null,
+    "role": "parent"
+  }
+]

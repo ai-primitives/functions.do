@@ -1,0 +1,16 @@
+{
+  "c_suite": "C-Suite",
+  "consulting": "Consulting",
+  "design": "Design",
+  "education": "Education",
+  "master_engineering_technical": "Engineering & Technical",
+  "master_finance": "Finance",
+  "master_human_resources": "Human Resources",
+  "master_information_technology": "Information Technology",
+  "master_legal": "Legal",
+  "master_marketing": "Marketing",
+  "master_operations": "Operations",
+  "master_sales": "Sales",
+  "medical_health": "Medical & Health",
+  "product_management": "Product",
+}

@@ -1,0 +1,16 @@
+[
+  "Seed",
+  "Angel",
+  "Venture (Round not Specified)",
+  "Series A",
+  "Series B",
+  "Series C",
+  "Series D",
+  "Series E",
+  "Series F",
+  "Debt Financing",
+  "Equity Crowdfunding",
+  "Convertible Note",
+  "Private Equity",
+  "Other",
+]
