@@ -287,4 +287,6 @@ const collections = DB({
   }
 })
 
+console.log(collections)
+
 export default collections;

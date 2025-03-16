@@ -310,12 +310,12 @@ export interface Function {
  * via the `definition` "tenants".
  */
 export interface Tenant {
-  id: string;
   name?: string | null;
   domain?: string | null;
   apiKey?: string | null;
   active?: boolean | null;
   deployed?: boolean | null;
+  id: string;
   functions?: (string | Function)[] | null;
   users?: (string | User)[] | null;
   updatedAt: string;
@@ -1241,6 +1241,7 @@ export interface TenantsSelect<T extends boolean = true> {
   apiKey?: T;
   active?: T;
   deployed?: T;
+  id?: T;
   functions?: T;
   users?: T;
   updatedAt?: T;
