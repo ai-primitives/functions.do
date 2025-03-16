@@ -21,8 +21,13 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const payload = await getPayload({ config })
 
   let { origin, hostname, searchParams } = new URL(request.url)
-  origin = origin.replace(hostname, decode(hostname))
-  hostname = decode(hostname)
+
+  try {
+    origin = origin.replace(hostname, decode(hostname))
+    hostname = decode(hostname)
+  } catch (error) {
+    
+  }
 
 
   const api = {
