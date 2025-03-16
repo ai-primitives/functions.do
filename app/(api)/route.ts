@@ -23,7 +23,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   let { origin, hostname, searchParams } = new URL(request.url)
 
   try {
-    origin = origin.replace(hostname, decode(hostname))
+    // origin = origin.replace(hostname, decode(hostname))
     hostname = decode(hostname)
   } catch (error) {
     console.log(error)
@@ -46,5 +46,5 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   
   const start = Date.now()
 
-  return Response.json({ api, message: 'Hello, world!', tenant, user: auth.user?.email })
+  return Response.json({ api, message: 'Hello, world!', tenant, user: auth.user?.email, hostname })
 }
