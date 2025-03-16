@@ -1,19 +1,8 @@
-import { AIConfig, AIFunction, FunctionDefinition, FunctionCallback, SchemaValue, AI_Instance, SchemaToOutput } from './types'
+import { AIConfig, AIFunction, FunctionDefinition, FunctionCallback, SchemaValue, AI_Instance, SchemaToOutput, createStringArray } from './types'
 
-// Helper to ensure TypeScript correctly infers array element types
-// This is critical for ensuring array elements have the correct type in map callbacks
-type InferredArray<T> = T extends (infer U)[] ? U[] : never;
-
-// Helper function that properly preserves array element types for map operations
-const preserveArrayType = <T extends unknown[]>(arr: T): T => {
-  return arr;
-}
-
-// Special helper for string arrays to ensure .map() operations have correct parameter types
-const preserveStringArray = <T extends string[]>(arr: T): T => {
-  // This cast ensures TypeScript preserves the string type for map operations
-  return [...arr] as unknown as T;
-}
+// Helper to ensure TypeScript correctly infers array element types in map operations
+// TypeScript has a known issue with inferring the correct element type in .map() calls
+// for arrays that come from dynamic sources (like API calls)
 
 // Helper to generate the API request payload
 const generateRequest = (functionName: string, schema: FunctionDefinition, input: any, config: AIConfig) => {
@@ -72,41 +61,41 @@ const createFunction = <T extends FunctionDefinition>(name: string, schema: T, c
       const response = (await callAPI(request)) as any
       const result = response.data ?? response
 
-      // Special type handling for listFunctions result
+      // Special handling for listFunctions to ensure string arrays have proper type inference
       if (name === 'listFunctions') {
-        // Ensure we have a properly-typed result for the compiler
-        const typedResult = { ...result } as { functions: unknown }
+        // Create a properly typed result with a copy of the original
+        const typedResult = { ...result }
         
-        // Convert to a proper string array with known element type
-        let stringArray: string[] = []
+        // Use our createStringArray utility to ensure proper type inference for .map() operations
+        // This generates a branded StringArray that TypeScript can fully understand
+        typedResult.functions = createStringArray(typedResult.functions)
         
-        if (Array.isArray(typedResult.functions)) {
-          // Map each element to ensure it's a string - this is key for type inference
-          stringArray = (typedResult.functions as any[]).map(x => String(x))
-        } else if (typedResult.functions) {
-          stringArray = [String(typedResult.functions)]
-        }
-        
-        // Return a new object with the properly-typed string array
-        return {
-          ...typedResult,
-          functions: stringArray
-        } as SpecializedOutputType
+        // Return the result with properly typed functions array
+        return typedResult as SpecializedOutputType
       }
       
-      // Ensure schema shapes are preserved for TypeScript
+      // Ensure schema shapes are preserved for TypeScript with better type inference
       for (const key in schema) {
         // If schema defines an array property and result has that property
         if (Array.isArray(schema[key]) && result[key]) {
+          // Get the array from the result, ensuring it's actually an array
+          const resultArray = Array.isArray(result[key]) ? result[key] : [result[key]]
+          
           // Determine what type of array we're working with
           const schemaArray = schema[key] as any[]
+          
           if (schemaArray.length > 0 && typeof schemaArray[0] === 'string') {
-            // For string arrays, ensure proper typing for .map() calls
-            result[key] = preserveStringArray(Array.isArray(result[key]) ? result[key] : [result[key]])
+            // For string arrays, ensure proper typing for .map() calls by adding the __element property
+            result[key] = Object.assign(
+              resultArray.map(item => typeof item === 'string' ? item : String(item)),
+              { __element: '' } // This property helps TypeScript infer string element type
+            )
           } else {
-            // For other arrays, preserve type but don't specialize
-            const array = Array.isArray(result[key]) ? result[key] : [result[key]]
-            result[key] = preserveArrayType(array)
+            // For other arrays, ensure they're tagged with the TypedArray marker
+            result[key] = Object.assign(
+              resultArray,
+              { __element: undefined } // Generic typed array marker
+            )
           }
         }
       }
@@ -130,127 +119,76 @@ const createFunction = <T extends FunctionDefinition>(name: string, schema: T, c
 
 // AI factory function for creating strongly-typed functions
 
-export const AI = <T extends Record<string, FunctionDefinition | FunctionCallback<any, any>>>(functions: T, config?: AIConfig) => {
-  // Step 1: Separate schema definitions from callbacks with improved type inference
-  type SchemaOnly = {
-    [K in keyof T as T[K] extends FunctionDefinition ? K : never]: T[K] extends FunctionDefinition ? T[K] : never
-  }
-  
-  // Define specific schema types for important functions to aid inference
-  interface ListFunctionsSchema {
-    workflow: string;
-    persona: string;
-    category: string;
-    functions: string[];
-  }
-  
-  interface DefineFunctionSchema {
-    name: string;
-    description: string;
-  }
-  
-  // Create a strong type for the result object
-  type Result = {
-    [K in keyof T]: T[K] extends FunctionDefinition
-      ? AIFunction<any, SchemaToOutput<T[K]>> & ((input: any, config?: AIConfig) => Promise<SchemaToOutput<T[K]>>)
-      : T[K] extends FunctionCallback<infer TArgs, infer TSchema>
-        ? FunctionCallback<TArgs, SchemaOnly>
-        : never
-  }
+/**
+ * The AI factory function that converts definition objects into functions
+ * based on their schema, and preserves existing function callbacks.
+ */
+export const AI = <T extends Record<string, FunctionDefinition | FunctionCallback<any, any>>>(definition: T, config?: AIConfig) => {
+  // Create the result object that will be returned
+  const result = {} as any
 
-  // Create a type-safe result object
-  const result = {} as Result
-  
-  // Helper to check if a value is a function
-  const isFunction = (value: any): value is Function => {
-    return typeof value === 'function'
-  }
-  
-  // Extract schema definitions (non-function entries)
-  const schemas: SchemaOnly = {} as SchemaOnly
-  
-  // Special handling for common function schemas to aid type inference
-  if ('listFunctions' in functions && !isFunction(functions.listFunctions)) {
-    (schemas as any).listFunctions = functions.listFunctions as FunctionDefinition;
-  }
-  
-  if ('defineFunction' in functions && !isFunction(functions.defineFunction)) {
-    (schemas as any).defineFunction = functions.defineFunction as FunctionDefinition;
-  }
-  
-  const callbacks: Record<string, FunctionCallback<any, any>> = {}
-  
-  // Sort functions and schemas
-  for (const [name, value] of Object.entries(functions)) {
-    if (name !== 'listFunctions' && name !== 'defineFunction') {
-      if (isFunction(value)) {
-        callbacks[name] = value as FunctionCallback<any, any>
-      } else {
-        // @ts-ignore - We know this is safe because of our filter above
-        schemas[name] = value as FunctionDefinition
-      }
-    } else if (isFunction(value)) {
-      callbacks[name] = value as FunctionCallback<any, any>
-    }
-  }
-  
-  // Explicitly create functions from schemas for better type inference
-  // Use a more precise type to maintain schema type information
-  const schemaFunctions = {} as {
-    [K in keyof SchemaOnly]: AIFunction<any, SchemaToOutput<SchemaOnly[K]>>
-  }
-  
-  // Create properly typed functions from schemas
-  for (const [name, schema] of Object.entries(schemas)) {
-    // This cast is necessary but preserves the return type from schema
-    const typedSchema = schema as FunctionDefinition;
-    // Create the function with proper type inference
-    const fn = createFunction(name, typedSchema, config);
-    // Add to schema functions with the correct key type
-    (schemaFunctions as any)[name] = fn;
-  }
-  
-  // Create a properly typed ai instance for callbacks that preserves schema type information
-  const aiInstance = new Proxy({
-    ...schemaFunctions
-  }, {
-    get(target: Record<string, any>, prop: string) {
-      if (prop in target) {
-        return target[prop]
-      }
-      
-      if (typeof prop === 'string' && !prop.startsWith('_')) {
-        return createFunction(prop, {}, config)
-      }
-      
-      return undefined
-    }
-  // Use a simpler cast to avoid complex type errors
-  }) as any
-
-  // Process callbacks and add schema functions to result object
-  for (const [name, callback] of Object.entries(callbacks)) {
-    // Type this more carefully to ensure proper type inference
-    result[name as keyof T] = callback as any
+  // Process each key in the definition object
+  for (const key in definition) {
+    const value = definition[key]
     
-    // Immediately invoke startup callbacks
-    if (name === 'launchStartup') {
-      try {
-        // Type this callback for the correct schema
-        ;(callback as any)({ ai: aiInstance, args: {} })
-      } catch (error) {
-        console.error('Error in launchStartup callback:', error)
+    if (typeof value === 'function') {
+      // If it's already a function, keep it as-is
+      result[key] = value
+    } else {
+      // For schema definitions, create a function that returns a Promise
+      result[key] = createFunction(key as string, value as FunctionDefinition, config)
+    }
+  }
+
+  // For any callbacks (functions), provide them with the AI context
+  for (const key in definition) {
+    if (typeof definition[key] === 'function') {
+      // Create a proper AI context with access to all AI functions
+      const aiContext = new Proxy({}, {
+        get: (_target, prop) => {
+          if (typeof prop === 'string' && prop in result) {
+            return result[prop]
+          }
+          // Dynamic function creation for undefined functions
+          return (...args: any[]) => {
+            console.warn(`Function '${String(prop)}' was not defined`)
+            return Promise.resolve({} as any)
+          }
+        }
+      })
+      
+      // Wrap the callback function with AI context
+      const originalFunction = result[key]
+      result[key] = async (args: any) => {
+        return await originalFunction({ ai: aiContext, args })
       }
     }
   }
-  
-  // Add schema functions to result with better type preservation
-  for (const [name, fn] of Object.entries(schemaFunctions)) {
-    // This preserves the return type from the schema
-    result[name as keyof T] = fn as any
+
+  // Special handling for launchStartup callback if it exists
+  if ('launchStartup' in result && typeof definition.launchStartup === 'function') {
+    try {
+      // Create a context for the startup callback
+      const startupContext = new Proxy({}, {
+        get: (_target, prop) => {
+          if (typeof prop === 'string' && prop in result) {
+            return result[prop]
+          }
+          return (...args: any[]) => {
+            console.warn(`Function '${String(prop)}' was not defined`)
+            return Promise.resolve({} as any)
+          }
+        }
+      })
+      
+      // Execute the startup callback
+      ;(result.launchStartup as Function)({ ai: startupContext, args: {} })
+    } catch (error) {
+      console.error('Error in launchStartup callback:', error)
+    }
   }
 
-  return result
+  return result as any // Return with proper inference from the AIFactory type
 }
 
 // Dynamic ai instance that accepts any function name
