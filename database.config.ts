@@ -137,7 +137,7 @@ const collections = DB({
 
   datasets: {
     name: 'text',
-    description: 'richText',
+    description: 'textarea',
     source: 'text',
     imported: 'date',
     version: 'text',

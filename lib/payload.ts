@@ -218,6 +218,8 @@ const parseField = (name: string, fieldType: string, collectionSlug: string): an
   switch (fieldType) {
     case 'text':
       return { name, type: 'text' };
+    case 'textarea':
+      return { name, type: 'textarea' };
     case 'richText':
       return { name, type: 'richText' };
     case 'email':
