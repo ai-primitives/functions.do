@@ -9,6 +9,7 @@ import { wrapLanguageModel } from 'ai'
 import { createOpenAI, openai } from '@ai-sdk/openai'
 import fetchObject from '@/lib/fetchObject'
 // import { openrouter } from '@openrouter/ai-sdk-provider'
+import yaml from 'yaml'
 
 const openrouter = createOpenAI({
   baseURL: process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1',
@@ -32,11 +33,17 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const tenant = hostname
   
   const start = Date.now()
-  const { system, prompt, seed, temperature, topK, topP, model, variant, ...input } = Object.fromEntries(searchParams) || {}
+  const { system, prompt, seed, temperature, topK, topP, model, variant, ...rest } = Object.fromEntries(searchParams) || {}
 
-  console.log(input)
+  console.log(rest)
 
-  const { slug: functionName } = await params
+  const { slug } = await params
+  // match `listBlogPostTitles(topic:puppies)` function name and args for yaml flow style parse
+  const functionName = slug.split('(')[0]
+  const args = slug.split('(')[1].split(')')[0]
+  const inputArgs = yaml.parse(args.replaceAll('_', ' '))
+  const input = args ? inputArgs : rest
+
   const [completionResult, variantResult] = await Promise.all([
     // fetchObject({ functionName, input, model, settings: { system, prompt, seed, temperature, topK, topP } }),
     generateObject({ functionName, input, model, settings: { system, prompt, seed, temperature, topK, topP } }),
