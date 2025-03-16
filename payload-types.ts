@@ -67,78 +67,52 @@ export interface Config {
   blocks: {};
   collections: {
     users: User;
+    tenants: Tenant;
     projects: Project;
-    groups: Group;
     functions: Function;
     functionCalls: FunctionCall;
-    models: Model;
     modelGroups: ModelGroup;
+    models: Model;
     providers: Provider;
-    workflows: Workflow;
-    workflowCalls: WorkflowCall;
-    prompts: Prompt;
-    datasets: Dataset;
+    schemas: Schema;
     data: Datum;
+    datasets: Dataset;
     evals: Eval;
     evalRuns: EvalRun;
     evalResults: EvalResult;
+    workflows: Workflow;
+    workflowCalls: WorkflowCall;
+    prompts: Prompt;
+    groups: Group;
     completions: Completion;
     images: Image;
-    schemas: Schema;
-    tenants: Tenant;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {
-    projects: {
-      modelGroups: 'modelGroups';
-      datasets: 'datasets';
-      workflows: 'workflows';
-      prompts: 'prompts';
-    };
-    functions: {
-      functionCalls: 'functionCalls';
-    };
-    modelGroups: {
-      models: 'models';
-    };
-    providers: {
-      models: 'models';
-    };
-    workflows: {
-      workflowCalls: 'workflowCalls';
-    };
-    datasets: {
-      data: 'data';
-      evals: 'evals';
-    };
-    evalRuns: {
-      results: 'evalResults';
-    };
-  };
+  collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
+    tenants: TenantsSelect<false> | TenantsSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
-    groups: GroupsSelect<false> | GroupsSelect<true>;
     functions: FunctionsSelect<false> | FunctionsSelect<true>;
     functionCalls: FunctionCallsSelect<false> | FunctionCallsSelect<true>;
-    models: ModelsSelect<false> | ModelsSelect<true>;
     modelGroups: ModelGroupsSelect<false> | ModelGroupsSelect<true>;
+    models: ModelsSelect<false> | ModelsSelect<true>;
     providers: ProvidersSelect<false> | ProvidersSelect<true>;
-    workflows: WorkflowsSelect<false> | WorkflowsSelect<true>;
-    workflowCalls: WorkflowCallsSelect<false> | WorkflowCallsSelect<true>;
-    prompts: PromptsSelect<false> | PromptsSelect<true>;
-    datasets: DatasetsSelect<false> | DatasetsSelect<true>;
+    schemas: SchemasSelect<false> | SchemasSelect<true>;
     data: DataSelect<false> | DataSelect<true>;
+    datasets: DatasetsSelect<false> | DatasetsSelect<true>;
     evals: EvalsSelect<false> | EvalsSelect<true>;
     evalRuns: EvalRunsSelect<false> | EvalRunsSelect<true>;
     evalResults: EvalResultsSelect<false> | EvalResultsSelect<true>;
+    workflows: WorkflowsSelect<false> | WorkflowsSelect<true>;
+    workflowCalls: WorkflowCallsSelect<false> | WorkflowCallsSelect<true>;
+    prompts: PromptsSelect<false> | PromptsSelect<true>;
+    groups: GroupsSelect<false> | GroupsSelect<true>;
     completions: CompletionsSelect<false> | CompletionsSelect<true>;
     images: ImagesSelect<false> | ImagesSelect<true>;
-    schemas: SchemasSelect<false> | SchemasSelect<true>;
-    tenants: TenantsSelect<false> | TenantsSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -189,15 +163,31 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   name?: string | null;
-  role: 'admin' | 'editor' | 'viewer';
-  /**
-   * Projects this user has access to
-   */
-  projects?:
+  password?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  active?: boolean | null;
+  avatar?: string | null;
+  projects?: (string | Project)[] | null;
+  function?: (string | Function)[] | null;
+  permissions?:
     | {
-        project: string | Project;
-        id?: string | null;
-      }[]
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  role?: ('admin' | 'editor' | 'viewer') | null;
+  preferences?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
     | null;
   tenants?:
     | {
@@ -217,7 +207,6 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -225,7 +214,7 @@ export interface User {
  */
 export interface Project {
   id: string;
-  name: string;
+  name?: string | null;
   description?: {
     root: {
       type: string;
@@ -241,98 +230,11 @@ export interface Project {
     };
     [k: string]: unknown;
   } | null;
-  status: 'draft' | 'active' | 'archived';
-  users?:
-    | {
-        user: string | User;
-        id?: string | null;
-      }[]
-    | null;
-  modelGroups?: {
-    docs?: (string | ModelGroup)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  datasets?: {
-    docs?: (string | Dataset)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  workflows?: {
-    docs?: (string | Workflow)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  prompts?: {
-    docs?: (string | Prompt)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "modelGroups".
- */
-export interface ModelGroup {
-  id: string;
-  name: string;
-  project: string | Project;
-  /**
-   * Models in this group
-   */
-  models?: {
-    docs?: (string | Model)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "models".
- */
-export interface Model {
-  id: string;
-  name: string;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  modelGroup: string | ModelGroup;
-  provider: string | Provider;
-  created?: string | null;
-  contextLength?: number | null;
-  architecture?: {
-    modality?: string | null;
-    tokenizer?: string | null;
-    instructType?: string | null;
-  };
-  pricing?: {
-    prompt?: string | null;
-    completion?: string | null;
-    image?: string | null;
-    request?: string | null;
-  };
-  topProvider?: {
-    contextLength?: number | null;
-    maxCompletionTokens?: number | null;
-    isModerated?: boolean | null;
-  };
-  perRequestLimits?:
+  active?: boolean | null;
+  status?: ('draft' | 'active' | 'archived') | null;
+  users?: (string | User)[] | null;
+  functions?: (string | Function)[] | null;
+  metadata?:
     | {
         [k: string]: unknown;
       }
@@ -341,121 +243,6 @@ export interface Model {
     | number
     | boolean
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "providers".
- */
-export interface Provider {
-  id: string;
-  name: string;
-  /**
-   * Models using this provider
-   */
-  models?: {
-    docs?: (string | Model)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  endpoint?: string | null;
-  apiKey?: string | null;
-  organizationId?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "datasets".
- */
-export interface Dataset {
-  id: string;
-  name: string;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  project: string | Project;
-  /**
-   * Data entries in this dataset
-   */
-  data?: {
-    docs?: (string | Datum)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  /**
-   * Evaluations for this dataset
-   */
-  evals?: {
-    docs?: (string | Eval)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "data".
- */
-export interface Datum {
-  id: string;
-  dataset?: (string | null) | Dataset;
-  data?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  tags?:
-    | {
-        tag?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "evals".
- */
-export interface Eval {
-  id: string;
-  name: string;
-  dataset: string | Dataset;
-  evalRuns?: (string | EvalRun)[] | null;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
   config?:
     | {
         [k: string]: unknown;
@@ -464,183 +251,6 @@ export interface Eval {
     | string
     | number
     | boolean
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "evalRuns".
- */
-export interface EvalRun {
-  id: string;
-  eval: string | Eval;
-  /**
-   * Results from this evaluation run
-   */
-  results?: {
-    docs?: (string | EvalResult)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  startTime: string;
-  endTime?: string | null;
-  status: 'pending' | 'running' | 'completed' | 'failed';
-  error?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "evalResults".
- */
-export interface EvalResult {
-  id: string;
-  evalRun: string | EvalRun;
-  metrics:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  createdAt: string;
-  summary?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "workflows".
- */
-export interface Workflow {
-  id: string;
-  name: string;
-  project: string | Project;
-  /**
-   * Executions of this workflow
-   */
-  workflowCalls?: {
-    docs?: (string | WorkflowCall)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  config?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  steps?:
-    | {
-        name: string;
-        type: 'function' | 'condition' | 'loop';
-        function?: (string | null) | Function;
-        condition?: string | null;
-        loopConfig?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "workflowCalls".
- */
-export interface WorkflowCall {
-  id: string;
-  workflow: string | Workflow;
-  input:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  output?:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  timestamp: string;
-  status: 'pending' | 'running' | 'completed' | 'failed';
-  error?: string | null;
-  duration?: number | null;
-  steps?:
-    | {
-        stepName: string;
-        status: 'pending' | 'running' | 'completed' | 'failed' | 'skipped';
-        input?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        output?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        error?: string | null;
-        startTime?: string | null;
-        endTime?: string | null;
-        id?: string | null;
-      }[]
     | null;
   updatedAt: string;
   createdAt: string;
@@ -652,20 +262,46 @@ export interface WorkflowCall {
 export interface Function {
   id: string;
   tenant?: (string | null) | Tenant;
-  name: string;
-  model?: (string | null) | Model;
-  output: 'Object' | 'Text';
-  schema?: (string | null) | Schema;
+  name?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  deployment?: ('dev' | 'test' | 'prod') | null;
+  active?: boolean | null;
+  output?: ('object' | 'text') | null;
+  modelGroup?: (string | null) | ModelGroup;
+  code?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  workflows?: (string | Workflow)[] | null;
   /**
-   * Calls made to this function
+   * functionCalls that reference this functions
    */
-  functionCalls?: {
-    docs?: (string | FunctionCall)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  system?: string | null;
-  user?: string | null;
+  functionCalls?: (string | FunctionCall)[] | null;
+  evals?: (string | Eval)[] | null;
+  prompts?: (string | Prompt)[] | null;
+  /**
+   * projects that reference this functions
+   */
+  projects?: (string | Project)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -677,18 +313,49 @@ export interface Tenant {
   id: string;
   name?: string | null;
   domain?: string | null;
+  apiKey?: string | null;
+  active?: boolean | null;
+  deployed?: boolean | null;
+  functions?: (string | Function)[] | null;
+  users?: (string | User)[] | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "schemas".
+ * via the `definition` "modelGroups".
  */
-export interface Schema {
+export interface ModelGroup {
   id: string;
-  tenant?: (string | null) | Tenant;
-  name: string;
-  schema:
+  name?: string | null;
+  family?: string | null;
+  version?: string | null;
+  active?: boolean | null;
+  /**
+   * models that reference this modelGroups
+   */
+  models?: (string | Model)[] | null;
+  /**
+   * functions that reference this modelGroups
+   */
+  functions?: (string | Function)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models".
+ */
+export interface Model {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+  modelGroup?: (string | null) | ModelGroup;
+  provider?: (string | null) | Provider;
+  family?: string | null;
+  version?: string | null;
+  active?: boolean | null;
+  architecture?:
     | {
         [k: string]: unknown;
       }
@@ -697,10 +364,92 @@ export interface Schema {
     | number
     | boolean
     | null;
-  schemaYaml?: string | null;
+  pricing?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  capabilities?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * functionCalls that reference this models
+   */
+  functionCalls?: (string | FunctionCall)[] | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "providers".
+ */
+export interface Provider {
+  id: string;
+  name?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  active?: boolean | null;
+  endpoint?: string | null;
+  apiUrl?: string | null;
+  apiKey?: string | null;
+  organizationId?: string | null;
+  authType?: ('apikey' | 'oauth' | 'bearer' | 'none') | null;
+  config?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  headers?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  tools?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * models that reference this providers
+   */
+  models?: (string | Model)[] | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -708,8 +457,9 @@ export interface Schema {
  */
 export interface FunctionCall {
   id: string;
-  function: string | Function;
-  input:
+  function?: (string | null) | Function;
+  model?: (string | null) | Model;
+  input?:
     | {
         [k: string]: unknown;
       }
@@ -727,10 +477,309 @@ export interface FunctionCall {
     | number
     | boolean
     | null;
-  timestamp: string;
-  status: 'pending' | 'running' | 'completed' | 'failed';
+  status?: ('pending' | 'running' | 'completed' | 'failed') | null;
+  cost?: number | null;
+  tokens?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  duration?: number | null;
+  meta?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  data?: (string | Datum)[] | null;
+  workflow?: (string | null) | WorkflowCall;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export interface Datum {
+  id: string;
+  dataset?: (string | null) | Dataset;
+  content?: string | null;
+  format?: ('text' | 'json' | 'blob') | null;
+  createdAt: string;
+  updatedAt: string;
+  extractedFrom?: string | null;
+  embeddingType?: string | null;
+  embeddingDim?: number | null;
+  data?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  functionCalls?: (string | FunctionCall)[] | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "datasets".
+ */
+export interface Dataset {
+  id: string;
+  name?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  source?: string | null;
+  imported?: string | null;
+  version?: string | null;
+  format?: ('text' | 'json' | 'csv' | 'images' | 'mixed') | null;
+  collection?: string | null;
+  metadata?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * data that reference this datasets
+   */
+  data?: (string | Datum)[] | null;
+  /**
+   * evals that reference this datasets
+   */
+  evals?: (string | Eval)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "evals".
+ */
+export interface Eval {
+  id: string;
+  name?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  type?: ('accuracy' | 'performance' | 'robustness' | 'safety' | 'custom') | null;
+  method?: string | null;
+  metric?: string | null;
+  dataset?: (string | null) | Dataset;
+  functions?: (string | Function)[] | null;
+  /**
+   * evalRuns that reference this evals
+   */
+  evalRuns?: (string | EvalRun)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "evalRuns".
+ */
+export interface EvalRun {
+  id: string;
+  eval?: (string | null) | Eval;
+  model?: (string | null) | Model;
+  function?: (string | null) | Function;
+  dataset?: (string | null) | Dataset;
+  metrics?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  summary?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  status?: ('pending' | 'running' | 'completed' | 'failed') | null;
+  /**
+   * results that reference this evalRuns
+   */
+  results?: (string | EvalResult)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "evalResults".
+ */
+export interface EvalResult {
+  id: string;
+  evalRun?: (string | null) | EvalRun;
+  metrics?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  score?: number | null;
+  pass?: boolean | null;
+  result?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  details?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "workflowCalls".
+ */
+export interface WorkflowCall {
+  id: string;
+  workflow?: (string | null) | Workflow;
+  input?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  output?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  timestamp?: string | null;
+  status?: ('pending' | 'running' | 'completed' | 'failed') | null;
   error?: string | null;
   duration?: number | null;
+  success?: boolean | null;
+  logs?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  metadata?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  functionCalls?: (string | FunctionCall)[] | null;
+  steps?:
+    | {
+        item?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "workflows".
+ */
+export interface Workflow {
+  id: string;
+  name?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  deployed?: boolean | null;
+  active?: boolean | null;
+  steps?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  functions?: (string | Function)[] | null;
+  /**
+   * workflowCalls that reference this workflows
+   */
+  workflowCalls?: (string | WorkflowCall)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -740,44 +789,70 @@ export interface FunctionCall {
  */
 export interface Prompt {
   id: string;
-  name: string;
-  content: string;
-  project: string | Project;
-  /**
-   * Functions referenced by this prompt
-   */
-  functions?:
-    | {
-        function: string | Function;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Models referenced by this prompt
-   */
-  models?:
-    | {
-        model: string | Model;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Providers referenced by this prompt
-   */
-  providers?:
-    | {
-        provider: string | Provider;
-        id?: string | null;
-      }[]
-    | null;
+  name?: string | null;
+  content?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  version?: string | null;
+  template?: boolean | null;
+  category?: string | null;
+  functions?: (string | Function)[] | null;
   variables?:
     | {
-        name: string;
-        description?: string | null;
-        defaultValue?: string | null;
+        item?: string | null;
         id?: string | null;
       }[]
     | null;
+  metadata?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schemas".
+ */
+export interface Schema {
+  id: string;
+  tenant?: (string | null) | Tenant;
+  name?: string | null;
+  schema?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  schemaYaml?: string | null;
+  type?: ('json' | 'typescript' | 'openai') | null;
+  version?: string | null;
+  /**
+   * functions that reference this schemas
+   */
+  functions?: (string | Function)[] | null;
+  models?: (string | Model)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1015,12 +1090,12 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
-        relationTo: 'projects';
-        value: string | Project;
+        relationTo: 'tenants';
+        value: string | Tenant;
       } | null)
     | ({
-        relationTo: 'groups';
-        value: string | Group;
+        relationTo: 'projects';
+        value: string | Project;
       } | null)
     | ({
         relationTo: 'functions';
@@ -1031,36 +1106,28 @@ export interface PayloadLockedDocument {
         value: string | FunctionCall;
       } | null)
     | ({
-        relationTo: 'models';
-        value: string | Model;
-      } | null)
-    | ({
         relationTo: 'modelGroups';
         value: string | ModelGroup;
+      } | null)
+    | ({
+        relationTo: 'models';
+        value: string | Model;
       } | null)
     | ({
         relationTo: 'providers';
         value: string | Provider;
       } | null)
     | ({
-        relationTo: 'workflows';
-        value: string | Workflow;
-      } | null)
-    | ({
-        relationTo: 'workflowCalls';
-        value: string | WorkflowCall;
-      } | null)
-    | ({
-        relationTo: 'prompts';
-        value: string | Prompt;
-      } | null)
-    | ({
-        relationTo: 'datasets';
-        value: string | Dataset;
+        relationTo: 'schemas';
+        value: string | Schema;
       } | null)
     | ({
         relationTo: 'data';
         value: string | Datum;
+      } | null)
+    | ({
+        relationTo: 'datasets';
+        value: string | Dataset;
       } | null)
     | ({
         relationTo: 'evals';
@@ -1075,20 +1142,28 @@ export interface PayloadLockedDocument {
         value: string | EvalResult;
       } | null)
     | ({
+        relationTo: 'workflows';
+        value: string | Workflow;
+      } | null)
+    | ({
+        relationTo: 'workflowCalls';
+        value: string | WorkflowCall;
+      } | null)
+    | ({
+        relationTo: 'prompts';
+        value: string | Prompt;
+      } | null)
+    | ({
+        relationTo: 'groups';
+        value: string | Group;
+      } | null)
+    | ({
         relationTo: 'completions';
         value: string | Completion;
       } | null)
     | ({
         relationTo: 'images';
         value: string | Image;
-      } | null)
-    | ({
-        relationTo: 'schemas';
-        value: string | Schema;
-      } | null)
-    | ({
-        relationTo: 'tenants';
-        value: string | Tenant;
       } | null)
     | ({
         relationTo: 'payload-jobs';
@@ -1142,13 +1217,16 @@ export interface PayloadMigration {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  password?: T;
+  firstName?: T;
+  lastName?: T;
+  active?: T;
+  avatar?: T;
+  projects?: T;
+  function?: T;
+  permissions?: T;
   role?: T;
-  projects?:
-    | T
-    | {
-        project?: T;
-        id?: T;
-      };
+  preferences?: T;
   tenants?:
     | T
     | {
@@ -1170,22 +1248,283 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tenants_select".
+ */
+export interface TenantsSelect<T extends boolean = true> {
+  name?: T;
+  domain?: T;
+  apiKey?: T;
+  active?: T;
+  deployed?: T;
+  functions?: T;
+  users?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
+  active?: T;
   status?: T;
-  users?:
+  users?: T;
+  functions?: T;
+  metadata?: T;
+  config?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "functions_select".
+ */
+export interface FunctionsSelect<T extends boolean = true> {
+  tenant?: T;
+  name?: T;
+  description?: T;
+  deployment?: T;
+  active?: T;
+  output?: T;
+  modelGroup?: T;
+  code?: T;
+  workflows?: T;
+  functionCalls?: T;
+  evals?: T;
+  prompts?: T;
+  projects?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "functionCalls_select".
+ */
+export interface FunctionCallsSelect<T extends boolean = true> {
+  function?: T;
+  model?: T;
+  input?: T;
+  output?: T;
+  status?: T;
+  cost?: T;
+  tokens?: T;
+  duration?: T;
+  meta?: T;
+  data?: T;
+  workflow?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "modelGroups_select".
+ */
+export interface ModelGroupsSelect<T extends boolean = true> {
+  name?: T;
+  family?: T;
+  version?: T;
+  active?: T;
+  models?: T;
+  functions?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "models_select".
+ */
+export interface ModelsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  modelGroup?: T;
+  provider?: T;
+  family?: T;
+  version?: T;
+  active?: T;
+  architecture?: T;
+  pricing?: T;
+  capabilities?: T;
+  functionCalls?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "providers_select".
+ */
+export interface ProvidersSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  active?: T;
+  endpoint?: T;
+  apiUrl?: T;
+  apiKey?: T;
+  organizationId?: T;
+  authType?: T;
+  config?: T;
+  headers?: T;
+  tools?: T;
+  models?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schemas_select".
+ */
+export interface SchemasSelect<T extends boolean = true> {
+  tenant?: T;
+  name?: T;
+  schema?: T;
+  schemaYaml?: T;
+  type?: T;
+  version?: T;
+  functions?: T;
+  models?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "data_select".
+ */
+export interface DataSelect<T extends boolean = true> {
+  dataset?: T;
+  content?: T;
+  format?: T;
+  createdAt?: T;
+  updatedAt?: T;
+  extractedFrom?: T;
+  embeddingType?: T;
+  embeddingDim?: T;
+  data?: T;
+  functionCalls?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "datasets_select".
+ */
+export interface DatasetsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  source?: T;
+  imported?: T;
+  version?: T;
+  format?: T;
+  collection?: T;
+  metadata?: T;
+  data?: T;
+  evals?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "evals_select".
+ */
+export interface EvalsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  type?: T;
+  method?: T;
+  metric?: T;
+  dataset?: T;
+  functions?: T;
+  evalRuns?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "evalRuns_select".
+ */
+export interface EvalRunsSelect<T extends boolean = true> {
+  eval?: T;
+  model?: T;
+  function?: T;
+  dataset?: T;
+  metrics?: T;
+  summary?: T;
+  status?: T;
+  results?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "evalResults_select".
+ */
+export interface EvalResultsSelect<T extends boolean = true> {
+  evalRun?: T;
+  metrics?: T;
+  score?: T;
+  pass?: T;
+  result?: T;
+  details?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "workflows_select".
+ */
+export interface WorkflowsSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  deployed?: T;
+  active?: T;
+  steps?: T;
+  functions?: T;
+  workflowCalls?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "workflowCalls_select".
+ */
+export interface WorkflowCallsSelect<T extends boolean = true> {
+  workflow?: T;
+  input?: T;
+  output?: T;
+  timestamp?: T;
+  status?: T;
+  error?: T;
+  duration?: T;
+  success?: T;
+  logs?: T;
+  metadata?: T;
+  functionCalls?: T;
+  steps?:
     | T
     | {
-        user?: T;
+        item?: T;
         id?: T;
       };
-  modelGroups?: T;
-  datasets?: T;
-  workflows?: T;
-  prompts?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prompts_select".
+ */
+export interface PromptsSelect<T extends boolean = true> {
+  name?: T;
+  content?: T;
+  description?: T;
+  version?: T;
+  template?: T;
+  category?: T;
+  functions?: T;
+  variables?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  metadata?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1211,253 +1550,6 @@ export interface GroupsSelect<T extends boolean = true> {
   type?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "functions_select".
- */
-export interface FunctionsSelect<T extends boolean = true> {
-  tenant?: T;
-  name?: T;
-  model?: T;
-  output?: T;
-  schema?: T;
-  functionCalls?: T;
-  system?: T;
-  user?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "functionCalls_select".
- */
-export interface FunctionCallsSelect<T extends boolean = true> {
-  function?: T;
-  input?: T;
-  output?: T;
-  timestamp?: T;
-  status?: T;
-  error?: T;
-  duration?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "models_select".
- */
-export interface ModelsSelect<T extends boolean = true> {
-  id?: T;
-  name?: T;
-  description?: T;
-  modelGroup?: T;
-  provider?: T;
-  created?: T;
-  contextLength?: T;
-  architecture?:
-    | T
-    | {
-        modality?: T;
-        tokenizer?: T;
-        instructType?: T;
-      };
-  pricing?:
-    | T
-    | {
-        prompt?: T;
-        completion?: T;
-        image?: T;
-        request?: T;
-      };
-  topProvider?:
-    | T
-    | {
-        contextLength?: T;
-        maxCompletionTokens?: T;
-        isModerated?: T;
-      };
-  perRequestLimits?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "modelGroups_select".
- */
-export interface ModelGroupsSelect<T extends boolean = true> {
-  name?: T;
-  project?: T;
-  models?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "providers_select".
- */
-export interface ProvidersSelect<T extends boolean = true> {
-  name?: T;
-  models?: T;
-  endpoint?: T;
-  apiKey?: T;
-  organizationId?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "workflows_select".
- */
-export interface WorkflowsSelect<T extends boolean = true> {
-  name?: T;
-  project?: T;
-  workflowCalls?: T;
-  description?: T;
-  config?: T;
-  steps?:
-    | T
-    | {
-        name?: T;
-        type?: T;
-        function?: T;
-        condition?: T;
-        loopConfig?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "workflowCalls_select".
- */
-export interface WorkflowCallsSelect<T extends boolean = true> {
-  workflow?: T;
-  input?: T;
-  output?: T;
-  timestamp?: T;
-  status?: T;
-  error?: T;
-  duration?: T;
-  steps?:
-    | T
-    | {
-        stepName?: T;
-        status?: T;
-        input?: T;
-        output?: T;
-        error?: T;
-        startTime?: T;
-        endTime?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "prompts_select".
- */
-export interface PromptsSelect<T extends boolean = true> {
-  name?: T;
-  content?: T;
-  project?: T;
-  functions?:
-    | T
-    | {
-        function?: T;
-        id?: T;
-      };
-  models?:
-    | T
-    | {
-        model?: T;
-        id?: T;
-      };
-  providers?:
-    | T
-    | {
-        provider?: T;
-        id?: T;
-      };
-  variables?:
-    | T
-    | {
-        name?: T;
-        description?: T;
-        defaultValue?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "datasets_select".
- */
-export interface DatasetsSelect<T extends boolean = true> {
-  name?: T;
-  description?: T;
-  project?: T;
-  data?: T;
-  evals?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "data_select".
- */
-export interface DataSelect<T extends boolean = true> {
-  dataset?: T;
-  data?: T;
-  tags?:
-    | T
-    | {
-        tag?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "evals_select".
- */
-export interface EvalsSelect<T extends boolean = true> {
-  name?: T;
-  dataset?: T;
-  evalRuns?: T;
-  description?: T;
-  config?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "evalRuns_select".
- */
-export interface EvalRunsSelect<T extends boolean = true> {
-  eval?: T;
-  results?: T;
-  startTime?: T;
-  endTime?: T;
-  status?: T;
-  error?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "evalResults_select".
- */
-export interface EvalResultsSelect<T extends boolean = true> {
-  evalRun?: T;
-  metrics?: T;
-  createdAt?: T;
-  summary?: T;
-  updatedAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1502,30 +1594,6 @@ export interface ImagesSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "schemas_select".
- */
-export interface SchemasSelect<T extends boolean = true> {
-  tenant?: T;
-  name?: T;
-  schema?: T;
-  schemaYaml?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tenants_select".
- */
-export interface TenantsSelect<T extends boolean = true> {
-  id?: T;
-  name?: T;
-  domain?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

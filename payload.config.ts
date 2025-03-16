@@ -9,25 +9,12 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Users } from './collections/Users'
+// Import our database schema and collection generator
+import collections from './database.config'
+
+// Import individual collections that are not yet handled by our schema system
 import { Images } from './collections/Images'
-import { Functions } from './collections/Functions'
-import { Tenants } from './collections/Tenants'
-import { Models } from './collections/Models'
-import { Schemas } from './collections/Schemas'
 import { Completions } from './collections/Completions'
-import { Projects } from './collections/Projects'
-import { ModelGroups } from './collections/ModelGroups'
-import { Providers } from './collections/Providers'
-import { Datasets } from './collections/Datasets'
-import { Data } from './collections/Data'
-import { Evals } from './collections/Evals'
-import { EvalRuns } from './collections/EvalRuns'
-import { EvalResults } from './collections/EvalResults'
-import { FunctionCalls } from './collections/FunctionCalls'
-import { Workflows } from './collections/Workflows'
-import { WorkflowCalls } from './collections/WorkflowCalls'
-import { Prompts } from './collections/Prompts'
 import { Groups } from './collections/Groups'
 
 import { isSuperAdmin } from './collections/hooks/isSuperAdmin'
@@ -38,39 +25,19 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
-    user: Users.slug,
+    user: 'users', // Now users collection has auth configuration
     importMap: {
       baseDir: path.resolve(dirname),
     },
   },
   collections: [
-    // Core collections
-    Users,
-    Projects,
+    // Collections from our schema system
+    ...Object.values(collections),
+    
+    // Individual collections not yet in the schema system
     Groups,
-
-    // AI collections
-    Functions,
-    FunctionCalls,
-    Models,
-    ModelGroups,
-    Providers,
-    Workflows,
-    WorkflowCalls,
-    Prompts,
-
-    // Data collections
-    Datasets,
-    Data,
-    Evals,
-    EvalRuns,
-    EvalResults,
-
-    // Existing collections
     Completions,
     Images,
-    Schemas,
-    Tenants,
   ],
   jobs: {
     tasks: [updateModels],
