@@ -165,29 +165,6 @@ export const AI = <T extends Record<string, FunctionDefinition | FunctionCallbac
     }
   }
 
-  // Special handling for launchStartup callback if it exists
-  if ('launchStartup' in result && typeof definition.launchStartup === 'function') {
-    try {
-      // Create a context for the startup callback
-      const startupContext = new Proxy({}, {
-        get: (_target, prop) => {
-          if (typeof prop === 'string' && prop in result) {
-            return result[prop]
-          }
-          return (...args: any[]) => {
-            console.warn(`Function '${String(prop)}' was not defined`)
-            return Promise.resolve({} as any)
-          }
-        }
-      })
-      
-      // Execute the startup callback
-      ;(result.launchStartup as Function)({ ai: startupContext, args: {} })
-    } catch (error) {
-      console.error('Error in launchStartup callback:', error)
-    }
-  }
-
   return result as any // Return with proper inference from the AIFactory type
 }
 
