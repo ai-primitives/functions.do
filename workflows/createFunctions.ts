@@ -5,7 +5,7 @@ export default AI({
   buildWorkflow: async ({ ai, args }) => {
     
     const workflow = await ai.listFunctions(args)
-    const functions = workflow.functions.map(fn => ai.defineFunction(fn))
+    const functions = await Promise.all(workflow.functions.map(ai.defineFunction))
 
   },
 
