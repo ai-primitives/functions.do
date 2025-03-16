@@ -10,7 +10,7 @@ import { createOpenAI, openai } from '@ai-sdk/openai'
 import fetchObject from '@/lib/fetchObject'
 // import { openrouter } from '@openrouter/ai-sdk-provider'
 import yaml from 'yaml'
-import { decode } from 'punycode'
+import { toUnicode } from 'punycode'
 
 export const maxDuration = 800
 
@@ -24,7 +24,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   try {
     // origin = origin.replace(hostname, decode(hostname))
-    hostname = decode(hostname)
+    hostname = toUnicode(hostname)
   } catch (error) {
     console.log(error)
   }
