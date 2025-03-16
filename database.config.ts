@@ -20,6 +20,7 @@ const collections = DB({
   },
 
   tenants: {
+    id: 'text',
     name: 'text',
     domain: 'text',
     apiKey: 'text',
@@ -217,7 +218,8 @@ const collections = DB({
     functions: 'functions[]',
     variables: 'array',
     metadata: 'json'
-  }
+  },
+
 }, {
   admin: {
     // Group collections under 'Core' heading
