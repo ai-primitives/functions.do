@@ -2,6 +2,13 @@ import { AI } from '../package'
 
 export default AI({
 
+  buildWorkflow: async ({ ai, args }) => {
+    
+    const workflow = await ai.listFunctions(args)
+    const functions = workflow.functions.map(fn => ai.defineFunction(fn))
+
+  },
+
   listFunctions: {
     workflow: 'Describe the workflow that the functions will be used for',
     persona: 'Who is the target persona who performs this workflow? Like expert developer or startup founder, etc.',
@@ -15,3 +22,4 @@ export default AI({
   }
 
 })
+

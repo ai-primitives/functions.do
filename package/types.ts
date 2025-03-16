@@ -10,7 +10,7 @@ export interface AIConfig {
 
 // Generic AI function type
 export type AIFunction<TInput = any, TOutput = any> = {
-  (input: TInput, config?: AIConfig): Promise<TOutput>
+  (input?: TInput, config?: AIConfig): Promise<TOutput>
 }
 
 // Types for function definitions
@@ -23,33 +23,50 @@ export type FunctionDefinition = Record<string, SchemaValue>
 
 // Helper type to convert schema to output type
 export type SchemaToOutput<T extends FunctionDefinition> = {
-  [K in keyof T]: T[K] extends Array<any>
-    ? T[K] extends Array<string>
-      ? string[]
-      : T[K] extends Array<Record<string, any>>
-        ? Array<{ [P in keyof T[K][0]]: SchemaToOutput<{ value: T[K][0][P] }>['value'] }>
-        : string[]
+  [K in keyof T]: T[K] extends Array<infer U>
+    ? (U extends string
+      ? StringArray // Use StringArray to ensure map() operations understand element type is string
+      : U extends Record<string, any>
+        ? Array<{ [P in keyof U]: SchemaToOutput<{ value: U[P] }>['value'] }>
+        : Array<string>)
     : T[K] extends Record<string, any>
       ? { [P in keyof T[K]]: SchemaToOutput<{ value: T[K][P] }>['value'] }
       : string
 }
 
-// Function callback type
-export type FunctionCallback<TArgs = any> = (context: { ai: AI_Instance; args: TArgs }) => any | Promise<any>
+// Improved function callback type with better type preservation for arrays
+export type FunctionCallback<TArgs = any, TSchemas = Record<string, FunctionDefinition>> = (
+  context: { 
+    ai: {
+      [K in keyof TSchemas]: TSchemas[K] extends FunctionDefinition 
+        ? ((input: any, config?: AIConfig) => Promise<SchemaToOutput<TSchemas[K]>>) & 
+          AIFunction<any, SchemaToOutput<TSchemas[K]>>
+        : never
+    } & { 
+      // Index signature to allow any function name access
+      [key: string]: (input?: any, config?: AIConfig) => Promise<any> 
+    }; 
+    args: TArgs 
+  }
+) => any | Promise<any>
 
 // Main AI function factory type
 export type AI = {
-  <T extends Record<string, FunctionDefinition | FunctionCallback>>(
+  <T extends Record<string, FunctionDefinition | FunctionCallback<any, any>>>(
     functions: T,
     config?: AIConfig,
   ): {
-    [K in keyof T]: T[K] extends FunctionDefinition ? AIFunction<any, SchemaToOutput<T[K]>> : T[K] extends FunctionCallback<infer TArgs> ? FunctionCallback<TArgs> : never
+    [K in keyof T]: T[K] extends FunctionDefinition 
+      ? AIFunction<any, SchemaToOutput<T[K]>> 
+      : T[K] extends FunctionCallback<infer TArgs, any> 
+        ? FunctionCallback<TArgs, Extract<T, Record<string, FunctionDefinition>>> 
+        : never
   }
 }
 
 // Dynamic AI instance type
 export type AI_Instance = {
-  [K: string]: AIFunction<any, any> & (<T = any>(input?: any, config?: AIConfig) => Promise<T>)
+  [K: string]: (input?: any, config?: AIConfig) => Promise<any>
 }
 
 // Helper type to infer array element types
