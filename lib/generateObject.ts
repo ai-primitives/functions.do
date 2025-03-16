@@ -12,6 +12,22 @@ import configPromise from 'payload.config'
 import { getPayload } from 'payload'
 import hashObject from 'object-hash'
 
+const openRouter = createOpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1',
+  headers: {
+    'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
+    'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
+  },
+  fetch: async (input, init) => {
+    // console.log('fetching', { input, init })
+    const response = await fetch(input, init)
+    const clonedResponse = response.clone()
+    const body = await clonedResponse.json()
+    console.log(body)
+    return response
+  }
+})
 
 const defaultModels = [
   'qwen/qwq-32b',
@@ -49,6 +65,7 @@ type GenerateObjectArgs = {
   functionName: string
   input: any
   model?: string
+  tenant?: string
   schema?: FunctionDefinition
   settings?: {
     system?: string
@@ -69,33 +86,37 @@ type GenerateObjectArgs = {
  */
 export default async (args: GenerateObjectArgs) => {
   const modelName = args.model || sample(defaultModels)!
-  const { functionName, input, settings } = args
+  const { functionName, input, settings, tenant } = args
   // const model = openRouter(modelName)
-  let { system = 'Respond only in JSON.', temperature, seed, topK, topP } = settings || {}
+  let { system, prompt, temperature = 2, seed, topK, topP } = settings || {}
   if (typeof temperature === 'string') temperature = parseFloat(temperature)
   if (typeof seed === 'string') seed = parseInt(seed)
   if (typeof topK === 'string') topK = parseInt(topK)
   if (typeof topP === 'string') topP = parseFloat(topP)
-  const prompt = `${functionName}(${JSON.stringify(input, null, 2)})`
+
+
+  const payload = await getPayload({ config: configPromise })
+
+  // const dbStart = Date.now()
+  // const savedFunction = await payload.find({
+  //   collection: 'functions',
+  //   where: { 
+  //     name: { equals: functionName },
+  //     tenant: { equals: args.tenant }, 
+  //   },
+  //   depth: 2,
+  // })
+  // const dbLatency = Date.now() - dbStart
+
+  // console.log(savedFunction, { dbLatency })
+
+  if (!system) system = 'Respond only in JSON.'
+  if (!prompt) prompt = `${functionName}(${JSON.stringify(input, null, 2)})`
+
 
   const start = Date.now()
 
-  const openRouter = createOpenAI({
-    apiKey: process.env.OPENROUTER_API_KEY,
-    baseURL: process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1',
-    headers: {
-      'HTTP-Referer': 'https://functions.do', // Optional. Site URL for rankings on openrouter.ai.
-      'X-Title': 'Functions.do', // Optional. Site name for rankings on openrouter.ai.
-    },
-    fetch: async (input, init) => {
-      // console.log('fetching', { input, init })
-      const response = await fetch(input, init)
-      const clonedResponse = response.clone()
-      const body = await clonedResponse.json()
-      console.log(body)
-      return response
-    }
-  })
+  
 
   const useTools = modelName.startsWith('anthropic')
   const structuredOutputs = useTools ? false : true
@@ -133,23 +154,46 @@ export default async (args: GenerateObjectArgs) => {
   const cache = results.response.headers?.['cf-aig-cache-status']
 
 
-  // waitUntil(
-  //   payload.create({
-  //     collection: 'completions',
-  //     data: {
-  //       tenant,
-  //       hash: inputHash,
-  //       function: func.docs[0],
-  //       input: input ? input : args,
-  //       output: completionResult.object,
-  //       model: completionResult.response.modelId,
-  //       requestId: completionResult.response.id,
-  //       debug: completionResult as any,
-  //       // reasoning: completionResult.,
-  //       seed,
-  //     },
-  //   }),
-  // )
+  waitUntil(
+    payload.create({
+      collection: 'completions',
+      data: {
+        tenant,
+        // hash: inputHash,
+        functionName,
+        // function: func.docs[0],
+        input: input ? input : args,
+        output: object,
+        model: modelId,
+        requestId: id,
+        debug: results as any,
+        // reasoning: completionResult.,
+        seed,
+        // latency,
+      },
+    }),
+  )
+
+  waitUntil(
+    payload.create({
+      collection: 'data',
+      data: {
+        // tenant,
+        data: object
+        // hash: inputHash,
+        // functionName,
+        // // function: func.docs[0],
+        // input: input ? input : args,
+        // output: object,
+        // model: modelId,
+        // requestId: id,
+        // debug: results as any,
+        // // reasoning: completionResult.,
+        // seed,
+        // // latency,
+      },
+    }),
+  )
 
   // console.log(headers)
   // const { id } = headers

@@ -413,23 +413,8 @@ export interface Dataset {
  */
 export interface Datum {
   id: string;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  dataset: string | Dataset;
-  metadata?:
+  dataset?: (string | null) | Dataset;
+  data?:
     | {
         [k: string]: unknown;
       }
@@ -1425,9 +1410,8 @@ export interface DatasetsSelect<T extends boolean = true> {
  * via the `definition` "data_select".
  */
 export interface DataSelect<T extends boolean = true> {
-  content?: T;
   dataset?: T;
-  metadata?: T;
+  data?: T;
   tags?:
     | T
     | {

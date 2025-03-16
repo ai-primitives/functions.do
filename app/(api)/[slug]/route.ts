@@ -39,9 +39,10 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
 
   console.log(rest)
 
-  const { slug } = await params
+  let { slug } = await params
+  slug = decodeURI(slug)
   // match `listBlogPostTitles(topic:puppies)` function name and args for yaml flow style parse
-  const functionName = decodeURIComponent(slug.split('(')[0])
+  const functionName = slug.split('(')[0]
   let args = slug.split('(')[1].split(')')[0]
   if (args[0] !== '{') args = '{' + args + '}'
   // if there is a `:` without a space after it, add a space
@@ -55,7 +56,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     // variantResult
   ] = await Promise.all([
     // fetchObject({ functionName, input, model, settings }),
-    generateObject({ functionName, input, model, settings }),
+    generateObject({ functionName, input, model, settings, tenant }),
 
     // TODO: Figure out a more effective way to create & test variants
     // generateObject({ functionName, input, model: variant, settings: { system, prompt, seed: 1, temperature, topK, topP } })
@@ -70,10 +71,10 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
     Object.entries(overrides).forEach(([key, value]) => {
       url.searchParams.set(key, String(value))
     })
-    return url.toString()
+    return decodeURIComponent(url.toString()).replaceAll('"',"'")
   }
 
-  const url = new URL(request.url.replaceAll('%20', '+'))
+  const url = new URL(decodeURIComponent(request.url.replaceAll('%20', '+')))
   // const { object, reasoning } = completionResult as any
   return Response.json({ function: functionName, args: input, settings,
     links: {

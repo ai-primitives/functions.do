@@ -8,15 +8,15 @@ export const Data: CollectionConfig = {
   },
   versions: true,
   fields: [
-    { name: 'content', type: 'richText', required: true },
+    // { name: 'content', type: 'richText', required: true },
     {
       name: 'dataset',
       type: 'relationship',
       relationTo: 'datasets',
-      required: true,
+      // required: true,
     },
     // Additional metadata fields
-    { name: 'metadata', type: 'json' },
+    { name: 'data', type: 'json' },
     { name: 'tags', type: 'array', fields: [{ name: 'tag', type: 'text' }] },
   ],
 }
