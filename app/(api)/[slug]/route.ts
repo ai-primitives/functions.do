@@ -33,7 +33,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   const tenant = hostname
   
   const start = Date.now()
-  const { system, prompt, seed, temperature, topK, topP, model, variant, ...rest } = Object.fromEntries(searchParams) || {}
+  const { system, prompt, seed, temperature, topK, topP, model = 'google/gemini-2.0-flash-001', variant, ...rest } = Object.fromEntries(searchParams) || {}
 
   console.log(rest)
 
