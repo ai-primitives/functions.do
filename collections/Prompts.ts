@@ -10,60 +10,16 @@ export const Prompts: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', required: true },
     { name: 'content', type: 'code', admin: { language: 'mdx' }, required: true },
-    {
-      name: 'project',
-      type: 'relationship',
-      relationTo: 'projects',
-      required: true,
-    },
-    // Using join fields for relationships
+    { name: 'description', type: 'richText' },
+    { name: 'version', type: 'text' },
+    { name: 'template', type: 'checkbox', defaultValue: false },
+    { name: 'category', type: 'text' },
     {
       name: 'functions',
-      type: 'array',
-      fields: [
-        {
-          name: 'function',
-          type: 'relationship',
-          relationTo: 'functions',
-          required: true,
-        },
-      ],
-      admin: {
-        description: 'Functions referenced by this prompt',
-      },
+      type: 'relationship',
+      relationTo: 'functions',
+      hasMany: true,
     },
-    // Additional references - using array fields for many-to-many relationships
-    {
-      name: 'models',
-      type: 'array',
-      fields: [
-        {
-          name: 'model',
-          type: 'relationship',
-          relationTo: 'models',
-          required: true,
-        },
-      ],
-      admin: {
-        description: 'Models referenced by this prompt',
-      },
-    },
-    {
-      name: 'providers',
-      type: 'array',
-      fields: [
-        {
-          name: 'provider',
-          type: 'relationship',
-          relationTo: 'providers',
-          required: true,
-        },
-      ],
-      admin: {
-        description: 'Providers referenced by this prompt',
-      },
-    },
-    // Configuration
     {
       name: 'variables',
       type: 'array',
@@ -71,7 +27,10 @@ export const Prompts: CollectionConfig = {
         { name: 'name', type: 'text', required: true },
         { name: 'description', type: 'text' },
         { name: 'defaultValue', type: 'text' },
+        { name: 'required', type: 'checkbox', defaultValue: false },
+        { name: 'type', type: 'select', options: ['string', 'number', 'boolean', 'object', 'array'] },
       ],
     },
+    { name: 'metadata', type: 'json' },
   ],
 }

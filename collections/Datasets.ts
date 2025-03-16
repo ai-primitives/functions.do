@@ -10,13 +10,11 @@ export const Datasets: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', required: true },
     { name: 'description', type: 'richText' },
-    {
-      name: 'project',
-      type: 'relationship',
-      relationTo: 'projects',
-      required: true,
-    },
-    // Using a join field for data entries
+    { name: 'source', type: 'text' },
+    { name: 'imported', type: 'date' },
+    { name: 'version', type: 'text' },
+    { name: 'collection', type: 'checkbox' },
+    { name: 'format', type: 'select', options: ['text', 'json', 'csv', 'images', 'mixed'] },
     {
       name: 'data',
       type: 'join',
@@ -26,7 +24,6 @@ export const Datasets: CollectionConfig = {
         description: 'Data entries in this dataset',
       },
     },
-    // Using a join field for evals
     {
       name: 'evals',
       type: 'join',
@@ -35,6 +32,13 @@ export const Datasets: CollectionConfig = {
       admin: {
         description: 'Evaluations for this dataset',
       },
+    },
+    {
+      name: 'metadata',
+      type: 'json',
+      admin: {
+        description: 'Additional metadata for the dataset'
+      }
     },
   ],
 }

@@ -10,6 +10,13 @@ export const Projects: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', required: true },
     { name: 'description', type: 'richText' },
+    { name: 'active', type: 'checkbox', defaultValue: true },
+    {
+      name: 'tenant',
+      type: 'relationship',
+      relationTo: 'tenants',
+      required: true,
+    },
     {
       name: 'status',
       type: 'select',
@@ -21,49 +28,19 @@ export const Projects: CollectionConfig = {
       ],
       defaultValue: 'draft',
     },
-    // Using array fields for many-to-many relationships with users
     {
       name: 'users',
-      type: 'array',
-      fields: [
-        {
-          name: 'user',
-          type: 'relationship',
-          relationTo: 'users',
-          required: true,
-        },
-      ],
-    },
-    // Using join fields for one-to-many relationships
-    {
-      name: 'modelGroups',
-      type: 'join',
-      collection: 'modelGroups',
-      on: 'project',
+      type: 'relationship',
+      relationTo: 'users',
+      hasMany: true,
     },
     {
-      name: 'datasets',
-      type: 'join',
-      collection: 'datasets',
-      on: 'project',
+      name: 'functions',
+      type: 'relationship',
+      relationTo: 'functions',
+      hasMany: true,
     },
-    // {
-    //   name: 'functions',
-    //   type: 'join',
-    //   collection: 'functions',
-    //   on: 'project',
-    // },
-    {
-      name: 'workflows',
-      type: 'join',
-      collection: 'workflows',
-      on: 'project',
-    },
-    {
-      name: 'prompts',
-      type: 'join',
-      collection: 'prompts',
-      on: 'project',
-    },
+    { name: 'metadata', type: 'json' },
+    { name: 'config', type: 'json' },
   ],
 }

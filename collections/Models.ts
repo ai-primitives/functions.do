@@ -45,12 +45,15 @@ export const Models: CollectionConfig = {
       ],
     },
     {
-      name: 'topProvider',
+      name: 'capabilities',
       type: 'group',
       fields: [
         { name: 'contextLength', type: 'number' },
         { name: 'maxCompletionTokens', type: 'number' },
         { name: 'isModerated', type: 'checkbox' },
+        { name: 'multimodal', type: 'checkbox' },
+        { name: 'tools', type: 'checkbox' },
+        { name: 'vision', type: 'checkbox' },
       ],
     },
     { name: 'perRequestLimits', type: 'json' },

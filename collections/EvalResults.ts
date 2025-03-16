@@ -15,8 +15,11 @@ export const EvalResults: CollectionConfig = {
       required: true,
     },
     { name: 'metrics', type: 'json', required: true },
-    // Additional result fields
+    { name: 'score', type: 'number' },
+    { name: 'pass', type: 'checkbox' },
     { name: 'createdAt', type: 'date', required: true },
+    { name: 'result', type: 'json' },
     { name: 'summary', type: 'richText' },
+    { name: 'details', type: 'json' },
   ],
 }

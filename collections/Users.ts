@@ -10,6 +10,10 @@ export const Users: CollectionConfig = {
   fields: [
     // Email added by default
     { name: 'name', type: 'text' },
+    { name: 'firstName', type: 'text' },
+    { name: 'lastName', type: 'text' },
+    { name: 'active', type: 'checkbox', defaultValue: true },
+    { name: 'avatar', type: 'text' },
     {
       name: 'role',
       type: 'select',
@@ -21,21 +25,16 @@ export const Users: CollectionConfig = {
       ],
       defaultValue: 'viewer',
     },
-    // Using array fields for many-to-many relationships with projects
     {
-      name: 'projects',
-      type: 'array',
-      fields: [
-        {
-          name: 'project',
-          type: 'relationship',
-          relationTo: 'projects',
-          required: true,
-        },
-      ],
-      admin: {
-        description: 'Projects this user has access to',
-      },
+      name: 'permissions',
+      type: 'json',
     },
+    {
+      name: 'tenants',
+      type: 'relationship',
+      relationTo: 'tenants',
+      hasMany: true,
+    },
+    { name: 'preferences', type: 'json' },
   ],
 }

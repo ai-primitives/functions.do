@@ -59,5 +59,27 @@ export const Schemas: CollectionConfig = {
         ],
       },
     },
+    {
+      name: 'type',
+      type: 'select',
+      options: ['json', 'typescript', 'openai'],
+      defaultValue: 'json'
+    },
+    {
+      name: 'version',
+      type: 'text'
+    },
+    {
+      name: 'functions',
+      type: 'relationship',
+      relationTo: 'functions',
+      hasMany: true,
+    },
+    {
+      name: 'models',
+      type: 'relationship',
+      relationTo: 'models',
+      hasMany: true,
+    },
   ],
 }

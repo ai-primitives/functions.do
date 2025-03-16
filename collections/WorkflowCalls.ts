@@ -17,7 +17,6 @@ export const WorkflowCalls: CollectionConfig = {
     { name: 'input', type: 'json', required: true },
     { name: 'output', type: 'json' },
     { name: 'timestamp', type: 'date', required: true },
-    // Additional status fields
     {
       name: 'status',
       type: 'select',
@@ -31,12 +30,23 @@ export const WorkflowCalls: CollectionConfig = {
       defaultValue: 'pending',
     },
     { name: 'error', type: 'text' },
-    { name: 'duration', type: 'number' }, // Duration in milliseconds
+    { name: 'duration', type: 'number' },
+    { name: 'success', type: 'checkbox' }, 
+    { name: 'logs', type: 'json' },
+    { name: 'metadata', type: 'json' },
+    {
+      name: 'functionCalls',
+      type: 'relationship',
+      relationTo: 'functionCalls',
+      hasMany: true,
+    },
     {
       name: 'steps',
       type: 'array',
       fields: [
+        { name: 'stepId', type: 'text', required: true },
         { name: 'stepName', type: 'text', required: true },
+        { name: 'stepOrder', type: 'number' },
         {
           name: 'status',
           type: 'select',

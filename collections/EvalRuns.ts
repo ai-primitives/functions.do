@@ -14,7 +14,21 @@ export const EvalRuns: CollectionConfig = {
       relationTo: 'evals',
       required: true,
     },
-    // Using a join field for results
+    {
+      name: 'model',
+      type: 'relationship',
+      relationTo: 'models',
+    },
+    {
+      name: 'function',
+      type: 'relationship',
+      relationTo: 'functions',
+    },
+    {
+      name: 'dataset',
+      type: 'relationship',
+      relationTo: 'datasets',
+    },
     {
       name: 'results',
       type: 'join',
@@ -26,7 +40,8 @@ export const EvalRuns: CollectionConfig = {
     },
     { name: 'startTime', type: 'date', required: true },
     { name: 'endTime', type: 'date' },
-    // Additional status fields
+    { name: 'metrics', type: 'json' },
+    { name: 'summary', type: 'richText' },
     {
       name: 'status',
       type: 'select',

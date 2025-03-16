@@ -9,13 +9,9 @@ export const ModelGroups: CollectionConfig = {
   versions: true,
   fields: [
     { name: 'name', type: 'text', required: true },
-    {
-      name: 'project',
-      type: 'relationship',
-      relationTo: 'projects',
-      required: true,
-    },
-    // Using join field for models relationship
+    { name: 'family', type: 'text' },
+    { name: 'version', type: 'text' },
+    { name: 'active', type: 'checkbox', defaultValue: true },
     {
       name: 'models',
       type: 'join',
@@ -24,6 +20,12 @@ export const ModelGroups: CollectionConfig = {
       admin: {
         description: 'Models in this group',
       },
+    },
+    {
+      name: 'functions',
+      type: 'relationship',
+      relationTo: 'functions',
+      hasMany: true,
     },
   ],
 }

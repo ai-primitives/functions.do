@@ -9,11 +9,20 @@ export const Evals: CollectionConfig = {
   versions: true,
   fields: [
     { name: 'name', type: 'text', required: true },
+    { name: 'description', type: 'richText' },
+    { name: 'type', type: 'select', options: ['accuracy', 'performance', 'robustness', 'safety', 'custom'] },
+    { name: 'method', type: 'text' },
+    { name: 'metric', type: 'text' },
     {
       name: 'dataset',
       type: 'relationship',
       relationTo: 'datasets',
-      required: true,
+    },
+    {
+      name: 'functions',
+      type: 'relationship',
+      relationTo: 'functions',
+      hasMany: true,
     },
     {
       name: 'evalRuns',
@@ -21,8 +30,7 @@ export const Evals: CollectionConfig = {
       relationTo: 'evalRuns',
       hasMany: true,
     },
-    // Additional configuration fields
-    { name: 'description', type: 'richText' },
+    { name: 'resultsTable', type: 'json' },
     { name: 'config', type: 'json' },
   ],
 }

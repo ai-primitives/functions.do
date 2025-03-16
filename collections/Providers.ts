@@ -9,7 +9,8 @@ export const Providers: CollectionConfig = {
   versions: true,
   fields: [
     { name: 'name', type: 'text', required: true },
-    // Using join field for models relationship
+    { name: 'description', type: 'richText' },
+    { name: 'active', type: 'checkbox', defaultValue: true },
     {
       name: 'models',
       type: 'join',
@@ -19,9 +20,13 @@ export const Providers: CollectionConfig = {
         description: 'Models using this provider',
       },
     },
-    // Additional fields for provider configuration
     { name: 'endpoint', type: 'text' },
+    { name: 'apiUrl', type: 'text' },
     { name: 'apiKey', type: 'text', admin: { condition: () => false } }, // Hidden in admin UI for security
     { name: 'organizationId', type: 'text' },
+    { name: 'authType', type: 'select', options: ['apiKey', 'oauth', 'bearer', 'none'] },
+    { name: 'config', type: 'json' },
+    { name: 'headers', type: 'json' },
+    { name: 'tools', type: 'json' },
   ],
 }

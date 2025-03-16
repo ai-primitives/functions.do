@@ -14,10 +14,10 @@ export const FunctionCalls: CollectionConfig = {
       relationTo: 'functions',
       required: true,
     },
+    { name: 'model', type: 'relationship', relationTo: 'models' },
     { name: 'input', type: 'json', required: true },
     { name: 'output', type: 'json' },
     { name: 'timestamp', type: 'date', required: true },
-    // Additional status fields
     {
       name: 'status',
       type: 'select',
@@ -31,6 +31,26 @@ export const FunctionCalls: CollectionConfig = {
       defaultValue: 'pending',
     },
     { name: 'error', type: 'text' },
-    { name: 'duration', type: 'number' }, // Duration in milliseconds
+    { name: 'duration', type: 'number' },
+    { name: 'cost', type: 'number' },
+    { name: 'tokens', type: 'json' },
+    {
+      name: 'meta',
+      type: 'json',
+      admin: {
+        description: 'Additional metadata for the function call'
+      }
+    },
+    {
+      name: 'data',
+      type: 'relationship',
+      relationTo: 'data',
+      hasMany: true,
+    },
+    {
+      name: 'workflow',
+      type: 'relationship',
+      relationTo: 'workflows',
+    }
   ],
 }
