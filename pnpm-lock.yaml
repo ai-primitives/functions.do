@@ -77,6 +77,9 @@ importers:
       payload:
         specifier: ^3.28.1
         version: 3.28.1(graphql@16.10.0)(typescript@5.7.3)
+      punycode:
+        specifier: ^2.3.1
+        version: 2.3.1
       react:
         specifier: 19.0.0
         version: 19.0.0

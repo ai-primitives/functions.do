@@ -10,6 +10,7 @@ import { createOpenAI, openai } from '@ai-sdk/openai'
 import fetchObject from '@/lib/fetchObject'
 // import { openrouter } from '@openrouter/ai-sdk-provider'
 import yaml from 'yaml'
+import { decode } from 'punycode'
 
 export const maxDuration = 800
 
@@ -19,7 +20,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   
   const payload = await getPayload({ config })
 
-  const { origin, hostname, searchParams } = new URL(request.url)
+  const { origin, hostname, searchParams } = new URL(decodeURI(decode(request.url)))
 
   const api = {
     admin: origin + '/admin',
