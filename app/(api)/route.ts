@@ -23,7 +23,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   let { origin, hostname, searchParams } = new URL(request.url)
 
   try {
-    // origin = origin.replace(hostname, decode(hostname))
+    origin = origin.replace(hostname, toUnicode(hostname))
     hostname = toUnicode(hostname)
   } catch (error) {
     console.log(error)
