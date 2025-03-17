@@ -34,6 +34,7 @@ export const updateModels: TaskConfig<'updateModels'> = {
           // Convert snake_case keys to camelCase using camelcase-keys package
           const camelCaseModel = camelcaseKeys(model, { deep: true })
           console.log(camelCaseModel)
+          camelCaseModel.id = camelCaseModel.id.replace('/','_')
           camelCaseModel.created = new Date(camelCaseModel.created * 1000)
 
           // Check if model already exists
