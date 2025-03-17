@@ -46,5 +46,7 @@ export const GET = async (request: Request, { params }: { params: Promise<{ slug
   
   const start = Date.now()
 
-  return Response.json({ api, message: 'Hello, world!', tenant, user: auth.user?.email, hostname }, { headers: { 'Content-Type': 'application/json; charset=utf-8' } })
+  const headers = Object.fromEntries(request.headers)
+
+  return Response.json({ api, message: 'Hello, world!', tenant, user: auth.user?.email, hostname, headers }, { headers: { 'Content-Type': 'application/json; charset=utf-8' } })
 }
