@@ -12,7 +12,7 @@ import configPromise from 'payload.config'
 import { getPayload } from 'payload'
 import hashObject from 'object-hash'
 
-const openRouter = createOpenAI({
+export const openRouter = createOpenAI({
   apiKey: process.env.OPENROUTER_API_KEY,
   baseURL: process.env.AI_GATEWAY_URL || 'https://openrouter.ai/api/v1',
   headers: {
