@@ -13,7 +13,7 @@ export const Datasets: CollectionConfig = {
     { name: 'source', type: 'text' },
     { name: 'imported', type: 'date' },
     { name: 'version', type: 'text' },
-    { name: 'collection', type: 'checkbox' },
+    // { name: 'collection', type: 'checkbox' },
     { name: 'format', type: 'select', options: ['text', 'json', 'csv', 'images', 'mixed'] },
     {
       name: 'data',

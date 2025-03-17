@@ -10,7 +10,9 @@ export const Models: CollectionConfig = {
   fields: [
     { name: 'id', type: 'text', required: true },
     { name: 'name', type: 'text', required: true },
-    { name: 'description', type: 'code', admin: { language: 'markdown', editorOptions: { padding: { top: 20, bottom: 20 } } } },
+    { name: 'description', type: 'code', admin: { language: 'markdown', 
+      // editorOptions: { padding: { top: 20, bottom: 20 } } 
+    } },
     {
       name: 'modelGroup',
       type: 'relationship',

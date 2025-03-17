@@ -3,7 +3,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { multiTenantPlugin } from '@payloadcms/plugin-multi-tenant'
-import type { Config } from './payload-types'
+import type { Config } from './payload.types'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -33,22 +33,13 @@ export default buildConfig({
     },
   },
   collections,
-  // collections: [
-  //   // Collections from our schema system
-  //   ...Object.values(collections),
-    
-  //   // Individual collections not yet in the schema system
-  //   Groups,
-  //   Completions,
-  //   Images,
-  // ],
   jobs: {
     tasks: [updateModels],
   },
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(dirname, 'payload.types.ts'),
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
@@ -62,7 +53,7 @@ export default buildConfig({
       tenantsArrayField: {},
       tenantField: {},
       collections: {
-        images: {},
+        // images: {},
         functions: {},
         schemas: {},
         completions: {},

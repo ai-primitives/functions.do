@@ -721,7 +721,6 @@ export interface Dataset {
   source?: string | null;
   imported?: string | null;
   version?: string | null;
-  collection?: boolean | null;
   format?: ('text' | 'json' | 'csv' | 'images' | 'mixed') | null;
   data?: {
     docs?: (string | Datum)[];
@@ -1285,7 +1284,6 @@ export interface DatasetsSelect<T extends boolean = true> {
   source?: T;
   imported?: T;
   version?: T;
-  collection?: T;
   format?: T;
   data?: T;
   evals?: T;
