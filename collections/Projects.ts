@@ -11,12 +11,12 @@ export const Projects: CollectionConfig = {
     { name: 'name', type: 'text', required: true },
     { name: 'description', type: 'richText' },
     { name: 'active', type: 'checkbox', defaultValue: true },
-    {
-      name: 'tenant',
-      type: 'relationship',
-      relationTo: 'tenants',
-      required: true,
-    },
+    // {
+    //   name: 'tenant',
+    //   type: 'relationship',
+    //   relationTo: 'tenants',
+    //   required: true,
+    // },
     {
       name: 'status',
       type: 'select',

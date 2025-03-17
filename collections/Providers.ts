@@ -16,9 +16,6 @@ export const Providers: CollectionConfig = {
       type: 'join',
       collection: 'models',
       on: 'provider',
-      admin: {
-        description: 'Models using this provider',
-      },
     },
     { name: 'endpoint', type: 'text' },
     { name: 'apiUrl', type: 'text' },

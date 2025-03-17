@@ -9,13 +9,15 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-// Import our database schema and collection generator
-import collections from './database.config'
+import { collections } from './collections'
 
-// Import individual collections that are not yet handled by our schema system
-import { Images } from './collections/Images'
-import { Completions } from './collections/Completions'
-import { Groups } from './collections/Groups'
+// Import our database schema and collection generator
+// import collections from './database.config'
+
+// // Import individual collections that are not yet handled by our schema system
+// import { Images } from './collections/Images'
+// import { Completions } from './collections/Completions'
+// import { Groups } from './collections/Groups'
 
 import { isSuperAdmin } from './collections/hooks/isSuperAdmin'
 import { updateModels } from './tasks/updateModels'
@@ -30,15 +32,16 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [
-    // Collections from our schema system
-    ...Object.values(collections),
+  collections,
+  // collections: [
+  //   // Collections from our schema system
+  //   ...Object.values(collections),
     
-    // Individual collections not yet in the schema system
-    Groups,
-    Completions,
-    Images,
-  ],
+  //   // Individual collections not yet in the schema system
+  //   Groups,
+  //   Completions,
+  //   Images,
+  // ],
   jobs: {
     tasks: [updateModels],
   },

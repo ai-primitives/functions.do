@@ -20,25 +20,16 @@ export const Datasets: CollectionConfig = {
       type: 'join',
       collection: 'data',
       on: 'dataset',
-      admin: {
-        description: 'Data entries in this dataset',
-      },
     },
     {
       name: 'evals',
       type: 'join',
       collection: 'evals',
       on: 'dataset',
-      admin: {
-        description: 'Evaluations for this dataset',
-      },
     },
     {
       name: 'metadata',
       type: 'json',
-      admin: {
-        description: 'Additional metadata for the dataset'
-      }
     },
   ],
 }

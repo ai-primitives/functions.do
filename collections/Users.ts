@@ -29,12 +29,12 @@ export const Users: CollectionConfig = {
       name: 'permissions',
       type: 'json',
     },
-    {
-      name: 'tenants',
-      type: 'relationship',
-      relationTo: 'tenants',
-      hasMany: true,
-    },
+    // {
+    //   name: 'tenants',
+    //   type: 'relationship',
+    //   relationTo: 'tenants',
+    //   hasMany: true,
+    // },
     { name: 'preferences', type: 'json' },
   ],
 }

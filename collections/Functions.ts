@@ -16,12 +16,12 @@ export const Functions: CollectionConfig = {
         { name: 'active', type: 'checkbox', defaultValue: true },
       ],
     },
-    {
-      name: 'tenant',
-      type: 'relationship',
-      relationTo: 'tenants',
-      required: true,
-    },
+    // {
+    //   name: 'tenant',
+    //   type: 'relationship',
+    //   relationTo: 'tenants',
+    //   required: true,
+    // },
     {
       name: 'modelGroup',
       type: 'relationship',
@@ -62,9 +62,6 @@ export const Functions: CollectionConfig = {
       type: 'join',
       collection: 'functionCalls',
       on: 'function',
-      admin: {
-        description: 'Calls made to this function',
-      },
     },
     {
       name: 'evals',

@@ -34,9 +34,6 @@ export const EvalRuns: CollectionConfig = {
       type: 'join',
       collection: 'evalResults',
       on: 'evalRun',
-      admin: {
-        description: 'Results from this evaluation run',
-      },
     },
     { name: 'startTime', type: 'date', required: true },
     { name: 'endTime', type: 'date' },
