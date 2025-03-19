@@ -48,18 +48,18 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
-    multiTenantPlugin<Config>({
-      tenantSelectorLabel: 'Project',
-      tenantsArrayField: {},
-      tenantField: {},
-      collections: {
-        // images: {},
-        // functions: {},
-        // schemas: {},
-        // completions: {},
-        // projects: {},
-      },
-      userHasAccessToAllTenants: isSuperAdmin,
-    }),
+    // multiTenantPlugin<Config>({
+    //   tenantSelectorLabel: 'Project',
+    //   tenantsArrayField: {},
+    //   tenantField: {},
+    //   collections: {
+    //     // images: {},
+    //     // functions: {},
+    //     // schemas: {},
+    //     // completions: {},
+    //     // projects: {},
+    //   },
+    //   userHasAccessToAllTenants: isSuperAdmin,
+    // }),
   ],
 })
