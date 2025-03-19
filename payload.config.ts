@@ -54,9 +54,9 @@ export default buildConfig({
       tenantField: {},
       collections: {
         // images: {},
-        functions: {},
-        schemas: {},
-        completions: {},
+        // functions: {},
+        // schemas: {},
+        // completions: {},
         // projects: {},
       },
       userHasAccessToAllTenants: isSuperAdmin,
